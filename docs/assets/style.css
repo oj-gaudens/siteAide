@@ -1,53 +1,141 @@
-/* ===== Global ===== */
+/* Reset & base */
+* {
+  box-sizing: border-box;
+  font-family: Inter, Arial, sans-serif;
+}
+
+/* Body global */
 body {
-  margin: 0; font-family:"Inter",sans-serif; background:#fefefe; color:#111; line-height:1.6;
+  margin: 0;
+  padding: 0;
+  background: #f4f6fb;
+  color: #1e293b;
+  line-height: 1.6;
 }
-a { color:#007acc; text-decoration:none; } a:hover { text-decoration:underline; }
-main { max-width:1200px; margin:auto; padding:2rem; display:flex; flex-direction:column; gap:2rem; }
-header { text-align:center; margin-bottom:2rem; }
-header h1 { font-size:2.5rem; }
-header p { font-size:1.1rem; color:#555; margin-top:0.3rem; }
 
-/* ===== Editor + Preview ===== */
-#editor-container { display:flex; gap:1rem; height:600px; }
-textarea#markdown-input {
-  width:50%; height:100%; padding:1rem; font-family:monospace; font-size:1rem;
-  border:1px solid #ddd; border-radius:6px; resize:vertical;
+/* Header classique */
+header {
+  background: #222;
+  color: white;
+  padding: 1rem;
+  text-align: center;
 }
+
+/* Header stylé (éditeur) */
+.top-header {
+  background: linear-gradient(135deg, #4f6edb, #5b8cff);
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+/* Contenu principal */
+main {
+  padding: 2rem;
+}
+
+/* Intro */
+.intro {
+  padding: 30px;
+  text-align: center;
+}
+
+.intro span {
+  color: #4f6edb;
+}
+
+/* Liens */
+a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Éditeur Markdown */
+.editor {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  height: 500px;
+}
+
+/* Zone de texte */
+textarea {
+  width: 50%;
+  padding: 15px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: none;
+}
+
+/* Preview */
 #preview {
-  width:50%; height:100%; padding:1rem; border:1px solid #ddd;
-  border-radius:6px; overflow:auto; background:#fff; position:relative;
+  width: 50%;
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0,0,0,.08);
 }
 
-/* ===== Buttons & Actions ===== */
-.toolbar { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.5rem; }
-button, .toolbar button {
-  padding:0.5rem 1rem; border:none; border-radius:4px;
-  background:#007acc; color:white; cursor:pointer; font-size:1rem;
+/* Barre d’outils */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+  justify-content: center;
 }
-button:hover { background:#005f99; }
 
-/* ===== Themes ===== */
-.theme-light { background:#fefefe; color:#111; }
-.theme-dark { background:#1e1e1e; color:#ddd; }
-.theme-dark #preview { background:#333; color:#fff; }
+/* Boutons & selects */
+button,
+select {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
 
-/* ===== Slides ===== */
-.slide { border:1px solid #007acc; padding:1rem; margin:1rem 0; border-radius:6px; background:#fefefe; transition:all 0.5s ease; opacity:0; transform:translateX(100%); }
-.slide.current { border:2px solid #ff5722; background:#fffbe6; opacity:1; transform:translateX(0); }
-.slide h1, .slide h2, .slide h3 { transition:all 0.5s ease; }
+button {
+  background: #4f6edb;
+  color: white;
+}
 
-/* ===== Notes & TOC ===== */
-.slide-note { font-size:0.85rem; color:#555; border-top:1px dashed #ddd; margin-top:0.5rem; padding-top:0.3rem; }
-.toc { font-size:0.9rem; color:#007acc; margin-bottom:1rem; }
+button:hover {
+  background: #3c56b5;
+}
 
-/* ===== Emails ===== */
-.email-block { border:1px solid #ddd; padding:1rem; margin:0.5rem 0; background:#f9f9f9; font-family:Arial,sans-serif; }
-.email-button { display:inline-block; padding:0.5rem 1rem; background:#007acc; color:#fff; border-radius:4px; text-decoration:none; }
-.email-preview-mobile { border:1px solid #333; max-width:400px; padding:1rem; margin:0.5rem; background:#fafafa; font-size:0.9rem; }
+/* Mode sombre */
+.theme-dark {
+  background: #0f172a;
+  color: #e5e7eb;
+}
 
-/* ===== Responsive ===== */
-@media(max-width:900px) {
-  #editor-container { flex-direction:column; height:auto; }
-  textarea#markdown-input, #preview { width:100%; height:400px; }
+.theme-dark #preview {
+  background: #020617;
+  color: white;
+}
+
+/* Texte d’aide */
+.hint {
+  text-align: center;
+  padding: 15px;
+  color: #475569;
+}
+
+/* Slides */
+.slide {
+  border: 2px solid #4f6edb;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.slide.current {
+  border-color: #ff9800;
 }

@@ -5,7 +5,7 @@ title: Accueil
 
 # Bienvenue sur Markdown PRO MAX
 
-page de test pour verifier la mise en page
+page de test pour verifier la mise en page - si je change je vois en direct 
 
 Écrivez votre Markdown à gauche et voyez le rendu live à droite.
 

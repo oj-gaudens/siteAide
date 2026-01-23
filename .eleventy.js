@@ -1,11 +1,10 @@
-module.exports = function (eleventyConfig) {
-  eleventyConfig.addPassthroughCopy("src/assets");
-
+module.exports = function(eleventyConfig) {
+  eleventyConfig.addPassthroughCopy("src/assets"); // Copie CSS et JS
   return {
     dir: {
       input: "src",
-      output: "docs",
-      includes: "_includes"
+      output: "_site",
+      includes: "templates",
     }
   };
 };
