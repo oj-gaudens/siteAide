@@ -15,6 +15,18 @@ const btnFullscreen = document.getElementById("fullscreen");
 
 let currentSlide = 0;
 
+/* 🔥 AJOUT — Parser blocs DSFR */
+function parseCustomBlocks(md) {
+  return md.replace(/\/\/\/\s*alert\s*\|\s*(.*?)\n([\s\S]*?)\/\/\//g, (match, title, content) => {
+    const htmlContent = marked.parse(content.trim());
+    return `
+<div class="fr-alert fr-alert--info">
+  <h5 class="fr-alert__title">${title}</h5>
+  ${htmlContent}
+</div>`;
+  });
+}
+
 const demos = {
   site: "💡 Template Site : header/footer/sections principales.",
   email: "💡 Template Email : objet/contenu/footer avec inline CSS.",
@@ -22,7 +34,10 @@ const demos = {
 };
 
 function updatePreview() {
-  const md = textarea.value;
+  let md = textarea.value;
+
+  // 🔥 AJOUT — transformation des blocs custom
+  md = parseCustomBlocks(md);
 
   // ===== MODE SLIDES =====
   if (templateSelector.value === "slides") {
