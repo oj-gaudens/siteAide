@@ -1,3 +1,8 @@
+---
+layout: layout.njk
+title: Accueil
+---
+
 # Template Email
 
 Objet : Votre objet ici

@@ -1,10 +1,11 @@
 module.exports = function(eleventyConfig) {
-  eleventyConfig.addPassthroughCopy("src/assets"); // Copie CSS et JS
+  eleventyConfig.addPassthroughCopy("src/assets"); // CSS, JS, images
+
   return {
     dir: {
-      input: "src",
-      output: "_site",
-      includes: "templates",
+      input: "src",          // dossier source
+      includes: "_includes", // dossiers pour layouts
+      output: "_site"
     }
   };
 };

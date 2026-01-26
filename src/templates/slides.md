@@ -1,3 +1,8 @@
+---
+layout: layout.njk
+title: Accueil
+---
+
 # Slide 1
 Titre + contenu
 

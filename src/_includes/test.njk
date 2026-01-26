@@ -4,18 +4,10 @@
   <meta charset="UTF-8">
   <title>{{ title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- DSFR OFFICIEL -->
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.12.1/dist/dsfr.min.css">
-  <script defer
-    src="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.12.1/dist/dsfr.module.min.js"></script>
-
-  <!-- MARKDOWN -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-  <!-- CUSTOM -->
-  <link rel="stylesheet" href="/assets/css/custom.css">
+<link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/dsfr/dsfr.min.css" />
+ 
+  
 </head>
 
 <body>
@@ -24,7 +16,8 @@
   <main class="fr-container fr-my-6w">
     {{ content | safe }}
   </main>
-
-  <script src="/assets/js/app.js"></script>
+<script type="module" src="/assets/dsfr/dsfr.module.min.js"></script>
+  <script nomodule src="/assets/dsfr/dsfr.nomodule.min.js"></script>
+  <script src="/assets/script.js"></script>
 </body>
 </html>
