@@ -15,13 +15,13 @@ const btnFullscreen = document.getElementById("fullscreen");
 
 let currentSlide = 0;
 
-/* 🔥 AJOUT — Parser blocs DSFR */
+/* 🔥 AJOUT — Parser blocs DSFR alert */
 function parseCustomBlocks(md) {
-  return md.replace(/\/\/\/\s*alert\s*\|\s*(.*?)\n([\s\S]*?)\/\/\//g, (match, title, content) => {
+  return md.replace(/\/\/\/\s*alert\s*\|\s*(.*?)\s*\r?\n([\s\S]*?)\r?\n\/\/\//g, (match, title, content) => {
     const htmlContent = marked.parse(content.trim());
     return `
 <div class="fr-alert fr-alert--info">
-  <h5 class="fr-alert__title">${title}</h5>
+  <h5 class="fr-alert__title">${title.trim()}</h5>
   ${htmlContent}
 </div>`;
   });
@@ -36,7 +36,7 @@ const demos = {
 function updatePreview() {
   let md = textarea.value;
 
-  // 🔥 AJOUT — transformation des blocs custom
+  // 🔥 AJOUT — transformation des blocs custom AVANT rendu Markdown
   md = parseCustomBlocks(md);
 
   // ===== MODE SLIDES =====
