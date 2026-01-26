@@ -1,5 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+/* ===== CONFIG MARKED ===== */
+marked.setOptions({
+  gfm: true,
+  breaks: true
+});
+
 const textarea = document.getElementById("markdown-input");
 const preview = document.getElementById("preview");
 const templateSelector = document.getElementById("template-selector");
@@ -15,16 +21,20 @@ const btnFullscreen = document.getElementById("fullscreen");
 
 let currentSlide = 0;
 
-/* 🔥 AJOUT — Parser blocs DSFR alert */
+/* ===============================
+   🔥 PARSER BLOCS CUSTOM DSFR
+=================================*/
 function parseCustomBlocks(md) {
-  return md.replace(/\/\/\/\s*alert\s*\|\s*(.*?)\s*\r?\n([\s\S]*?)\r?\n\/\/\//g, (match, title, content) => {
-    const htmlContent = marked.parse(content.trim());
-    return `
+  return md.replace(
+    /\/\/\/\s*alert\s*\|\s*(.*?)\s*\r?\n([\s\S]*?)\r?\n\/\/\//g,
+    (match, title, content) => {
+      return `
 <div class="fr-alert fr-alert--info">
   <h5 class="fr-alert__title">${title.trim()}</h5>
-  ${htmlContent}
+  ${marked.parse(content.trim())}
 </div>`;
-  });
+    }
+  );
 }
 
 const demos = {
@@ -36,10 +46,10 @@ const demos = {
 function updatePreview() {
   let md = textarea.value;
 
-  // 🔥 AJOUT — transformation des blocs custom AVANT rendu Markdown
+  // 👉 transformation des blocs custom AVANT rendu
   md = parseCustomBlocks(md);
 
-  // ===== MODE SLIDES =====
+  /* ===== MODE SLIDES ===== */
   if (templateSelector.value === "slides") {
     const slides = md.split(/---/).map(s => s.trim()).filter(Boolean);
     preview.innerHTML = "";
@@ -47,9 +57,7 @@ function updatePreview() {
     slides.forEach((s, i) => {
       const div = document.createElement("div");
       div.className = "slide" + (i === currentSlide ? " current" : "");
-      div.innerHTML =
-        marked.parse(s) +
-        `<div class="slide-note">Notes slide ${i + 1}</div>`;
+      div.innerHTML = s + `<div class="slide-note">Notes slide ${i + 1}</div>`;
       preview.appendChild(div);
     });
 
@@ -59,7 +67,7 @@ function updatePreview() {
     preview.prepend(toc);
   }
 
-  // ===== MODE NORMAL =====
+  /* ===== MODE NORMAL ===== */
   else {
     preview.innerHTML = marked.parse(md);
 
