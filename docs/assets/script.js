@@ -21,20 +21,26 @@ const btnFullscreen = document.getElementById("fullscreen");
 
 let currentSlide = 0;
 
-/* ===============================
-   🔥 PARSER BLOCS CUSTOM DSFR
-=================================*/
+/* ======================================
+   🔥 PARSER BLOCS CUSTOM DSFR (SAFE)
+======================================*/
 function parseCustomBlocks(md) {
-  return md.replace(
+  let blocks = [];
+
+  md = md.replace(
     /\/\/\/\s*alert\s*\|\s*(.*?)\s*\r?\n([\s\S]*?)\r?\n\/\/\//g,
     (match, title, content) => {
-      return `
+      const html = `
 <div class="fr-alert fr-alert--info">
   <h5 class="fr-alert__title">${title.trim()}</h5>
   ${marked.parse(content.trim())}
 </div>`;
+      blocks.push(html);
+      return `%%ALERT_BLOCK_${blocks.length - 1}%%`;
     }
   );
+
+  return { md, blocks };
 }
 
 const demos = {
@@ -44,10 +50,11 @@ const demos = {
 };
 
 function updatePreview() {
-  let md = textarea.value;
+  let raw = textarea.value;
 
-  // 👉 transformation des blocs custom AVANT rendu
-  md = parseCustomBlocks(md);
+  // 🔥 On extrait les blocs custom
+  const parsed = parseCustomBlocks(raw);
+  let md = parsed.md;
 
   /* ===== MODE SLIDES ===== */
   if (templateSelector.value === "slides") {
@@ -57,7 +64,14 @@ function updatePreview() {
     slides.forEach((s, i) => {
       const div = document.createElement("div");
       div.className = "slide" + (i === currentSlide ? " current" : "");
-      div.innerHTML = s + `<div class="slide-note">Notes slide ${i + 1}</div>`;
+
+      let slideHTML = marked.parse(s);
+
+      parsed.blocks.forEach((block, idx) => {
+        slideHTML = slideHTML.replace(`%%ALERT_BLOCK_${idx}%%`, block);
+      });
+
+      div.innerHTML = slideHTML + `<div class="slide-note">Notes slide ${i + 1}</div>`;
       preview.appendChild(div);
     });
 
@@ -69,7 +83,13 @@ function updatePreview() {
 
   /* ===== MODE NORMAL ===== */
   else {
-    preview.innerHTML = marked.parse(md);
+    let html = marked.parse(md);
+
+    parsed.blocks.forEach((block, i) => {
+      html = html.replace(`%%ALERT_BLOCK_${i}%%`, block);
+    });
+
+    preview.innerHTML = html;
 
     if (demos[templateSelector.value]) {
       const box = document.createElement("div");
