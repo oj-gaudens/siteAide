@@ -28,7 +28,7 @@ function parseCustomBlocks(md) {
   let blocks = [];
 
   md = md.replace(
-    /\/\/\/\s*alert\s*\|\s*(.*?)\s*\r?\n([\s\S]*?)\r?\n\/\/\//g,
+    /\/\/\/\s*alert\s*\|\s*(.*?)\s*\n([\s\S]*?)\n?\/\/\//g,
     (match, title, content) => {
       const html = `
 <div class="fr-alert fr-alert--info">
@@ -42,6 +42,7 @@ function parseCustomBlocks(md) {
 
   return { md, blocks };
 }
+
 
 const demos = {
   site: "💡 Template Site : header/footer/sections principales.",
