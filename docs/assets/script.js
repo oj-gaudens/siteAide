@@ -57,8 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const demos = {
-    site: "💡 Template Site",
-    email: "💡 Template Email",
     slides: "💡 Slides : --- pour séparer"
   };
 
