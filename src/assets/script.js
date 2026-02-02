@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const templateSelector = document.getElementById("template-selector");
   const themeSelector = document.getElementById("theme-selector");
 
-  // Buttons
   const btnCopyHTML = document.getElementById("copy-html");
   const btnCopyText = document.getElementById("copy-text");
   const btnDownloadHTML = document.getElementById("download-html");
@@ -22,44 +21,55 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentSlide = 0;
 
   /* ======================================
-     🔥 PARSER BLOCS CUSTOM DSFR (SAFE)
+     🔥 PARSER BLOCS CUSTOM DSFR ALERT
   ======================================*/
   function parseCustomBlocks(md) {
     let blocks = [];
 
-    md = md.replace(
-      /\/\/\/\s*alert\s*\|\s*(.*?)\s*\r?\n([\s\S]*?)\r?\n\/\/\//g,
-      (match, title, content) => {
-        const html = `
-          <div class="fr-alert fr-alert--info">
-            <h5 class="fr-alert__title">${title.trim()}</h5>
-            ${marked.parse(content.trim())}
-          </div>
-        `;
-        blocks.push(html);
-        return `%%ALERT_BLOCK_${blocks.length - 1}%%`;
-      }
-    );
+    const regex = /(^|\n)[ \t]*\/\/\/[ \t]*alert[ \t]*\|[ \t]*(.+?)[ \t]*\n([\s\S]*?)[ \t]*\/\/\/(?=\n|$)/g;
+
+    md = md.replace(regex, (match, start, title, content) => {
+
+      const slug = title
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, "")
+        .replace(/\s+/g, "-");
+
+      const html = `
+<div class="fr-alert fr-alert--info">
+  <h5 class="fr-alert__title" id="${slug}">${title.trim()}</h5>
+  ${marked.parse(content.trim())}
+</div>`;
+
+      blocks.push(html);
+      return `${start}%%ALERT_BLOCK_${blocks.length - 1}%%`;
+    });
 
     return { md, blocks };
   }
 
+  function injectBlocks(html, blocks) {
+    blocks.forEach((block, i) => {
+      html = html.replaceAll(`%%ALERT_BLOCK_${i}%%`, block);
+    });
+    return html;
+  }
+
   const demos = {
-    site: "💡 Template Site : header/footer/sections principales.",
-    email: "💡 Template Email : objet/contenu/footer avec inline CSS.",
-    slides: "💡 Slides : séparer avec --- • utiliser ← →"
+    site: "💡 Template Site",
+    email: "💡 Template Email",
+    slides: "💡 Slides : --- pour séparer"
   };
 
   function updatePreview() {
     let raw = textarea.value;
-
     const parsed = parseCustomBlocks(raw);
     let md = parsed.md;
 
     /* ===== MODE SLIDES ===== */
     if (templateSelector.value === "slides") {
       const slides = md.split(/---/).map(s => s.trim()).filter(Boolean);
-
       preview.innerHTML = "";
 
       slides.forEach((s, i) => {
@@ -67,11 +77,9 @@ document.addEventListener("DOMContentLoaded", () => {
         div.className = "slide" + (i === currentSlide ? " current" : "");
 
         let slideHTML = marked.parse(s);
-        parsed.blocks.forEach((block, idx) => {
-          slideHTML = slideHTML.replace(`%%ALERT_BLOCK_${idx}%%`, block);
-        });
+        slideHTML = injectBlocks(slideHTML, parsed.blocks);
 
-        div.innerHTML = slideHTML + `<div class="slide-note">Notes slide ${i + 1}</div>`;
+        div.innerHTML = slideHTML;
         preview.appendChild(div);
       });
 
@@ -84,10 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /* ===== MODE NORMAL ===== */
     else {
       let html = marked.parse(md);
-
-      parsed.blocks.forEach((block, i) => {
-        html = html.replace(`%%ALERT_BLOCK_${i}%%`, block);
-      });
+      html = injectBlocks(html, parsed.blocks);
 
       preview.innerHTML = html;
 
@@ -100,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* ===== LIVE PREVIEW ===== */
+  /* ===== EVENTS ===== */
   textarea.addEventListener("input", updatePreview);
 
   templateSelector.addEventListener("change", () => {
@@ -112,16 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.className = e.target.value;
   });
 
-  /* ===== BOUTONS ===== */
-  btnCopyHTML.onclick = () => {
-    navigator.clipboard.writeText(preview.innerHTML);
-    alert("HTML copié !");
-  };
-
-  btnCopyText.onclick = () => {
-    navigator.clipboard.writeText(textarea.value);
-    alert("Texte copié !");
-  };
+  btnCopyHTML.onclick = () => navigator.clipboard.writeText(preview.innerHTML);
+  btnCopyText.onclick = () => navigator.clipboard.writeText(textarea.value);
 
   btnDownloadHTML.onclick = () => {
     const blob = new Blob([preview.innerHTML], { type: "text/html" });
@@ -140,7 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   btnFullscreen.onclick = () => document.body.requestFullscreen();
 
-  /* ===== NAVIGATION SLIDES ===== */
   document.addEventListener("keydown", e => {
     if (templateSelector.value !== "slides") return;
 
@@ -149,15 +145,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     slides[currentSlide].classList.remove("current");
 
-    if (e.key === "ArrowRight") currentSlide = (currentSlide + 1) % slides.length;
-    if (e.key === "ArrowLeft") currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    if (e.key === "ArrowRight")
+      currentSlide = (currentSlide + 1) % slides.length;
+
+    if (e.key === "ArrowLeft")
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
 
     slides[currentSlide].classList.add("current");
-
-    const toc = document.querySelector(".toc");
-    if (toc) toc.textContent = `Slide ${currentSlide + 1} / ${slides.length}`;
   });
 
-  /* ===== INIT ===== */
   updatePreview();
 });
