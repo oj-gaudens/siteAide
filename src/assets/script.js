@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const templateSelector = document.getElementById("template-selector");
   const themeSelector = document.getElementById("theme-selector");
 
-  // Buttons
   const btnCopyHTML = document.getElementById("copy-html");
   const btnCopyText = document.getElementById("copy-text");
   const btnDownloadHTML = document.getElementById("download-html");
@@ -27,45 +26,44 @@ document.addEventListener("DOMContentLoaded", () => {
   function parseCustomBlocks(md) {
     let blocks = [];
 
-    md = md.replace(/^[ \t]*\/\/\/\s*alert\s*\|\s*(.+?)\s*\n([\s\S]*?)\n?[ \t]*\/\/\//gm,
-      (match, title, content) => {
+    const regex = /(^|\n)[ \t]*\/\/\/[ \t]*alert[ \t]*\|[ \t]*(.+?)[ \t]*\n([\s\S]*?)[ \t]*\/\/\/(?=\n|$)/g;
 
-        const slug = title
-          .toLowerCase()
-          .trim()
-          .replace(/[^\w\s-]/g, "")
-          .replace(/\s+/g, "-");
+    md = md.replace(regex, (match, start, title, content) => {
 
-        const html = `
+      const slug = title
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, "")
+        .replace(/\s+/g, "-");
+
+      const html = `
 <div class="fr-alert fr-alert--info">
   <h5 class="fr-alert__title" id="${slug}">${title.trim()}</h5>
   ${marked.parse(content.trim())}
 </div>`;
 
-        blocks.push(html);
-        return `%%ALERT_BLOCK_${blocks.length - 1}%%`;
-      }
-    );
+      blocks.push(html);
+      return `${start}%%ALERT_BLOCK_${blocks.length - 1}%%`;
+    });
 
     return { md, blocks };
   }
 
-  const demos = {
-    site: "💡 Template Site : header/footer/sections principales.",
-    email: "💡 Template Email : objet/contenu/footer.",
-    slides: "💡 Slides : séparer avec ---  •  utiliser ← →"
-  };
-
   function injectBlocks(html, blocks) {
     blocks.forEach((block, i) => {
-      html = html.split(`%%ALERT_BLOCK_${i}%%`).join(block);
+      html = html.replaceAll(`%%ALERT_BLOCK_${i}%%`, block);
     });
     return html;
   }
 
+  const demos = {
+    site: "💡 Template Site",
+    email: "💡 Template Email",
+    slides: "💡 Slides : --- pour séparer"
+  };
+
   function updatePreview() {
     let raw = textarea.value;
-
     const parsed = parseCustomBlocks(raw);
     let md = parsed.md;
 
@@ -81,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let slideHTML = marked.parse(s);
         slideHTML = injectBlocks(slideHTML, parsed.blocks);
 
-        div.innerHTML = slideHTML + `<div class="slide-note">Notes slide ${i + 1}</div>`;
+        div.innerHTML = slideHTML;
         preview.appendChild(div);
       });
 
@@ -107,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* ===== LIVE PREVIEW ===== */
+  /* ===== EVENTS ===== */
   textarea.addEventListener("input", updatePreview);
 
   templateSelector.addEventListener("change", () => {
@@ -119,16 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.className = e.target.value;
   });
 
-  /* ===== BOUTONS ===== */
-  btnCopyHTML.onclick = () => {
-    navigator.clipboard.writeText(preview.innerHTML);
-    alert("HTML copié !");
-  };
-
-  btnCopyText.onclick = () => {
-    navigator.clipboard.writeText(textarea.value);
-    alert("Texte copié !");
-  };
+  btnCopyHTML.onclick = () => navigator.clipboard.writeText(preview.innerHTML);
+  btnCopyText.onclick = () => navigator.clipboard.writeText(textarea.value);
 
   btnDownloadHTML.onclick = () => {
     const blob = new Blob([preview.innerHTML], { type: "text/html" });
@@ -147,7 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   btnFullscreen.onclick = () => document.body.requestFullscreen();
 
-  /* ===== NAVIGATION SLIDES ===== */
   document.addEventListener("keydown", e => {
     if (templateSelector.value !== "slides") return;
 
@@ -163,12 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentSlide = (currentSlide - 1 + slides.length) % slides.length;
 
     slides[currentSlide].classList.add("current");
-
-    const toc = document.querySelector(".toc");
-    if (toc) toc.textContent = `Slide ${currentSlide + 1} / ${slides.length}`;
   });
 
-  /* ===== INIT ===== */
   updatePreview();
-
 });
