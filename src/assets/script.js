@@ -27,18 +27,24 @@ let currentSlide = 0;
 function parseCustomBlocks(md) {
   let blocks = [];
 
-  md = md.replace(
-    /\/\/\/\s*alert\s*\|\s*(.*?)\s*\n([\s\S]*?)\n?\/\/\//g,
-    (match, title, content) => {
-      const html = `
+  md = md.replace(/\/\/\/\s*alert\s*\|\s*(.+)\n([\s\S]*?)\/\/\//g, (match, title, content) => {
+    
+    // slug pour l'id (par defaut → par-defaut)
+    const slug = title
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-");
+
+    const html = `
 <div class="fr-alert fr-alert--info">
-  <h5 class="fr-alert__title">${title.trim()}</h5>
+  <h5 class="fr-alert__title" id="${slug}">${title.trim()}</h5>
   ${marked.parse(content.trim())}
 </div>`;
-      blocks.push(html);
-      return `%%ALERT_BLOCK_${blocks.length - 1}%%`;
-    }
-  );
+
+    blocks.push(html);
+    return `%%ALERT_BLOCK_${blocks.length - 1}%%`;
+  });
 
   return { md, blocks };
 }
