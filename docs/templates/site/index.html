@@ -1,25 +1,18 @@
----
-layout: layout.njk
-title: Accueil
----
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Accueil</title>
-  <link rel="stylesheet" href="assets/dsfr">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/dsfr/dsfr.min.css" />
+
 </head>
-<body class="theme-light">
-  <header>
-  <h1>Accueil</h1>
-  <p>Choisissez un template et editez votre contenu en direct.</p>
+<body>
+<header>
+  <h1>Accueil zzz </h1>
 </header>
-
-
-  <main>
-    <h1>Bienvenue sur Markdown PRO MAX</h1>
+<main>
+  <h1>Bienvenue sur Markdown PRO MAX</h1>
 <p>Écrivez votre Markdown à gauche et voyez le rendu live à droite.</p>
 <h2>Choisir un template :</h2>
 <select id="template-selector">
@@ -55,7 +48,12 @@ title: Accueil
 Hover sur les encadrés bleus pour des aides inline selon le template.
 </blockquote>
 
-  </main>
-  <script src="assets/script.js"></script>
+</main>
+<script src="/assets/script.js"></script>
+
+
+<script type="module" src="/assets/dsfr/dsfr.module.min.js"></script>
+  <script nomodule src="/assets/dsfr/dsfr.nomodule.min.js"></script>
+  <script src="/assets/script.js"></script>
 </body>
 </html>
