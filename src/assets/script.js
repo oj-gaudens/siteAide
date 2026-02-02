@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ======================================
      🔥 PARSER BLOCS CUSTOM DSFR ALERT
   ======================================*/
- function parseCustomBlocks(md) {
+  function parseCustomBlocks(md) {
   let blocks = [];
 
   const regex = /(^|\n)[ \t]*\/\/\/[ \t]*alert[ \t]*\|[ \t]*(.+?)[ \t]*\n([\s\S]*?)[ \t]*\/\/\/(?=\n|$)/g;

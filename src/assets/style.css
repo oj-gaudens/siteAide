@@ -180,12 +180,3 @@ button:hover { background: #005f99; }
     height: 400px;
   }
 }
-/* ===== PROTECTION DSFR ===== */
-#preview .fr-alert {
-  all: revert;
-  font-family: inherit;
-}
-
-#preview .fr-alert * {
-  box-sizing: border-box;
-}
