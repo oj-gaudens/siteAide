@@ -1,6 +1,6 @@
 ---
 layout: layout.njk
-title: Accueil oj
+title: Accueil 
 ---
 
 # Bienvenue sur Markdown PRO MAX
