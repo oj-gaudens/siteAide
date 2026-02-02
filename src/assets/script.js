@@ -24,24 +24,6 @@ let currentSlide = 0;
 /* ======================================
    🔥 PARSER BLOCS CUSTOM DSFR (SAFE)
 ======================================*/
-function parseCustomBlocks(md) {
-  let blocks = [];
-
-  md = md.replace(
-    /\/\/\/\s*alert\s*\|\s*(.*?)\s*\r?\n([\s\S]*?)\r?\n\/\/\//g,
-    (match, title, content) => {
-      const html = `
-<div class="fr-alert fr-alert--info">
-  <h5 class="fr-alert__title">${title.trim()}</h5>
-  ${marked.parse(content.trim())}
-</div>`;
-      blocks.push(html);
-      return `%%ALERT_BLOCK_${blocks.length - 1}%%`;
-    }
-  );
-
-  return { md, blocks };
-}
 
 const demos = {
   site: "💡 Template Site : header/footer/sections principales.",
