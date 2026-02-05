@@ -2,17 +2,31 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>{{ title }}</title>
-
-  <!-- Ton CSS uniquement -->
-  <link rel="stylesheet" href="/assets/style.css">
+  <title>{% if title %}{{ title }} – {% endif %}Markdown PRO MAX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ siteDescription or 'Créez vos sites, emails et slides rapidement avec Markdown PRO MAX' }}">
+  
+  <!-- ✅ AJOUTER | url ICI -->
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | url }}">
+  
+  <!-- Librairie Markdown preview -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
-<body>
-
-  <!-- Juste le contenu de la page -->
+<body class="theme-light">
+<header class="top-header">
+  <h1>{{ siteTitle or "Site d'Aide" }}</h1>
+  <p>{{ siteDescription or "Créez vos sites, emails et slides rapidement, avec live preview et export facile." }}</p>
+</header>
+<main>
   {{ content | safe }}
+</main>
+<footer class="site-footer">
+  <p>&copy; 2026 Markdown PRO MAX – Créé avec Eleventy</p>
+</footer>
 
-  <!-- Ton JS uniquement -->
-  <script src="/assets/script.js"></script>
+<!-- ✅ AJOUTER | url ICI AUSSI -->
+{% if jsFile %}
+<script src="{{ ('/js/' + jsFile) | url }}"></script>
+{% endif %}
 </body>
 </html>
