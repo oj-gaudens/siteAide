@@ -65,9 +65,12 @@ function processAlerts(md) {
     const markup = options.markup || 'h5';
     const id = generateId(title);
     
+    // CORRECTION: Parser le contenu en Markdown
+    const htmlContent = marked.parse(content);
+    
     return `<div class="fr-alert fr-alert--${type}">
 <${markup} class="fr-alert__title" id="${id}">${title}</${markup}>
-<p>${content}</p>
+${htmlContent}
 </div>`;
   });
 }
@@ -99,9 +102,12 @@ function processCallouts(md) {
       linkHtml = `<a class="fr-btn" href="${linkUrl}"${target}>${linkLabel}</a>`;
     }
     
+    // CORRECTION: Parser le contenu en Markdown
+    const htmlContent = marked.parse(content);
+    
     return `<div class="fr-callout ${colorClass}">
 <${markup} class="fr-callout__title">${iconHtml}${title}</${markup}>
-<p class="fr-callout__text">${content}</p>
+<div class="fr-callout__text">${htmlContent}</div>
 ${linkHtml}
 </div>`;
   });
@@ -123,12 +129,15 @@ function processAccordions(md) {
     const isOpen = options.open || false;
     const collapseClass = isOpen ? '' : ' fr-collapse--collapsed';
     
+    // ⭐ CORRECTION PRINCIPALE: Parser le contenu en Markdown !!!
+    const htmlContent = marked.parse(content);
+    
     return `<section class="fr-accordion">
 <h3 class="fr-accordion__title">
 <button class="fr-accordion__btn" aria-expanded="${isOpen}" aria-controls="accordion-${accordionId}">${title}</button>
 </h3>
 <div class="fr-collapse${collapseClass}" id="accordion-${accordionId}">
-${content}
+${htmlContent}
 </div>
 </section>`;
   });
@@ -216,6 +225,9 @@ function processCards(md) {
       detailHtml = `<p class="fr-card__detail">Fichier à télécharger</p>`;
     }
     
+    // CORRECTION: Parser le contenu en Markdown
+    const htmlContent = marked.parse(content);
+    
     return `<div class="${cardClasses}">
 ${imageHtml}
 <div class="fr-card__body">
@@ -224,7 +236,7 @@ ${imageHtml}
 <a href="${target}"${targetNew}>${title}</a>
 </${markup}>
 ${descriptionHtml}
-<p class="fr-card__desc">${content}</p>
+<div class="fr-card__desc">${htmlContent}</div>
 ${detailHtml}
 </div>
 <div class="fr-card__footer">
@@ -262,7 +274,6 @@ function processTiles(md) {
     if (horizontal) tileClasses += ' fr-tile--horizontal';
     if (download) tileClasses += ' fr-tile--download';
     if (variations) tileClasses += ` ${variations.split(',').map(v => `fr-tile--${v.trim()}`).join(' ')}`;
-    
     let pictoHtml = '';
     if (picto) {
       pictoHtml = `<div class="fr-tile__header">
@@ -294,6 +305,9 @@ function processTiles(md) {
       detailText = 'Fichier à télécharger';
     }
     
+    // CORRECTION: Parser le contenu en Markdown
+    const htmlDetail = marked.parse(detailText);
+    
     return `<div class="${tileClasses}">
 <div class="fr-tile__body">
 <div class="fr-tile__content">
@@ -301,7 +315,7 @@ function processTiles(md) {
 <a href="${target}"${targetNew}>${title}</a>
 </${markup}>
 ${descriptionHtml}
-<p class="fr-tile__detail">${detailText}</p>
+<div class="fr-tile__detail">${htmlDetail}</div>
 </div>
 </div>
 ${pictoHtml}
@@ -311,69 +325,72 @@ ${badgeHtml}
 }
 
 // Process ROW/COL components (grid system)
-function processGrid(md) {
-  // D'abord, traiter les colonnes
-  const colRegex = /\/\/\/\s*col(?:\s*\|\s*([^\n]+))?\n([\s\S]*?)\/\/\//g;
-  let processedMd = md.replace(colRegex, (match, classes, content) => {
+function processGrids(md) {
+  // D'abord, traiter les colonnes (col)
+  let result = md;
+  
+  // Regex pour détecter les colonnes
+  const colRegex = /\/\/\/\s*col(?:\s*\|\s*([^\n]*))?\n([\s\S]*?)\/\/\//g;
+  
+  // Remplacer les colonnes par des placeholders temporaires
+  const colPlaceholders = [];
+  result = result.replace(colRegex, (match, classes, content) => {
     const colClasses = classes ? classes.trim().split(/\s+/).map(c => `fr-col-${c}`).join(' ') : 'fr-col';
-    return `<div class="${colClasses}">
-${content.trim()}
-</div>`;
+    const placeholder = `___COL_PLACEHOLDER_${colPlaceholders.length}___`;
+    colPlaceholders.push({ classes: colClasses, content: content.trim() });
+    return placeholder;
   });
   
-  // Ensuite, traiter les lignes
-  const rowRegex = /\/\/\/\s*row(?:\s*\|\s*([^\n]+))?\n([\s\S]*?)\/\/\//g;
-  processedMd = processedMd.replace(rowRegex, (match, header, content) => {
+  // Ensuite, traiter les lignes (row)
+  const rowRegex = /\/\/\/\s*row(?:\s*\|\s*([^\n]*))?\n([\s\S]*?)\/\/\//g;
+  
+  result = result.replace(rowRegex, (match, classes, content) => {
     let rowClasses = 'fr-grid-row';
-    let options = {};
-    
-    if (header) {
-      const parts = header.split('\n');
+    if (classes) {
+      const parts = classes.split('\n');
       const firstLine = parts[0].trim();
-      
-      // Si la première ligne contient des classes CSS
-      if (firstLine && !firstLine.includes(':')) {
-        rowClasses += ` ${firstLine}`;
-      }
+      if (firstLine) rowClasses += ` ${firstLine}`;
       
       // Parser les options
-      const optionsText = parts.slice(1).join('\n');
-      options = parseOptions(optionsText);
+      const options = parseOptions(parts.slice(1).join('\n'));
+      if (options.halign) rowClasses += ` fr-grid-row--${options.halign}`;
+      if (options.valign) rowClasses += ` fr-grid-row--${options.valign}`;
     }
     
-    if (options.halign) rowClasses += ` fr-grid-row--${options.halign}`;
-    if (options.valign) rowClasses += ` fr-grid-row--${options.valign}`;
+    // Remplacer les placeholders de colonnes
+    let processedContent = content;
+    colPlaceholders.forEach((col, index) => {
+      const placeholder = `___COL_PLACEHOLDER_${index}___`;
+      if (processedContent.includes(placeholder)) {
+        // CORRECTION: Parser le contenu de la colonne en Markdown
+        const htmlContent = marked.parse(col.content);
+        processedContent = processedContent.replace(
+          placeholder,
+          `<div class="${col.classes}">\n${htmlContent}\n</div>`
+        );
+      }
+    });
     
     return `<div class="${rowClasses}">
-${content.trim()}
+${processedContent}
 </div>`;
   });
   
-  return processedMd;
+  return result;
 }
 
-// ============================================================================
-// MAIN PROCESSING FUNCTION
-// ============================================================================
-
+// Process all components in order
 function processAllComponents(md) {
-  // Ordre important : traiter les composants imbriqués d'abord
-  let processed = md;
-  
-  // 1. Traiter les cartes et tuiles (avant la grille)
-  processed = processCards(processed);
-  processed = processTiles(processed);
-  
-  // 2. Traiter la grille (qui contient les cartes/tuiles)
-  processed = processGrid(processed);
-  
-  // 3. Traiter les autres composants
-  processed = processAlerts(processed);
-  processed = processCallouts(processed);
-  processed = processAccordions(processed);
-  processed = processBadges(processed);
-  
-  return processed;
+  // Ordre important: grilles en dernier car elles contiennent d'autres composants
+  let result = md;
+  result = processAlerts(result);
+  result = processCallouts(result);
+  result = processAccordions(result);
+  result = processBadges(result);
+  result = processCards(result);
+  result = processTiles(result);
+  result = processGrids(result);
+  return result;
 }
 
 // ============================================================================
@@ -681,324 +698,12 @@ document.querySelectorAll('[data-insert]').forEach(button => {
   });
 });
 
-// ============================================================================
-// TEMPLATE LOADING
-// ============================================================================
-
-// Load Site template
-document.getElementById('load-template-site')?.addEventListener('click', () => {
-  const siteTemplate = `# Bienvenue sur notre site
-
-/// callout | Nouvelle version disponible
-    color: blue-cumulus
-    icon: info-line
-    markup: h3
-    link_label: Télécharger maintenant
-    link_url: https://example.com/download
-    link_newtab: true
-Découvrez toutes les nouvelles fonctionnalités de notre dernière mise à jour !
-///
-
-## Nos services
-
-/// row | fr-grid-row--gutters
-/// col | 12 lg-4
-/// card | Service Premium
-    image: https://via.placeholder.com/400x250
-    target: /premium
-    badge: Populaire | yellow-tournesol
-    markup: h4
-Notre service le plus demandé avec toutes les fonctionnalités avancées.
-///
-///
-
-/// col | 12 lg-4
-/// card | Service Standard
-    image: https://via.placeholder.com/400x250
-    target: /standard
-    badge: Nouveau | green-menthe
-    markup: h4
-Le parfait équilibre entre fonctionnalités et prix.
-///
-///
-
-/// col | 12 lg-4
-/// card | Service Basic
-    image: https://via.placeholder.com/400x250
-    target: /basic
-    markup: h4
-Pour débuter en douceur avec l'essentiel.
-///
-///
-///
-
-## Questions fréquentes
-
-/// accordion | Comment ça fonctionne ?
-Notre service est simple à utiliser. Inscrivez-vous, configurez votre compte et commencez à utiliser toutes les fonctionnalités en quelques minutes.
-///
-
-/// accordion | Quels sont les tarifs ?
-    open: true
-Nous proposons plusieurs formules adaptées à vos besoins :
-- Basic : 9€/mois
-- Standard : 19€/mois
-- Premium : 29€/mois
-///
-
-/// accordion | Comment nous contacter ?
-Vous pouvez nous joindre par email à contact@example.com ou par téléphone au 01 23 45 67 89.
-///
-
-## Témoignages clients
-
-/// row | fr-grid-row--gutters
-/// col
-> "Un service exceptionnel ! Je recommande vivement."
-
-**Marie Dupont** - Directrice Marketing
-///
-
-/// col
-> "Exactement ce dont j'avais besoin. Équipe très réactive."
-
-**Jean Martin** - CEO
-///
-
-/// col
-> "Le meilleur choix que j'ai fait cette année."
-
-**Sophie Bernard** - Freelance
-///
-///
-
-/// alert | Offre limitée
-    type: warning
-    markup: h3
-🎁 Profitez de -20% sur tous nos services jusqu'au 31 décembre !
-///`;
-
-  textarea.value = siteTemplate;
-  template.value = 'site';
-  render();
-  showNotification('Template Site chargé !');
-});
-
-// Load Email template
-document.getElementById('load-template-email')?.addEventListener('click', () => {
-  const emailTemplate = `# Newsletter - Janvier 2026
-
-Bonjour,
-
-/// callout | Nouvelle fonctionnalité
-    color: green-menthe
-    icon: medal-fill
-    markup: h3
-Découvrez notre nouvel éditeur Markdown avec support DSFR complet !
-///
-
-## Les actualités du mois
-
-/// alert | Événement à venir
-    type: info
-    markup: h4
-Webinaire gratuit le 15 janvier à 14h : "Maîtriser le Markdown"
-///
-
-### Article 1 : Guide complet du Markdown
-
-/// card | Lire l'article
-    image: https://via.placeholder.com/600x300
-    target: https://example.com/article1
-    markup: h4
-Tout ce que vous devez savoir sur le Markdown pour créer du contenu professionnel.
-///
-
-### Article 2 : Les composants DSFR
-
-/// card | Découvrir
-    image: https://via.placeholder.com/600x300
-    target: https://example.com/article2
-    badge: Populaire | yellow-tournesol
-    markup: h4
-Un guide complet des composants du Design System de l'État Français.
-///
-
-## Nos badges de qualité
-
-/// badge
-    type: success
-    icon: true
-Certifié
-///
-
-/// badge
-    color: green-menthe
-100% Gratuit
-///
-
-/// badge
-    type: new
-Nouveau
-///
-
----
-
-Cordialement,  
-**L'équipe Markdown PRO MAX**
-
-[Se désabonner](https://example.com/unsubscribe)`;
-
-  textarea.value = emailTemplate;
-  template.value = 'email';
-  render();
-  showNotification('Template Email chargé !');
-});
-
-// Load Slides template
-document.getElementById('load-template-slides')?.addEventListener('click', () => {
-  const slidesTemplate = `# Markdown PRO MAX
-
-## Présentation complète
-
-Par Votre Nom  
-Date : 2 février 2026
-
----
-
-# Introduction
-
-/// callout | Objectif de la présentation
-    color: blue-cumulus
-    icon: info-line
-    markup: h3
-Découvrir tous les composants DSFR disponibles
-///
-
-**Au programme :**
-- Les alertes
-- Les callouts
-- Les grilles
-- Les cartes et tuiles
-
----
-
-# Les Alertes
-
-/// alert | Information
-    type: info
-    markup: h3
-Les alertes permettent de mettre en avant des informations importantes.
-///
-
-/// alert | Succès
-    type: success
-Opération réussie !
-///
-
-/// alert | Attention
-    type: warning
-Point d'attention important.
-///
-
----
-
-# Les Grilles
-
-/// row | fr-grid-row--gutters
-/// col
-**Colonne 1**
-
-Contenu de la première colonne avec du texte.
-///
-
-/// col
-**Colonne 2**
-
-Contenu de la deuxième colonne avec du texte.
-///
-///
-
----
-
-# Les Cartes
-
-/// row | fr-grid-row--gutters
-/// col
-/// card | Service 1
-    image: https://via.placeholder.com/300x200
-    badge: Nouveau | green-menthe
-    markup: h4
-Description du service
-///
-///
-
-/// col
-/// card | Service 2
-    image: https://via.placeholder.com/300x200
-    badge: Populaire | yellow-tournesol
-    markup: h4
-Description du service
-///
-///
-///
-
----
-
-# Les Badges
-
-Nos certifications :
-
-/// badge
-    type: success
-    icon: true
-Certifié
-///
-
-/// badge
-    color: green-menthe
-Écologique
-///
-
-/// badge
-    type: new
-Nouveau
-///
-
----
-
-# Conclusion
-
-/// callout | Merci !
-    color: green-menthe
-    icon: medal-fill
-    markup: h2
-Des questions ?
-///
-
-**Contact :** contact@example.com
-
----
-
-# Fin
-
-**Merci pour votre attention !**
-
-👏 Applaudissements`;
-
-  textarea.value = slidesTemplate;
-  template.value = 'slides';
-  currentSlide = 0;
-  render();
-  showNotification('Template Slides chargé !');
-});
-
 // Print styles
 const printStyles = document.createElement("style");
 printStyles.textContent = `
   @media print {
     body { background: white !important; }
-    .top-header, .intro, .editor textarea, .toolbar, .hint, .site-footer { display: none !important; }
+    .top-header, .intro, .editor textarea, .toolbar, .hint, .site-footer, .dsfr-toolbar { display: none !important; }
     #preview { 
       width: 100% !important; 
       box-shadow: none !important; 
