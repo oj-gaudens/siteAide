@@ -1,4 +1,4 @@
-/* Reset & Base */
+/* Reset & Base - Style Gouvernemental Strict */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,20 +6,21 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  background: #f4f6fb;
-  color: #1e293b;
+  font-family: 'Marianne', Arial, sans-serif;
+  background: #f6f6f6;
+  color: #161616;
   line-height: 1.6;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Header */
+/* Header - Style DSFR Officiel */
 .top-header {
-  background: linear-gradient(135deg, #4f6edb 0%, #5b8cff 100%);
+  background: #000091;
   color: white;
   padding: 40px 20px;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(79, 110, 219, 0.3);
+  box-shadow: none;
+  border-bottom: 2px solid #e5e5e5;
 }
 
 .top-header h1 {
@@ -47,7 +48,7 @@ body {
 }
 
 .intro span {
-  color: #4f6edb;
+  color: #000091;
   font-weight: 700;
 }
 
@@ -60,8 +61,8 @@ body {
 .intro select {
   margin-left: 10px;
   padding: 8px 12px;
-  border-radius: 6px;
-  border: 2px solid #e2e8f0;
+  border-radius: 0;
+  border: 2px solid #ddd;
   font-size: 14px;
   cursor: pointer;
   transition: border-color 0.3s ease;
@@ -69,7 +70,7 @@ body {
 
 .intro select:hover,
 .intro select:focus {
-  border-color: #4f6edb;
+  border-color: #000091;
   outline: none;
 }
 
@@ -88,49 +89,49 @@ textarea {
   padding: 20px;
   font-size: 15px;
   font-family: 'Monaco', 'Courier New', monospace;
-  border-radius: 12px;
-  border: 2px solid #e2e8f0;
+  border-radius: 0;
+  border: 2px solid #ddd;
   resize: none;
   background: white;
-  color: #1e293b;
+  color: #161616;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 textarea:focus {
   outline: none;
-  border-color: #4f6edb;
-  box-shadow: 0 0 0 3px rgba(79, 110, 219, 0.1);
+  border-color: #000091;
+  box-shadow: inset 0 -2px 0 0 #000091;
 }
 
 #preview {
   width: 50%;
   background: white;
-  border-radius: 12px;
+  border-radius: 0;
   padding: 30px;
   overflow-y: auto;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  border: 2px solid #e2e8f0;
+  box-shadow: none;
+  border: 2px solid #ddd;
 }
 
 /* Preview Content Styling */
 #preview h1 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #1e293b;
-  border-bottom: 3px solid #4f6edb;
+  color: #161616;
+  border-bottom: 2px solid #000091;
   padding-bottom: 10px;
 }
 
 #preview h2 {
   font-size: 1.6rem;
   margin: 25px 0 15px;
-  color: #334155;
+  color: #161616;
 }
 
 #preview h3 {
   font-size: 1.3rem;
   margin: 20px 0 10px;
-  color: #475569;
+  color: #161616;
 }
 
 #preview p {
@@ -147,31 +148,33 @@ textarea:focus {
 }
 
 #preview a {
-  color: #4f6edb;
-  text-decoration: none;
+  color: #000091;
+  text-decoration: underline;
   font-weight: 500;
 }
 
 #preview a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 #preview code {
-  background: #f1f5f9;
+  background: #f6f6f6;
   padding: 2px 6px;
-  border-radius: 4px;
+  border-radius: 0;
   font-family: 'Monaco', 'Courier New', monospace;
   font-size: 0.9em;
-  color: #e11d48;
+  color: #ce0500;
+  border: 1px solid #ddd;
 }
 
 #preview pre {
-  background: #1e293b;
-  color: #e2e8f0;
+  background: #161616;
+  color: #f6f6f6;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 0;
   overflow-x: auto;
   margin: 20px 0;
+  border: 2px solid #000091;
 }
 
 #preview pre code {
@@ -181,11 +184,13 @@ textarea:focus {
 }
 
 #preview blockquote {
-  border-left: 4px solid #4f6edb;
+  border-left: 4px solid #000091;
   padding-left: 20px;
   margin: 20px 0;
-  color: #64748b;
+  color: #666;
   font-style: italic;
+  background: #f6f6f6;
+  padding: 15px 15px 15px 20px;
 }
 
 /* Toolbar */
@@ -201,7 +206,7 @@ textarea:focus {
 
 button, select {
   padding: 12px 20px;
-  border-radius: 8px;
+  border-radius: 0;
   border: none;
   cursor: pointer;
   font-size: 14px;
@@ -210,29 +215,30 @@ button, select {
 }
 
 button {
-  background: #4f6edb;
+  background: #000091;
   color: white;
-  box-shadow: 0 2px 8px rgba(79, 110, 219, 0.3);
+  box-shadow: none;
+  border: 2px solid #000091;
 }
 
 button:hover {
-  background: #3c56b5;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(79, 110, 219, 0.4);
+  background: #1212ff;
+  transform: none;
+  box-shadow: inset 0 -4px 0 0 rgba(0, 0, 0, 0.2);
 }
 
 button:active {
-  transform: translateY(0);
+  transform: translateY(1px);
 }
 
 select {
   background: white;
-  border: 2px solid #e2e8f0;
-  color: #1e293b;
+  border: 2px solid #ddd;
+  color: #161616;
 }
 
 select:hover {
-  border-color: #4f6edb;
+  border-color: #000091;
 }
 
 /* Hint */
@@ -249,9 +255,9 @@ select:hover {
 .site-footer {
   text-align: center;
   padding: 30px 20px;
-  background: #f8fafc;
-  border-top: 2px solid #e2e8f0;
-  color: #64748b;
+  background: #f6f6f6;
+  border-top: 2px solid #ddd;
+  color: #666;
   margin-top: 40px;
 }
 
@@ -398,10 +404,13 @@ select:hover {
   position: relative;
   padding: 1.5rem;
   margin: 1.5rem 0;
-  border-radius: 8px;
+  border-radius: 0;
   border-left: 4px solid;
   background-color: #f6f6f6;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
+  border-right: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 .fr-alert--info {
@@ -513,8 +522,11 @@ select:hover {
   background: #f6f6f6;
   padding: 1.5rem;
   margin: 1.5rem 0;
-  border-radius: 8px;
-  border-left: 4px solid #0063cb;
+  border-radius: 0;
+  border-left: 4px solid #000091;
+  border-right: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 .fr-callout--green-menthe {

@@ -2,7 +2,6 @@
 const textarea = document.getElementById("markdown-input");
 const preview = document.getElementById("preview");
 const template = document.getElementById("template-selector");
-const theme = document.getElementById("theme-selector");
 
 let currentSlide = 0;
 
@@ -450,11 +449,6 @@ template.addEventListener("change", () => {
   render();
 });
 
-theme.addEventListener("change", e => {
-  document.body.className = e.target.value;
-  localStorage.setItem("theme", e.target.value);
-});
-
 // Copy HTML
 document.getElementById("copy-html").onclick = () => {
   navigator.clipboard.writeText(preview.innerHTML)
@@ -516,16 +510,71 @@ document.getElementById("clear-all").onclick = () => {
   }
 };
 
-// Fullscreen
+// Fullscreen - Vue côte-à-côte comme un vrai éditeur
 document.getElementById("fullscreen").onclick = () => {
+  const editorSection = document.querySelector('.editor');
+  
   if (!document.fullscreenElement) {
+    // Mode plein écran activé
     document.body.requestFullscreen().catch(err => {
       showNotification("Erreur plein écran", true);
     });
+    
+    // Appliquer le style plein écran
+    editorSection.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      max-width: 100%;
+      padding: 0;
+      margin: 0;
+      gap: 0;
+      z-index: 9999;
+      background: #ffffff;
+    `;
+    
+    textarea.style.cssText = `
+      width: 50%;
+      height: 100vh;
+      border-radius: 0;
+      border: none;
+      border-right: 2px solid #ddd;
+      padding: 20px;
+      margin: 0;
+    `;
+    
+    preview.style.cssText = `
+      width: 50%;
+      height: 100vh;
+      border-radius: 0;
+      border: none;
+      padding: 40px;
+      margin: 0;
+      overflow-y: auto;
+    `;
+    
   } else {
+    // Sortir du plein écran
     document.exitFullscreen();
+    
+    // Restaurer les styles normaux
+    editorSection.style.cssText = '';
+    textarea.style.cssText = '';
+    preview.style.cssText = '';
   }
 };
+
+// Restaurer les styles quand on quitte le plein écran avec Échap
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement) {
+    const editorSection = document.querySelector('.editor');
+    editorSection.style.cssText = '';
+    textarea.style.cssText = '';
+    preview.style.cssText = '';
+  }
+});
 
 // Keyboard navigation for slides
 document.addEventListener("keydown", e => {
@@ -596,13 +645,6 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Load saved theme
-const savedTheme = localStorage.getItem("theme");
-if (savedTheme) {
-  document.body.className = savedTheme;
-  theme.value = savedTheme;
-}
-
 // Load saved content
 const savedContent = localStorage.getItem("markdown-content");
 if (savedContent) {
@@ -666,29 +708,177 @@ document.getElementById('collapse-all')?.addEventListener('click', (e) => {
   });
 });
 
+// ============================================================================
+// TEMPLATES - Charger les templates prédéfinis
+// ============================================================================
+
+const templates = {
+  site: `# Bienvenue sur mon site
+
+## À propos
+
+Ceci est un site web créé avec le Système de Design de l'État.
+
+### Nos services
+
+- Service 1
+- Service 2
+- Service 3
+
+## Contact
+
+Pour nous contacter : [contact@exemple.gouv.fr](mailto:contact@exemple.gouv.fr)
+
+/// alert | Informationimportante
+type: info
+markup: h4
+Ceci est une information importante.
+///`,
+
+  email: `# Objet : Votre demande
+
+Bonjour,
+
+Nous accusons réception de votre demande.
+
+/// alert | Information
+type: info
+Votre dossier est en cours de traitement.
+///
+
+## Prochaines étapes
+
+1. Vérification des documents
+2. Validation
+3. Réponse finale
+
+Cordialement,
+
+L'équipe`,
+
+  slides: `---
+
+# 🎯 Titre de la présentation
+
+**Sous-titre élégant**
+
+---
+
+## 📋 Plan de la présentation
+
+/// card
+**Points clés :**
+- 📌 Point important 1
+- 📌 Point important 2  
+- 📌 Point important 3
+///
+
+---
+
+## 💡 Slide avec cadre
+
+/// alert | Information importante
+type: info
+markup: h4
+Ceci est un contenu mis en valeur dans un cadre bleu
+///
+
+**Détails supplémentaires** avec du texte normal
+
+---
+
+## 📊 Conclusion
+
+**Merci de votre attention !**
+
+/// alert | À retenir
+type: success
+Les points essentiels à retenir de cette présentation
+///`
+};
+
+// Boutons de chargement des templates
+document.getElementById('load-template-site')?.addEventListener('click', () => {
+  textarea.value = templates.site;
+  render();
+  showNotification('Template Site chargé !');
+});
+
+document.getElementById('load-template-email')?.addEventListener('click', () => {
+  textarea.value = templates.email;
+  render();
+  showNotification('Template Email chargé !');
+});
+
+document.getElementById('load-template-slides')?.addEventListener('click', () => {
+  textarea.value = templates.slides;
+  render();
+  showNotification('Template Slides chargé !');
+});
+
+// ============================================================================
+// SYSTÈME DE THÈME UNIFIÉ - Mode clair/sombre
+// ============================================================================
+
+// Fonction unique pour appliquer le thème
+function applyTheme(themeName) {
+  const htmlElement = document.documentElement;
+  
+  // Retirer la classe theme-dark
+  htmlElement.classList.remove('theme-dark');
+  
+  // Ajouter theme-dark si mode sombre
+  if (themeName === 'dark') {
+    htmlElement.classList.add('theme-dark');
+  }
+  
+  // Sauvegarder dans localStorage
+  localStorage.setItem("theme", themeName);
+}
+
+// Charger le thème sauvegardé au démarrage
+const savedTheme = localStorage.getItem("theme") || 'light';
+applyTheme(savedTheme);
+
+// Bouton Mode Clair
+document.getElementById('theme-light')?.addEventListener('click', () => {
+  applyTheme('light');
+  showNotification('Mode clair activé ☀️');
+});
+
+// Bouton Mode Sombre
+document.getElementById('theme-dark')?.addEventListener('click', () => {
+  applyTheme('dark');
+  showNotification('Mode sombre activé 🌙');
+});
+
 // Insert component when button is clicked
 document.querySelectorAll('[data-insert]').forEach(button => {
   button.addEventListener('click', (e) => {
     e.stopPropagation();
     const textToInsert = button.getAttribute('data-insert');
     
-    // Get current cursor position
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
+    // CORRECTION: Ajouter à la fin du texte au lieu de la position du curseur
     const currentValue = textarea.value;
     
-    // Insert text at cursor position
-    const newValue = currentValue.substring(0, start) + '\n\n' + textToInsert + '\n\n' + currentValue.substring(end);
+    // Ajouter à la fin avec un saut de ligne
+    const newValue = currentValue + '\n\n' + textToInsert + '\n\n';
     textarea.value = newValue;
     
-    // Set cursor position after inserted text
-    const newCursorPos = start + textToInsert.length + 4;
+    // Placer le curseur à la fin
+    const newCursorPos = newValue.length;
     textarea.selectionStart = newCursorPos;
     textarea.selectionEnd = newCursorPos;
+    
+    // Scroll automatiquement en bas du textarea
+    textarea.scrollTop = textarea.scrollHeight;
     
     // Focus textarea and render
     textarea.focus();
     render();
+    
+    // Scroll preview en bas
+    preview.scrollTop = preview.scrollHeight;
     
     // Close dropdown
     button.closest('.group-buttons').classList.add('hidden');
