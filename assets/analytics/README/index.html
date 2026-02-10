@@ -1,0 +1,65 @@
+<h1>analytics</h1>
+<h2>Dépendances</h2>
+<pre><code class="language-shell">analytics
+└─ core
+└─ scheme
+└─ accordion
+└─ button
+└─ breadcrumb
+└─ sidemenu
+└─ tab
+└─ tooltip
+└─ display
+└─ tag
+└─ toggle
+└─ modal
+└─ navigation
+└─ table
+└─ password
+└─ header
+</code></pre>
+<h2>Utilisation</h2>
+<p>Afin d’utiliser le composant <code>analytics</code>, il est nécessaire d’ajouter les fichiers de styles et de scripts présents dans le dossier dist dans l'ordre suivant :\n</p>
+<pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/legacy/legacy.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/core/core.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/core/core.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/scheme/scheme.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/accordion/accordion.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/accordion/accordion.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/button/button.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/button/button.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/navigation/navigation.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/navigation/navigation.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/modal/modal.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/modal/modal.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/breadcrumb/breadcrumb.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/breadcrumb/breadcrumb.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/toggle/toggle.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/toggle/toggle.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/sidemenu/sidemenu.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/sidemenu/sidemenu.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/password/password.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/password/password.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/tab/tab.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/tab/tab.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/tooltip/tooltip.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/tooltip/tooltip.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/checkbox/checkbox.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/checkbox/checkbox.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/tag/tag.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/tag/tag.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/header/header.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/header/header.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/display/display.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/display/display.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/table/table.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/table/table.nomodule.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;module&quot; href=&quot;js/analytics/analytics.module.min.js&quot; &gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; nomodule href=&quot;js/analytics/analytics.nomodule.min.js&quot; &gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
