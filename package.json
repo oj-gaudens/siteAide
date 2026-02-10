@@ -4,11 +4,15 @@
   "description": "Site Markdown PRO MAX avec Eleventy",
   "scripts": {
     "start": "eleventy --serve",
-    "build": "eleventy"
+    "build": "eleventy",
+    "clean": "rm -rf docs"
   },
   "keywords": ["eleventy", "markdown", "site"],
   "author": "",
   "license": "MIT",
+  "dependencies": {
+    "markdown-it": "^13.0.1"
+  },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1"
   }
