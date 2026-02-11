@@ -309,121 +309,182 @@ select:hover {
 /* DARK THEME */
 /* ========================================================================== */
 
-.theme-dark {
-  background: #161616;
-  color: #f6f6f6;
+/* MODE SOMBRE - Change TOUTE la page */
+htmlhtml.theme-dark {
+  background: #161616 !important;
+  color: #f6f6f6 !important;
 }
 
-/* Changer TOUT le body en mode sombre */
-.theme-dark body {
-  background: #161616;
-  color: #f6f6f6;
+htmlhtml.theme-dark body {
+  background: #161616 !important;
+  color: #f6f6f6 !important;
 }
 
-.theme-dark .top-header {
+htmlhtml.theme-dark main {
+  background: #161616 !important;
+  color: #f6f6f6 !important;
+}
+
+/* Header DSFR en mode sombre */
+htmlhtml.theme-dark .fr-header {
+  background: #1a1a1a !important;
+  border-bottom: 1px solid #3a3a3a !important;
+}
+
+htmlhtml.theme-dark .fr-header__body {
+  background: #1a1a1a !important;
+}
+
+htmlhtml.theme-dark .fr-header__service-title,
+htmlhtml.theme-dark .fr-header__service-tagline,
+htmlhtml.theme-dark .fr-logo {
+  color: #f6f6f6 !important;
+}
+
+htmlhtml.theme-dark .fr-nav__link {
+  color: #f6f6f6 !important;
+}
+
+htmlhtml.theme-dark .fr-nav__link:hover {
+  background: #2a2a2a !important;
+}
+
+htmlhtml.theme-dark .fr-btn {
+  background: #2a2a2a !important;
+  color: #f6f6f6 !important;
+  border-color: #3a3a3a !important;
+}
+
+htmlhtml.theme-dark .fr-btn:hover {
+  background: #3a3a3a !important;
+}
+
+/* Footer DSFR en mode sombre */
+htmlhtml.theme-dark .fr-footer {
+  background: #1a1a1a !important;
+  border-top: 1px solid #3a3a3a !important;
+  color: #f6f6f6 !important;
+}
+
+htmlhtml.theme-dark .fr-footer__body {
+  background: #1a1a1a !important;
+}
+
+htmlhtml.theme-dark .fr-footer__content-desc,
+htmlhtml.theme-dark .fr-footer__content-link,
+htmlhtml.theme-dark .fr-footer__bottom-link,
+htmlhtml.theme-dark .fr-footer__bottom-copy {
+  color: #f6f6f6 !important;
+}
+
+htmlhtml.theme-dark .fr-footer__bottom-link:hover {
+  background: #2a2a2a !important;
+}
+
+htmlhtml.theme-dark .top-header {
   background: #1212ff;
   border-bottom-color: #3a3a3a;
 }
 
-.theme-dark .intro,
-.theme-dark .toolbar,
-.theme-dark .dsfr-toolbar {
-  color: #f6f6f6;
-  background: #1a1a1a;
-  border-color: #3a3a3a;
+htmlhtml.theme-dark .intro,
+htmlhtml.theme-dark .toolbar,
+htmlhtml.theme-dark .dsfr-toolbar {
+  color: #f6f6f6 !important;
+  background: #1a1a1a !important;
+  border-color: #3a3a3a !important;
 }
 
-.theme-dark .toolbar-group {
-  background: #1a1a1a;
-  border-color: #3a3a3a;
+htmlhtml.theme-dark .toolbar-group {
+  background: #1a1a1a !important;
+  border-color: #3a3a3a !important;
 }
 
-.theme-dark .group-toggle,
-.theme-dark button,
-.theme-dark .template-btn,
-.theme-dark .mini-btn {
-  background: #2a2a2a;
-  color: #f6f6f6;
-  border-color: #3a3a3a;
+htmlhtml.theme-dark .group-toggle,
+htmlhtml.theme-dark button,
+htmlhtml.theme-dark .template-btn,
+htmlhtml.theme-dark .mini-btn {
+  background: #2a2a2a !important;
+  color: #f6f6f6 !important;
+  border-color: #3a3a3a !important;
 }
 
-.theme-dark .group-toggle:hover,
-.theme-dark button:hover,
-.theme-dark .template-btn:hover {
-  background: #3a3a3a;
+htmlhtml.theme-dark .group-toggle:hover,
+htmlhtml.theme-dark button:hover,
+htmlhtml.theme-dark .template-btn:hover {
+  background: #3a3a3a !important;
 }
 
-.theme-dark textarea {
-  background: #1a1a1a;
-  color: #f6f6f6;
-  border-color: #3a3a3a;
+htmlhtml.theme-dark textarea {
+  background: #1a1a1a !important;
+  color: #f6f6f6 !important;
+  border-color: #3a3a3a !important;
 }
 
-.theme-dark textarea:focus {
+html.theme-dark textarea:focus {
   background: #0a0a0a;
 }
 
-.theme-dark #preview {
+html.theme-dark #preview {
   background: #0a0a0a;
   color: #f6f6f6;
 }
 
-.theme-dark #preview h1,
-.theme-dark #preview h2,
-.theme-dark #preview h3 {
+html.theme-dark #preview h1,
+html.theme-dark #preview h2,
+html.theme-dark #preview h3 {
   color: #ffffff;
   border-color: #1212ff;
 }
 
-.theme-dark #preview p,
-.theme-dark #preview li {
+html.theme-dark #preview p,
+html.theme-dark #preview li {
   color: #e5e5e5;
 }
 
-.theme-dark #preview a {
+html.theme-dark #preview a {
   color: #6a6aff;
 }
 
-.theme-dark #preview a:hover {
+html.theme-dark #preview a:hover {
   background: #1a1a1a;
 }
 
-.theme-dark #preview code {
+html.theme-dark #preview code {
   background: #1a1a1a;
   color: #ff6b6b;
   border-color: #3a3a3a;
 }
 
-.theme-dark #preview pre {
+html.theme-dark #preview pre {
   background: #000000;
   border-color: #1212ff;
 }
 
-.theme-dark #preview blockquote {
+html.theme-dark #preview blockquote {
   background: #1a1a1a;
   border-left-color: #1212ff;
   color: #e5e5e5;
 }
 
-.theme-dark .hint,
-.theme-dark .site-footer {
+html.theme-dark .hint,
+html.theme-dark .site-footer {
   background: #1a1a1a;
   border-color: #1212ff;
   color: #aaa;
 }
 
-.theme-dark select {
+html.theme-dark select {
   background: #1a1a1a;
   color: #f6f6f6;
   border-color: #3a3a3a;
 }
 
-.theme-dark button {
+html.theme-dark button {
   background: #1212ff;
   border-color: #1212ff;
 }
 
-.theme-dark button:hover {
+html.theme-dark button:hover {
   background: #3a3aff;
 }
 
@@ -448,12 +509,12 @@ select:hover {
   box-shadow: inset 0 0 0 4px #1212ff;
 }
 
-.theme-dark .slide {
+html.theme-dark .slide {
   background: #0a0a0a;
   border-color: #1212ff;
 }
 
-.theme-dark .slide.current {
+html.theme-dark .slide.current {
   border-color: #3a3aff;
   background: #1a1a1a;
 }
@@ -481,15 +542,15 @@ select:hover {
   background: #1212ff;
 }
 
-.theme-dark ::-webkit-scrollbar-track {
+html.theme-dark ::-webkit-scrollbar-track {
   background: #1a1a1a;
 }
 
-.theme-dark ::-webkit-scrollbar-thumb {
+html.theme-dark ::-webkit-scrollbar-thumb {
   background: #1212ff;
 }
 
-.theme-dark ::-webkit-scrollbar-thumb:hover {
+html.theme-dark ::-webkit-scrollbar-thumb:hover {
   background: #3a3aff;
 }
 
@@ -964,4 +1025,23 @@ select:hover {
     border-right: none;
     border-bottom: 2px solid #ddd;
   }
+}
+
+/* Style pour les boutons du menu qui sont des templates */
+.fr-nav__link[id^="nav-template"] {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  font-size: inherit;
+  font-family: inherit;
+  text-align: left;
+}
+
+.fr-nav__link[id^="nav-template"]:hover {
+  background: var(--background-action-low-blue-france-hover);
+}
+
+html.theme-dark .fr-nav__link[id^="nav-template"]:hover {
+  background: #2a2a2a !important;
 }

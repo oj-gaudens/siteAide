@@ -64,6 +64,7 @@
                             </p>
                         </div>
                     </div>
+                    </div>
                     <div class="fr-header__tools">
                         <div class="fr-header__tools-links">
                             <ul class="fr-btns-group">
@@ -91,6 +92,15 @@
                         </li>
                         <li class="fr-nav__item">
                             <a class="fr-nav__link" href="/about" target="_self">À propos</a>
+                        </li>
+                        <li class="fr-nav__item">
+                            <button class="fr-nav__link" id="nav-template-site">🌐 Site Web</button>
+                        </li>
+                        <li class="fr-nav__item">
+                            <button class="fr-nav__link" id="nav-template-email">✉️ Email</button>
+                        </li>
+                        <li class="fr-nav__item">
+                            <button class="fr-nav__link" id="nav-template-slides">📊 Slides</button>
                         </li>
                     </ul>
                 </nav>
@@ -147,11 +157,6 @@
                     <li class="fr-footer__bottom-item">
                         <a class="fr-footer__bottom-link" href="#">Données personnelles</a>
                     </li>
-                    <li class="fr-footer__bottom-item">
-                        <button class="fr-footer__bottom-link fr-fi-theme-fill fr-link--icon-left" aria-controls="fr-theme-modal" data-fr-opened="false">
-                            Paramètres d'affichage
-                        </button>
-                    </li>
                 </ul>
                 <div class="fr-footer__bottom-copy">
                     <p>
@@ -207,20 +212,6 @@
                                                     </svg>
                                                 </div>
                                             </div>
-                                            <div class="fr-radio-group fr-radio-rich">
-                                                <input value="system" type="radio" id="fr-radios-theme-system" name="fr-radios-theme">
-                                                <label class="fr-label" for="fr-radios-theme-system">
-                                                    Système
-                                                    <span class="fr-hint-text">Utilise les paramètres système.</span>
-                                                </label>
-                                                <div class="fr-radio-rich__img">
-                                                    <svg class="fr-artwork" width="80px" height="80px" viewBox="0 0 80 80">
-                                                        <use class="fr-artwork-decorative" href="{{ '/assets/artwork/system.svg#artwork-decorative' | url }}"></use>
-                                                        <use class="fr-artwork-minor" href="{{ '/assets/artwork/system.svg#artwork-minor' | url }}"></use>
-                                                        <use class="fr-artwork-major" href="{{ '/assets/artwork/system.svg#artwork-major' | url }}"></use>
-                                                    </svg>
-                                                </div>
-                                            </div>
                                         </div>
                                     </fieldset>
                                 </div>
@@ -236,9 +227,9 @@
     <script type="module" src="{{ '/assets/dsfr.module.min.js' | url }}"></script>
     <script nomodule src="{{ '/assets/dsfr.nomodule.min.js' | url }}"></script>
     
-    <!-- Script custom si besoin -->
+    <!-- Script custom -->
     {% if jsFile %}
-    <script src="{{ ('/js/' + jsFile) | url }}"></script>
+    <script src="{{ '/js/script.js' | url }}"></script>
     {% endif %}
 </body>
 </html>

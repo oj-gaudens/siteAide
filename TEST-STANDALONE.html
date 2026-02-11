@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr" data-fr-scheme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Markdown Editor</title>
+    
+    <!-- DSFR CSS -->
+    <link rel="stylesheet" href="src/assets/dsfr.min.css">
+    <link rel="stylesheet" href="src/assets/css/style-gouvernemental.css">
+    
+    <!-- Marked.js -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <style>
+        .editor {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 600px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        #preview {
+            border: 2px solid #000091;
+            padding: 20px;
+            background: white;
+            min-height: 600px;
+            overflow-y: auto;
+        }
+        .toolbar {
+            padding: 15px;
+            background: #f6f6f6;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header DSFR -->
+    <header role="banner" class="fr-header">
+        <div class="fr-header__body">
+            <div class="fr-container">
+                <div class="fr-header__body-row">
+                    <div class="fr-header__brand fr-enlarge-link">
+                        <div class="fr-header__service">
+                            <p class="fr-header__service-title">
+                                Studio Markdown DSFR
+                            </p>
+                        </div>
+                    </div>
+                    <div class="fr-header__tools">
+                        <div class="fr-header__tools-links">
+                            <ul class="fr-btns-group">
+                                <li>
+                                    <button class="fr-btn fr-icon-theme-fill" aria-controls="fr-theme-modal" data-fr-opened="false">
+                                        Thème
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="intro" style="padding: 20px;">
+            <h2>Test de l'éditeur Markdown</h2>
+            <p>Écris du Markdown à gauche, vois le résultat à droite EN DIRECT !</p>
+        </div>
+
+        <section class="editor">
+            <textarea id="markdown-input"># Hello World
+
+## Test Preview Live
+
+Écris ici et ça s'affiche **directement** à droite !
+
+- Item 1
+- Item 2
+- Item 3</textarea>
+
+            <div id="preview"></div>
+        </section>
+
+        <div class="toolbar">
+            <button id="copy-html">📋 Copier HTML</button>
+            <button id="load-template-site">🌐 Template Site</button>
+            <button id="theme-light">☀️ Clair</button>
+            <button id="theme-dark">🌙 Sombre</button>
+        </div>
+    </main>
+
+    <!-- Modale thème DSFR -->
+    <dialog id="fr-theme-modal" class="fr-modal" role="dialog">
+        <div class="fr-container fr-container--fluid fr-container-md">
+            <div class="fr-grid-row fr-grid-row--center">
+                <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+                    <div class="fr-modal__body">
+                        <div class="fr-modal__header">
+                            <button class="fr-btn--close fr-btn" aria-controls="fr-theme-modal">
+                                Fermer
+                            </button>
+                        </div>
+                        <div class="fr-modal__content">
+                            <h1 class="fr-modal__title">Paramètres d'affichage</h1>
+                            <div class="fr-form-group">
+                                <fieldset class="fr-fieldset">
+                                    <legend class="fr-fieldset__legend">Choisissez un thème</legend>
+                                    <div class="fr-fieldset__content">
+                                        <div class="fr-radio-group">
+                                            <input value="light" type="radio" id="fr-radios-theme-light" name="fr-radios-theme">
+                                            <label class="fr-label" for="fr-radios-theme-light">Thème clair</label>
+                                        </div>
+                                        <div class="fr-radio-group">
+                                            <input value="dark" type="radio" id="fr-radios-theme-dark" name="fr-radios-theme">
+                                            <label class="fr-label" for="fr-radios-theme-dark">Thème sombre</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- DSFR JS -->
+    <script type="module" src="src/assets/dsfr.module.min.js"></script>
+    
+    <!-- Script principal -->
+    <script>
+        const textarea = document.getElementById('markdown-input');
+        const preview = document.getElementById('preview');
+        
+        // Fonction de rendu
+        function render() {
+            if (typeof marked !== 'undefined') {
+                preview.innerHTML = marked.parse(textarea.value);
+                console.log('✅ Preview mise à jour !');
+            } else {
+                console.error('❌ Marked.js non chargé !');
+            }
+        }
+        
+        // Fonction thème
+        function applyTheme(themeName) {
+            const html = document.documentElement;
+            html.classList.remove('theme-dark');
+            
+            if (themeName === 'dark') {
+                html.classList.add('theme-dark');
+            }
+            
+            html.setAttribute('data-fr-scheme', themeName);
+            localStorage.setItem('theme', themeName);
+            
+            console.log('✅ Thème appliqué:', themeName);
+            
+            // Sync radios
+            const lightRadio = document.getElementById('fr-radios-theme-light');
+            const darkRadio = document.getElementById('fr-radios-theme-dark');
+            if (lightRadio && darkRadio) {
+                lightRadio.checked = (themeName === 'light');
+                darkRadio.checked = (themeName === 'dark');
+            }
+        }
+        
+        // Event: Textarea input
+        textarea.addEventListener('input', () => {
+            console.log('📝 Texte modifié');
+            render();
+        });
+        
+        // Event: Bouton Copier
+        document.getElementById('copy-html')?.addEventListener('click', () => {
+            navigator.clipboard.writeText(preview.innerHTML);
+            alert('HTML copié !');
+        });
+        
+        // Event: Bouton Clair
+        document.getElementById('theme-light')?.addEventListener('click', () => {
+            applyTheme('light');
+        });
+        
+        // Event: Bouton Sombre
+        document.getElementById('theme-dark')?.addEventListener('click', () => {
+            applyTheme('dark');
+        });
+        
+        // Event: Radios DSFR
+        document.querySelectorAll('input[name="fr-radios-theme"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                applyTheme(e.target.value);
+            });
+        });
+        
+        // Charger le thème sauvegardé
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+        
+        // Premier rendu
+        render();
+        
+        console.log('✅ Script chargé et prêt !');
+    </script>
+</body>
+</html>
