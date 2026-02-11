@@ -64,6 +64,7 @@
                             </p>
                         </div>
                     </div>
+                    </div>
                     <div class="fr-header__tools">
                         <div class="fr-header__tools-links">
                             <ul class="fr-btns-group">
@@ -92,6 +93,15 @@
                         <li class="fr-nav__item">
                             <a class="fr-nav__link" href="/about" target="_self">À propos</a>
                         </li>
+                        <li class="fr-nav__item">
+                            <button class="fr-nav__link" id="nav-template-site">🌐 Site Web</button>
+                        </li>
+                        <li class="fr-nav__item">
+                            <button class="fr-nav__link" id="nav-template-email">✉️ Email</button>
+                        </li>
+                        <li class="fr-nav__item">
+                            <button class="fr-nav__link" id="nav-template-slides">📊 Slides</button>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -102,32 +112,6 @@
     <main id="content" role="main">
         <div class="fr-container">
             
-<section class="intro">
-  <h2>Bienvenue sur <span>Markdown PRO MAX</span></h2>
-  <p>L'éditeur Markdown le plus complet avec tous les composants DSFR</p>
-
-  <div class="template-selector-wrapper">
-    <label>
-      <span class="label-icon">🎯</span> Choisir un template :
-      <select id="template-selector">
-        <option value="site">🌐 Site Web</option>
-        <option value="email">✉️ Email</option>
-        <option value="slides">📊 Slides</option>
-      </select>
-    </label>
-    
-    <button id="load-template-site" class="template-btn" title="Charger le template Site complet">
-      <span class="btn-icon">🌐</span> Charger Template Site
-    </button>
-    <button id="load-template-email" class="template-btn" title="Charger le template Email complet">
-      <span class="btn-icon">✉️</span> Charger Template Email
-    </button>
-    <button id="load-template-slides" class="template-btn" title="Charger le template Slides complet">
-      <span class="btn-icon">📊</span> Charger Template Slides
-    </button>
-  </div>
-</section>
-
 <!-- Barre d'outils DSFR ULTRA-COMPLÈTE -->
 <section class="dsfr-toolbar">
   <div class="toolbar-header">
@@ -531,8 +515,6 @@ Merci !
   <button id="export-pdf">📑 Exporter PDF</button>
   <button id="clear-all">🗑️ Effacer</button>
   <button id="fullscreen">⛶ Plein écran</button>
-  <button id="theme-dark">🌙 Sombre</button>
-  <button id="theme-light">☀️ Clair</button>
 </div>
 
 <footer class="hint">
@@ -583,11 +565,6 @@ Merci !
                     </li>
                     <li class="fr-footer__bottom-item">
                         <a class="fr-footer__bottom-link" href="#">Données personnelles</a>
-                    </li>
-                    <li class="fr-footer__bottom-item">
-                        <button class="fr-footer__bottom-link fr-fi-theme-fill fr-link--icon-left" aria-controls="fr-theme-modal" data-fr-opened="false">
-                            Paramètres d'affichage
-                        </button>
                     </li>
                 </ul>
                 <div class="fr-footer__bottom-copy">
@@ -644,20 +621,6 @@ Merci !
                                                     </svg>
                                                 </div>
                                             </div>
-                                            <div class="fr-radio-group fr-radio-rich">
-                                                <input value="system" type="radio" id="fr-radios-theme-system" name="fr-radios-theme">
-                                                <label class="fr-label" for="fr-radios-theme-system">
-                                                    Système
-                                                    <span class="fr-hint-text">Utilise les paramètres système.</span>
-                                                </label>
-                                                <div class="fr-radio-rich__img">
-                                                    <svg class="fr-artwork" width="80px" height="80px" viewBox="0 0 80 80">
-                                                        <use class="fr-artwork-decorative" href="/siteAide/assets/artwork/system.svg#artwork-decorative"></use>
-                                                        <use class="fr-artwork-minor" href="/siteAide/assets/artwork/system.svg#artwork-minor"></use>
-                                                        <use class="fr-artwork-major" href="/siteAide/assets/artwork/system.svg#artwork-major"></use>
-                                                    </svg>
-                                                </div>
-                                            </div>
                                         </div>
                                     </fieldset>
                                 </div>
@@ -673,7 +636,7 @@ Merci !
     <script type="module" src="/siteAide/assets/dsfr.module.min.js"></script>
     <script nomodule src="/siteAide/assets/dsfr.nomodule.min.js"></script>
     
-    <!-- Script custom si besoin -->
+    <!-- Script custom -->
     
     <script src="/siteAide/js/script.js"></script>
     
