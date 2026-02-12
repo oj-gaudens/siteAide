@@ -12,7 +12,8 @@ module.exports = function(eleventyConfig) {
   });
   
   return {
-    pathPrefix: "/siteAide/",  // LE NOM DE TON REPO GITHUB
+    // pathPrefix uniquement en production (GitHub Pages)
+    pathPrefix: isProd ? "/siteAide/" : "/",
     dir: {
       input: "src",
       output: "docs",

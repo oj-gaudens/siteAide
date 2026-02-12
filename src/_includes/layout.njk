@@ -9,7 +9,7 @@
     <!-- DSFR CSS COMPLET -->
     <link rel="stylesheet" href="{{ '/assets/dsfr.min.css' | url }}">
     <link rel="stylesheet" href="{{ '/assets/utility/utility.min.css' | url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/style-gouvernemental.css' | url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/style-dsfr-pur.css' | url }}">
     
     <!-- Meta theme color -->
     <meta name="theme-color" content="#000091">
@@ -229,7 +229,7 @@
     
     <!-- Script custom -->
     {% if jsFile %}
-    <script src="{{ '/js/script.js' | url }}"></script>
+    <script src="{{ '/js/' + jsFile | url }}"></script>
     {% endif %}
 </body>
 </html>

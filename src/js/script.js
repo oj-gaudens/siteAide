@@ -1,32 +1,33 @@
 // ============================================================================
-// MARKDOWN EDITOR DSFR - Script principal
+// MARKDOWN EDITOR DSFR - Version Finale Sans Conflit
+// Attend vraiment que le DSFR soit chargé via window.dsfr
 // ============================================================================
 
-// ATTENDRE QUE LE DOM SOIT CHARGÉ
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('🚀 Initialisation du Studio Markdown DSFR...');
-
+// Fonction principale qui lance l'éditeur
+function lancerMarkdownEditor() {
+  console.log('🚀 Lancement du Studio Markdown DSFR...');
+  
   // ============================================================================
   // ELEMENTS DU DOM
   // ============================================================================
   
   const textarea = document.getElementById("markdown-input");
   const preview = document.getElementById("preview");
-
+  
   if (!textarea || !preview) {
-    console.error('❌ Erreur: Éléments introuvables');
+    console.error('❌ Erreur: Éléments textarea ou preview introuvables');
     return;
   }
-
+  
   console.log('✅ Éléments trouvés');
-
+  
   let currentSlide = 0;
-  let currentMode = 'normal'; // 'normal' ou 'slides'
-
+  let currentMode = 'normal';
+  
   // ============================================================================
   // HELPER FUNCTIONS
   // ============================================================================
-
+  
   function generateId(text) {
     return text.toLowerCase()
       .replace(/[àâä]/g, 'a')
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '');
   }
-
+  
   function parseOptions(optionsText) {
     const options = {};
     if (!optionsText) return options;
@@ -57,11 +58,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
     return options;
   }
-
+  
+  function showNotification(message) {
+    const notif = document.createElement('div');
+    notif.className = 'notification';
+    notif.textContent = message;
+    document.body.appendChild(notif);
+    
+    setTimeout(() => {
+      notif.style.opacity = '0';
+      setTimeout(() => notif.remove(), 300);
+    }, 2000);
+  }
+  
   // ============================================================================
   // COMPOSANTS DSFR - Traitement
   // ============================================================================
-
+  
   function processAlerts(md) {
     const regex = /\/\/\/\s*alert\s*\|\s*([^\n]+)\n([\s\S]*?)\/\/\//g;
     
@@ -92,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>`;
     });
   }
-
+  
   function processCallouts(md) {
     const regex = /\/\/\/\s*callout\s*\|\s*([^\n]+)\n([\s\S]*?)\/\/\//g;
     
@@ -112,63 +125,64 @@ document.addEventListener('DOMContentLoaded', function() {
       const options = parseOptions(optionLines.join('\n'));
       const actualContent = contentLines.join('\n').trim();
       
-      const color = options.color || 'blue-cumulus';
+      const color = options.color || '';
       const icon = options.icon || '';
+      const link_label = options.link_label || '';
+      const link_url = options.link_url || '';
+      const link_newtab = options.link_newtab === true || options.link_newtab === 'true';
       const markup = options.markup || 'h3';
-      const linkLabel = options.link_label || '';
-      const linkUrl = options.link_url || '';
-      const linkNewtab = options.link_newtab || false;
       
-      const iconHtml = icon ? `<span class="fr-icon-${icon}" aria-hidden="true"></span>` : '';
-      const titleHtml = `<${markup} class="fr-callout__title">${iconHtml} ${title.trim()}</${markup}>`;
-      const contentHtml = marked.parse(actualContent);
+      const colorClass = color ? `fr-callout--${color}` : '';
+      const iconClass = icon ? `fr-icon-${icon}` : '';
+      const titleHtml = `<${markup} class="fr-callout__title ${iconClass}">${title.trim()}</${markup}>`;
+      const contentHtml = `<p class="fr-callout__text">${marked.parseInline(actualContent)}</p>`;
       
-      let buttonHtml = '';
-      if (linkLabel && linkUrl) {
-        const target = linkNewtab ? ' target="_blank" rel="noopener"' : '';
-        buttonHtml = `<a class="fr-btn" href="${linkUrl}"${target}>${linkLabel}</a>`;
+      let linkHtml = '';
+      if (link_label && link_url) {
+        const targetAttr = link_newtab ? 'target="_blank" rel="noopener"' : '';
+        linkHtml = `<a class="fr-btn fr-btn--sm" href="${link_url}" ${targetAttr}>${link_label}</a>`;
       }
       
-      return `<div class="fr-callout fr-fi-information-line fr-callout--${color}">
+      return `<div class="fr-callout ${colorClass}">
         ${titleHtml}
         ${contentHtml}
-        ${buttonHtml}
+        ${linkHtml}
       </div>`;
     });
   }
-
+  
   function processBadges(md) {
     const regex = /\/\/\/\s*badge\s*\n([\s\S]*?)\/\/\//g;
     
     return md.replace(regex, (match, content) => {
       const lines = content.trim().split('\n');
       const optionLines = [];
-      const textLines = [];
+      const contentLines = [];
       
       lines.forEach(line => {
         if (line.match(/^\s*\w+:/)) {
           optionLines.push(line);
         } else {
-          textLines.push(line);
+          contentLines.push(line);
         }
       });
       
       const options = parseOptions(optionLines.join('\n'));
-      const text = textLines.join(' ').trim();
+      const badgeText = contentLines.join(' ').trim();
       
       const type = options.type || '';
       const color = options.color || '';
       const icon = options.icon === true || options.icon === 'true';
       
-      let classes = 'fr-badge';
-      if (type) classes += ` fr-badge--${type}`;
-      if (color) classes += ` fr-badge--${color}`;
-      if (icon) classes += ' fr-badge--icon';
+      let badgeClass = 'fr-badge';
+      if (type) badgeClass += ` fr-badge--${type}`;
+      if (color) badgeClass += ` fr-badge--${color}`;
+      if (icon) badgeClass += ` fr-icon-${type === 'success' ? 'checkbox-circle-line' : type === 'error' ? 'close-circle-line' : type === 'info' ? 'information-line' : type === 'warning' ? 'warning-line' : type === 'new' ? 'star-line' : ''}`;
       
-      return `<span class="${classes}">${text}</span>`;
+      return `<p class="${badgeClass}">${badgeText}</p>`;
     });
   }
-
+  
   function processCards(md) {
     const regex = /\/\/\/\s*card\s*\|\s*([^\n]+)\n([\s\S]*?)\/\/\//g;
     
@@ -188,8 +202,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const options = parseOptions(optionLines.join('\n'));
       const actualContent = contentLines.join('\n').trim();
       
-      const image = options.image || '';
       const target = options.target || '#';
+      const image = options.image || '';
       const badge = options.badge || '';
       const markup = options.markup || 'h4';
       
@@ -216,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>`;
     });
   }
-
+  
   function processTiles(md) {
     const regex = /\/\/\/\s*tile\s*\|\s*([^\n]+)\n([\s\S]*?)\/\/\//g;
     
@@ -262,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>`;
     });
   }
-
+  
   function processAccordions(md) {
     const regex = /\/\/\/\s*accordion\s*\|\s*([^\n]+)\n([\s\S]*?)\/\/\//g;
     
@@ -297,31 +311,25 @@ document.addEventListener('DOMContentLoaded', function() {
       </section>`;
     });
   }
-
+  
   function processGrids(md) {
-    // Traiter les rows et cols
     let result = md;
     
-    // Remplacer les rows
     result = result.replace(/\/\/\/\s*row\s*\|\s*([^\n]*)\n/g, (match, classes) => {
       return `<div class="fr-grid-row ${classes.trim()}">`;
     });
     
-    // Remplacer les cols
     result = result.replace(/\/\/\/\s*col\s*\|\s*([^\n]*)\n/g, (match, classes) => {
       const colClasses = classes.trim().split(/\s+/).map(c => `fr-col-${c}`).join(' ');
       return `<div class="${colClasses}">`;
     });
     
-    // Remplacer les cols simples
     result = result.replace(/\/\/\/\s*col\s*\n/g, '<div class="fr-col">');
-    
-    // Fermer les divs
     result = result.replace(/\/\/\/\s*\n/g, '</div>\n');
     
     return result;
   }
-
+  
   function processAllComponents(md) {
     let result = md;
     result = processAlerts(result);
@@ -333,15 +341,14 @@ document.addEventListener('DOMContentLoaded', function() {
     result = processGrids(result);
     return result;
   }
-
+  
   // ============================================================================
   // RENDER FUNCTIONS
   // ============================================================================
-
+  
   function render() {
     const md = textarea.value;
-
-    // Détecter si c'est du mode slides
+    
     if (md.includes('---')) {
       currentMode = 'slides';
       renderSlides(md);
@@ -350,118 +357,114 @@ document.addEventListener('DOMContentLoaded', function() {
       renderNormal(md);
     }
   }
-
+  
   function renderNormal(md) {
-    const processedMd = processAllComponents(md);
-    preview.innerHTML = marked.parse(processedMd);
-    console.log('✅ Preview mise à jour (mode normal)');
+    const processed = processAllComponents(md);
+    const html = marked.parse(processed);
+    preview.innerHTML = html;
   }
-
+  
   function renderSlides(md) {
-    const slides = md.split("---").map(s => s.trim()).filter(Boolean);
-    preview.innerHTML = "";
+    const slides = md.split('---').map(s => s.trim()).filter(s => s);
     
-    slides.forEach((slideContent, index) => {
-      const div = document.createElement("div");
-      div.className = "slide" + (index === currentSlide ? " current" : "");
-      const processedContent = processAllComponents(slideContent);
-      div.innerHTML = marked.parse(processedContent);
-      div.addEventListener("click", () => {
-        currentSlide = index;
-        updateSlides();
-      });
-      preview.appendChild(div);
+    if (slides.length === 0) {
+      preview.innerHTML = '<p>Aucune slide trouvée</p>';
+      return;
+    }
+    
+    const slideContent = slides[currentSlide] || slides[0];
+    const processed = processAllComponents(slideContent);
+    const html = marked.parse(processed);
+    
+    preview.innerHTML = `
+      <div class="slide-container">
+        <div class="slide-content">${html}</div>
+        <div class="slide-controls">
+          <button class="fr-btn fr-btn--secondary" id="prev-slide" ${currentSlide === 0 ? 'disabled' : ''}>
+            ← Précédent
+          </button>
+          <span class="slide-counter">${currentSlide + 1} / ${slides.length}</span>
+          <button class="fr-btn fr-btn--secondary" id="next-slide" ${currentSlide === slides.length - 1 ? 'disabled' : ''}>
+            Suivant →
+          </button>
+        </div>
+      </div>
+    `;
+    
+    document.getElementById('prev-slide')?.addEventListener('click', () => {
+      if (currentSlide > 0) {
+        currentSlide--;
+        render();
+      }
     });
     
-    console.log(`✅ Preview mise à jour (${slides.length} slides)`);
-  }
-
-  function updateSlides() {
-    const slides = document.querySelectorAll(".slide");
-    slides.forEach((slide, index) => {
-      slide.classList.toggle("current", index === currentSlide);
+    document.getElementById('next-slide')?.addEventListener('click', () => {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        render();
+      }
     });
   }
-
+  
   // ============================================================================
-  // NOTIFICATIONS
+  // TEMPLATES
   // ============================================================================
-
-  function showNotification(message) {
-    const notif = document.createElement('div');
-    notif.className = 'notification';
-    notif.textContent = message;
-    document.body.appendChild(notif);
-    
-    setTimeout(() => {
-      notif.classList.add('show');
-    }, 10);
-    
-    setTimeout(() => {
-      notif.classList.remove('show');
-      setTimeout(() => notif.remove(), 300);
-    }, 2000);
-  }
-
-  // ============================================================================
-  // EVENT LISTENERS - Textarea
-  // ============================================================================
-
-  textarea.addEventListener("input", () => {
-    render();
-  });
-
-  // ============================================================================
-  // EVENT LISTENERS - Boutons Templates (dans le menu)
-  // ============================================================================
-
+  
   const templates = {
-    site: `# Bienvenue sur mon site
+    site: `# 🎯 Bienvenue sur mon site
 
-## À propos
+## 📢 Mise en avant
 
-Ceci est un site web créé avec le Système de Design de l'État.
+/// callout | Information importante
+    color: blue-cumulus
+    markup: h3
+Ceci est une mise en avant pour attirer l'attention sur un point clé.
+///
 
-### Nos services
+## 📋 Nos services
 
-- Service 1
-- Service 2
-- Service 3
+/// card | Service Premium
+    target: /services/premium
+    image: https://via.placeholder.com/400x200
+Découvrez notre offre premium avec tous les avantages.
+///
 
-## Contact
+/// card | Service Standard
+    target: /services/standard
+    badge: Populaire|success
+Accédez à nos services de base pour commencer.
+///
 
-Pour nous contacter : [contact@exemple.gouv.fr](mailto:contact@exemple.gouv.fr)
+## 📞 Contact
 
-/// alert | Information importante
-type: info
-markup: h4
-Ceci est une information importante.
-///`,
-
-    email: `# Objet : Votre demande
+N'hésitez pas à nous contacter pour plus d'informations.`,
+    
+    email: `# ✉️ Objet : Informations importantes
 
 Bonjour,
 
-Nous accusons réception de votre demande.
-
 /// alert | Information
-type: info
-Votre dossier est en cours de traitement.
+    type: info
+    markup: h4
+Nous vous informons que des changements importants vont avoir lieu.
 ///
 
-## Prochaines étapes
+## 📌 Points clés :
 
-1. Vérification des documents
-2. Validation
-3. Réponse finale
+- Point important 1
+- Point important 2
+- Point important 3
+
+/// callout | À noter
+    color: green-menthe
+    markup: h4
+Cette information est essentielle pour la suite.
+///
 
 Cordialement,
-
 L'équipe`,
-
-    slides: `---
-
-# 🎯 Titre de la présentation
+    
+    slides: `# 🎯 Titre de la présentation
 
 **Sous-titre élégant**
 
@@ -472,7 +475,7 @@ L'équipe`,
 /// card
 **Points clés :**
 - 📌 Point important 1
-- 📌 Point important 2  
+- 📌 Point important 2
 - 📌 Point important 3
 ///
 
@@ -481,8 +484,8 @@ L'équipe`,
 ## 💡 Slide avec cadre
 
 /// alert | Information importante
-type: info
-markup: h4
+    type: info
+    markup: h4
 Ceci est un contenu mis en valeur dans un cadre bleu
 ///
 
@@ -492,51 +495,48 @@ Ceci est un contenu mis en valeur dans un cadre bleu
 
 ## 📊 Conclusion
 
-**Merci de votre attention !**
-
-/// alert | À retenir
-type: success
-Les points essentiels à retenir de cette présentation
-///`
+Les points essentiels à retenir de cette présentation`
   };
-
+  
+  // ============================================================================
+  // EVENT LISTENERS - Templates
+  // ============================================================================
+  
   document.getElementById('nav-template-site')?.addEventListener('click', () => {
     textarea.value = templates.site;
     render();
     showNotification('Template Site chargé ! 🌐');
   });
-
+  
   document.getElementById('nav-template-email')?.addEventListener('click', () => {
     textarea.value = templates.email;
     render();
     showNotification('Template Email chargé ! ✉️');
   });
-
+  
   document.getElementById('nav-template-slides')?.addEventListener('click', () => {
     textarea.value = templates.slides;
+    currentSlide = 0;
     render();
     showNotification('Template Slides chargé ! 📊');
   });
-
+  
   // ============================================================================
-  // EVENT LISTENERS - Boutons de la toolbar
+  // EVENT LISTENERS - Boutons d'action
   // ============================================================================
-
-  // Copier HTML
+  
   document.getElementById("copy-html")?.addEventListener('click', () => {
     navigator.clipboard.writeText(preview.innerHTML)
       .then(() => showNotification("HTML copié ! 📋"))
       .catch(() => showNotification("Erreur de copie ❌"));
   });
-
-  // Copier texte
+  
   document.getElementById("copy-text")?.addEventListener('click', () => {
     navigator.clipboard.writeText(preview.textContent)
       .then(() => showNotification("Texte copié ! 📄"))
       .catch(() => showNotification("Erreur de copie ❌"));
   });
-
-  // Télécharger HTML
+  
   document.getElementById("download-html")?.addEventListener('click', () => {
     const blob = new Blob([preview.innerHTML], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
@@ -547,14 +547,12 @@ Les points essentiels à retenir de cette présentation
     URL.revokeObjectURL(url);
     showNotification("HTML téléchargé ! 💾");
   });
-
-  // Exporter PDF
+  
   document.getElementById("export-pdf")?.addEventListener('click', () => {
     window.print();
     showNotification("Impression lancée ! 📑");
   });
-
-  // Effacer
+  
   document.getElementById("clear-all")?.addEventListener('click', () => {
     if (confirm('Êtes-vous sûr de vouloir tout effacer ?')) {
       textarea.value = '';
@@ -563,98 +561,53 @@ Les points essentiels à retenir de cette présentation
       showNotification("Contenu effacé ! 🗑️");
     }
   });
-
- // Clear all
-document.getElementById("clear-all").onclick = () => {
-  if (confirm("Voulez-vous vraiment tout effacer ?")) {
-    textarea.value = "";
-    render();
-    showNotification("Contenu effacé");
-  }
-};
-
-// Fullscreen - Vue côte-à-côte comme un vrai éditeur
-document.getElementById("fullscreen").onclick = () => {
-  const editorSection = document.querySelector('.editor');
   
-  if (!document.fullscreenElement) {
-    // Mode plein écran activé
-    document.body.requestFullscreen().catch(err => {
-      showNotification("Erreur plein écran", true);
-    });
-    
-    // Appliquer le style plein écran
-    editorSection.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      max-width: 100%;
-      padding: 0;
-      margin: 0;
-      gap: 0;
-      z-index: 9999;
-      background: #ffffff;
-    `;
-    
-    textarea.style.cssText = `
-      width: 50%;
-      height: 100vh;
-      border-radius: 0;
-      border: none;
-      border-right: 2px solid #ddd;
-      padding: 20px;
-      margin: 0;
-    `;
-    
-    preview.style.cssText = `
-      width: 50%;
-      height: 100vh;
-      border-radius: 0;
-      border: none;
-      padding: 40px;
-      margin: 0;
-      overflow-y: auto;
-    `;
-    
-  } else {
-    // Sortir du plein écran
-    document.exitFullscreen();
-    
-    // Restaurer les styles normaux
-    editorSection.style.cssText = '';
-    textarea.style.cssText = '';
-    preview.style.cssText = '';
-  }
-};
-
-// Restaurer les styles quand on quitte le plein écran avec Échap
-document.addEventListener('fullscreenchange', () => {
-  if (!document.fullscreenElement) {
-    const editorSection = document.querySelector('.editor');
-    editorSection.style.cssText = '';
-    textarea.style.cssText = '';
-    preview.style.cssText = '';
-  }
-});
   // ============================================================================
-  // SYSTÈME DE THÈME
+  // MODE PLEIN ÉCRAN (comme le screenshot)
   // ============================================================================
-
+  
+  // Créer le bouton EXIT
+  const exitBtn = document.createElement('button');
+  exitBtn.className = 'exit-fullscreen-btn';
+  exitBtn.innerHTML = '✕ Sortir du plein écran';
+  document.body.appendChild(exitBtn);
+  
+  function toggleFullscreen() {
+    const isFullscreen = document.body.classList.contains('fullscreen-mode');
+    
+    if (!isFullscreen) {
+      // Activer le mode plein écran
+      document.body.classList.add('fullscreen-mode');
+      showNotification("Mode plein écran activé ⛶");
+    } else {
+      // Désactiver le mode plein écran
+      document.body.classList.remove('fullscreen-mode');
+      showNotification("Mode normal ⛶");
+    }
+  }
+  
+  // Bouton plein écran principal
+  document.getElementById("fullscreen")?.addEventListener('click', toggleFullscreen);
+  
+  // Bouton EXIT
+  exitBtn.addEventListener('click', toggleFullscreen);
+  
+  // ESC pour sortir
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.classList.contains('fullscreen-mode')) {
+      toggleFullscreen();
+    }
+  });
+  
+  // ============================================================================
+  // SYSTÈME DE THÈME - Intégré avec DSFR
+  // ============================================================================
+  
   function applyTheme(themeName) {
     const htmlElement = document.documentElement;
-    
-    htmlElement.classList.remove('theme-dark');
-    
-    if (themeName === 'dark') {
-      htmlElement.classList.add('theme-dark');
-    }
-    
     htmlElement.setAttribute('data-fr-scheme', themeName);
     localStorage.setItem("theme", themeName);
     
-    // Synchroniser les radios DSFR
     const lightRadio = document.getElementById('fr-radios-theme-light');
     const darkRadio = document.getElementById('fr-radios-theme-dark');
     
@@ -665,88 +618,104 @@ document.addEventListener('fullscreenchange', () => {
     
     console.log(`✅ Thème ${themeName} appliqué`);
   }
-
-  // Charger le thème sauvegardé
+  
   const savedTheme = localStorage.getItem("theme") || 'light';
   applyTheme(savedTheme);
-
-  // Gérer les radios DSFR dans la modale
+  
   document.querySelectorAll('input[name="fr-radios-theme"]').forEach(radio => {
     radio.addEventListener('change', (e) => {
       const theme = e.target.value;
       applyTheme(theme);
-      
-      if (theme === 'light') {
-        showNotification('Mode clair activé ☀️');
-      } else if (theme === 'dark') {
-        showNotification('Mode sombre activé 🌙');
-      }
+      showNotification(theme === 'light' ? 'Mode clair activé ☀️' : 'Mode sombre activé 🌙');
     });
   });
-
+  
   // ============================================================================
-  // TOOLBAR COMPONENTS INSERTION
+  // TOOLBAR - Gérer les dropdowns
   // ============================================================================
-
-  // Toggle dropdown menus
-  document.querySelectorAll('.group-toggle').forEach(button => {
+  
+  document.querySelectorAll('.toolbar-btn').forEach(button => {
     button.addEventListener('click', () => {
-      const group = button.parentElement;
-      const content = group.querySelector('.group-buttons');
-      const isHidden = content.classList.contains('hidden');
+      const group = button.getAttribute('data-group');
+      const dropdown = document.getElementById(`dropdown-${group}`);
       
-      content.classList.toggle('hidden');
-      button.textContent = button.textContent.replace(isHidden ? '▼' : '▲', isHidden ? '▲' : '▼');
+      if (!dropdown) return;
+      
+      // Fermer tous les autres dropdowns
+      document.querySelectorAll('.toolbar-dropdown').forEach(d => {
+        if (d !== dropdown) d.classList.add('hidden');
+      });
+      
+      // Désactiver tous les autres boutons
+      document.querySelectorAll('.toolbar-btn').forEach(b => {
+        if (b !== button) b.classList.remove('active');
+      });
+      
+      // Toggle le dropdown actuel
+      dropdown.classList.toggle('hidden');
+      button.classList.toggle('active');
     });
   });
-
+  
   // Expand all / Collapse all
   document.getElementById('expand-all')?.addEventListener('click', () => {
-    document.querySelectorAll('.group-buttons').forEach(content => {
-      content.classList.remove('hidden');
-    });
-    document.querySelectorAll('.group-toggle').forEach(btn => {
-      btn.textContent = btn.textContent.replace('▼', '▲');
-    });
+    document.querySelectorAll('.toolbar-dropdown').forEach(d => d.classList.remove('hidden'));
+    document.querySelectorAll('.toolbar-btn').forEach(b => b.classList.add('active'));
+    showNotification('Tout ouvert 📂');
   });
-
+  
   document.getElementById('collapse-all')?.addEventListener('click', () => {
-    document.querySelectorAll('.group-buttons').forEach(content => {
-      content.classList.add('hidden');
-    });
-    document.querySelectorAll('.group-toggle').forEach(btn => {
-      btn.textContent = btn.textContent.replace('▲', '▼');
-    });
+    document.querySelectorAll('.toolbar-dropdown').forEach(d => d.classList.add('hidden'));
+    document.querySelectorAll('.toolbar-btn').forEach(b => b.classList.remove('active'));
+    showNotification('Tout fermé 📁');
   });
-
-  // Insert component when button is clicked
+  
+  // ============================================================================
+  // INSERTION DE COMPOSANTS - CORRIGÉ pour les vrais retours à la ligne
+  // ============================================================================
+  
   document.querySelectorAll('[data-insert]').forEach(button => {
     button.addEventListener('click', (e) => {
+      e.preventDefault();
       e.stopPropagation();
-      const textToInsert = button.getAttribute('data-insert');
       
+      // Récupérer le texte à insérer depuis l'attribut
+      let textToInsert = button.getAttribute('data-insert');
+      
+      // IMPORTANT : Convertir les \\n littéraux en vrais retours à la ligne
+      // Car dans les attributs HTML, \n est stocké comme \\n littéral
+      textToInsert = textToInsert.replace(/\\n/g, '\n');
+      
+      // Récupérer la position du curseur
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
       const text = textarea.value;
       
+      // Insérer le texte à la position du curseur
       const before = text.substring(0, start);
       const after = text.substring(end);
       
-      textarea.value = before + '\n' + textToInsert + '\n' + after;
+      // Ajouter des retours à la ligne pour séparer
+      textarea.value = before + '\n\n' + textToInsert + '\n\n' + after;
       
-      const newCursorPos = start + textToInsert.length + 2;
+      // Placer le curseur après le texte inséré
+      const newCursorPos = start + textToInsert.length + 4;
       textarea.setSelectionRange(newCursorPos, newCursorPos);
+      
+      // Focus sur le textarea
       textarea.focus();
       
+      // Rendre la preview
       render();
+      
       showNotification('Composant inséré ! ✨');
     });
   });
-
+  
   // ============================================================================
   // SAUVEGARDE AUTOMATIQUE
   // ============================================================================
-
+  
   let saveTimeout;
   textarea.addEventListener("input", () => {
     clearTimeout(saveTimeout);
@@ -754,20 +723,52 @@ document.addEventListener('fullscreenchange', () => {
       localStorage.setItem("markdown-content", textarea.value);
       console.log('💾 Sauvegarde automatique');
     }, 1000);
+    
+    // Render en temps réel
+    render();
   });
-
+  
   // Charger le contenu sauvegardé
   const savedContent = localStorage.getItem("markdown-content");
   if (savedContent) {
     textarea.value = savedContent;
-    console.log('✅ Contenu restauré depuis localStorage');
+    console.log('✅ Contenu restauré');
   }
-
+  
   // ============================================================================
   // RENDER INITIAL
   // ============================================================================
-
+  
   render();
   console.log('✅ Initialisation terminée !');
+}
 
-}); // Fin du DOMContentLoaded
+// ============================================================================
+// POINT D'ENTRÉE - Attend vraiment que TOUT soit chargé
+// ============================================================================
+
+// Attendre que le DOM soit prêt
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function attendreDSFR() {
+    // Attendre que le DSFR soit initialisé
+    // Le DSFR se charge en module, donc on attend un peu plus
+    if (window.dsfr) {
+      console.log('✅ DSFR détecté, lancement immédiat');
+      lancerMarkdownEditor();
+    } else {
+      console.log('⏳ Attente du DSFR...');
+      setTimeout(function() {
+        lancerMarkdownEditor();
+      }, 200);
+    }
+  });
+} else {
+  // Le DOM est déjà chargé
+  if (window.dsfr) {
+    console.log('✅ DSFR et DOM prêts, lancement');
+    lancerMarkdownEditor();
+  } else {
+    console.log('⏳ DOM prêt, attente DSFR...');
+    setTimeout(lancerMarkdownEditor, 200);
+  }
+}
