@@ -1,3 +1,5 @@
+const isProd = process.env.NODE_ENV === "production";
+
 module.exports = function(eleventyConfig) {
   // Copier les assets statiques
   eleventyConfig.addPassthroughCopy("src/assets");
@@ -10,10 +12,8 @@ module.exports = function(eleventyConfig) {
   });
   
   return {
-    // pathPrefix TOUJOURS pour GitHub Pages
-    // Si tu veux tester en local SANS pathPrefix, utilise: npm start
-    // Pour build GitHub Pages, utilise: npm run build
-    pathPrefix: "/siteAide/",
+    // pathPrefix uniquement en production (GitHub Pages)
+    pathPrefix: isProd ? "/siteAide/" : "/",
     dir: {
       input: "src",
       output: "docs",
