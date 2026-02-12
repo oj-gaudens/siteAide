@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Site Markdown PRO MAX avec Eleventy",
   "scripts": {
-    "start": "eleventy --serve",
+    "start": "eleventy --serve --pathprefix=/",
     "build": "eleventy",
+    "build:github": "eleventy",
     "clean": "rm -rf docs"
   },
   "keywords": ["eleventy", "markdown", "site"],
