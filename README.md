@@ -1,283 +1,79 @@
-# 🎯 Studio Markdown DSFR - Version Finale
+# 🔥 MARKDOWN EDITOR DSFR
 
-## ✅ TOUT EST PRÊT À FONCTIONNER !
+## ⚡ INSTALLATION
 
-Ce projet utilise :
-- **Eleventy (11ty)** pour générer le site statique
-- **DSFR (Système de Design de l'État)** pour les composants
-- **Marked.js** pour convertir le Markdown en HTML
-- **Bleu Marine #000091** (couleur officielle du drapeau français)
-
----
-
-## 🚀 INSTALLATION ET LANCEMENT
-
-### 1️⃣ Prérequis
-- **Node.js** version 14+ (vérifiez avec `node -v`)
-- **npm** (vient avec Node.js)
-
-### 2️⃣ Installation
 ```bash
-# Décompresser le ZIP
-unzip MARKDOWN-EDITOR-BLEU-MARINE-FINAL.zip
-cd markdown-editor-optimized
-
-# Installer les dépendances
 npm install
 ```
 
-### 3️⃣ Lancement
+---
+
+## 💻 DÉVELOPPEMENT LOCAL
+
 ```bash
-# Démarrer le serveur de développement
 npm start
 ```
 
-Le site s'ouvre automatiquement sur **http://localhost:8080** 🎉
-
----
-
-## 📁 STRUCTURE DU PROJET
-
+**IMPORTANT** : Ouvre dans ton navigateur :
 ```
-markdown-editor-optimized/
-├── src/
-│   ├── _includes/
-│   │   └── layout.njk                 ← Template principal
-│   ├── assets/
-│   │   ├── dsfr.min.css              ← CSS DSFR officiel
-│   │   ├── css/
-│   │   │   └── style-dsfr-pur.css    ← Notre CSS (bleu marine)
-│   │   └── [autres assets DSFR]
-│   ├── js/
-│   │   └── script-dsfr-pur.js        ← Notre JavaScript
-│   └── index.njk                      ← Page principale
-├── .eleventy.js                       ← Config Eleventy
-├── package.json                       ← Dépendances
-└── README.md                          ← Ce fichier
+http://localhost:8080/siteAide/
 ```
 
----
-
-## 🎨 FICHIERS PRINCIPAUX
-
-### CSS Utilisé
-- **`src/assets/css/style-dsfr-pur.css`**
-  - Utilise 100% les variables DSFR
-  - Couleur bleu marine `#000091`
-  - Support du thème sombre
-  - Pas de conflit avec le DSFR
-
-### JavaScript Utilisé
-- **`src/js/script-dsfr-pur.js`**
-  - Attend le chargement du DSFR
-  - Corrige les retours à la ligne (`\n`)
-  - Insertion à la position du curseur
-  - Sauvegarde automatique
-
-### Template
-- **`src/_includes/layout.njk`**
-  - Charge le DSFR
-  - Charge notre CSS
-  - Charge notre JS
-  - Header + Footer DSFR
+⚠️ **PAS `http://localhost:8080` mais `http://localhost:8080/siteAide/`** ⚠️
 
 ---
 
-## ✨ FONCTIONNALITÉS
+## 🌐 DÉPLOIEMENT GITHUB PAGES
 
-### 🔵 Boutons Bleu Marine
-Tous les boutons de la toolbar sont en **bleu marine #000091** comme le drapeau français.
+### 1️⃣ Build
 
-### 📝 Composants DSFR Disponibles
-- **Alertes** (Info, Succès, Warning, Erreur)
-- **Callouts** (Mise en avant colorée)
-- **Badges** (Success, Error, Info, Warning, New)
-- **Cartes** (Avec/sans image, avec badges)
-- **Tuiles** (Avec pictos)
-- **Accordéons** (Dépliants)
-- **Grilles** (2, 3, 4 colonnes)
-- **Markdown de base** (Titres, listes, liens, images, etc.)
-
-### 🌓 Thème Sombre
-Bascule entre mode clair et sombre avec le bouton "Thème" en haut à droite.
-
-### 💾 Sauvegarde Automatique
-Le contenu est sauvegardé automatiquement dans le localStorage.
-
-### 📋 Actions Disponibles
-- Copier HTML
-- Copier texte
-- Télécharger HTML
-- Exporter PDF
-- Effacer tout
-- Mode plein écran
-
-### 🎯 Templates Prédéfinis
-Accédez aux templates via le menu :
-- 🌐 **Site Web** : Page d'accueil complète
-- ✉️ **Email** : Template d'email
-- 📊 **Slides** : Présentation
-
----
-
-## 🔧 DÉPANNAGE
-
-### Le site ne se lance pas
 ```bash
-# Supprimer node_modules et réinstaller
-rm -rf node_modules
-npm install
-npm start
+npm run build
 ```
 
-### Les boutons ne fonctionnent pas
-1. Vérifiez que **Marked.js** est chargé (ligne 24 du layout.njk)
-2. Ouvrez la console du navigateur (F12) pour voir les erreurs
-3. Le script attend 100ms que le DSFR soit chargé
+### 2️⃣ Commit et Push
 
-### Le thème sombre ne fonctionne pas
-Le thème utilise l'attribut `data-fr-scheme`. Vérifiez dans la console :
-```javascript
-document.documentElement.getAttribute('data-fr-scheme')
-// Devrait retourner 'light' ou 'dark'
+```bash
+git add .
+git commit -m "Deploy"
+git push origin main
 ```
 
----
+### 3️⃣ Activer GitHub Pages
 
-## 📝 UTILISATION
+1. Va sur ton repository GitHub
+2. **Settings** → **Pages**
+3. Source : **Deploy from a branch**
+4. Branch : **main** → Folder : **/docs** → **Save**
 
-### Insérer un composant
-1. Cliquez sur un **bouton bleu** (ex: "ALERTES ▼")
-2. Le dropdown s'ouvre
-3. Cliquez sur un composant (ex: "ℹ️ Info")
-4. Le composant s'insère dans l'éditeur
-5. La preview se met à jour en temps réel
+### 4️⃣ Accéder au site
 
-### Créer des slides
-Séparez vos slides avec `---` :
-```markdown
-# Slide 1
-
-Contenu de la première slide
-
----
-
-# Slide 2
-
-Contenu de la deuxième slide
 ```
-
-### Syntaxe des composants DSFR
-
-#### Alerte
-```markdown
-/// alert | Titre de l'alerte
-    type: info
-    markup: h4
-Contenu de l'alerte.
-///
-```
-
-#### Callout
-```markdown
-/// callout | Titre du callout
-    color: blue-cumulus
-    icon: info-line
-    markup: h3
-Contenu mis en avant.
-///
-```
-
-#### Badge
-```markdown
-/// badge
-    type: success
-    icon: true
-Validé
-///
-```
-
-#### Carte
-```markdown
-/// card | Titre de la carte
-    image: https://via.placeholder.com/300x200
-    target: /page1
-    badge: Nouveau | green-menthe
-    markup: h4
-Description de la carte.
-///
+https://TON-USERNAME.github.io/siteAide/
 ```
 
 ---
 
-## 🌐 DÉPLOIEMENT
+## 🎯 URLS
 
-### GitHub Pages
-1. Modifiez `.eleventy.js` ligne 16 :
-   ```javascript
-   pathPrefix: "/nom-de-votre-repo/",
-   ```
-2. Buildez le site :
-   ```bash
-   npm run build
-   ```
-3. Le dossier `docs/` est généré
-4. Activez GitHub Pages sur la branche `main` dossier `/docs`
-
-### Netlify / Vercel
-1. Connectez votre repo GitHub
-2. Build command : `npm run build`
-3. Publish directory : `docs`
+| Environnement | URL |
+|---------------|-----|
+| **Local** | `http://localhost:8080/siteAide/` |
+| **GitHub Pages** | `https://ton-username.github.io/siteAide/` |
 
 ---
 
-## 🎯 COULEURS UTILISÉES
+## ✅ CHECKLIST
 
-### Bleu Marine (Drapeau Français)
-- **Normal** : `#000091`
-- **Hover** : `#1212ff`
-- **Active** : `#2323ff`
-
-### Variables DSFR
-Le CSS utilise les variables DSFR pour tout le reste :
-- `--background-action-low-blue-france`
-- `--text-title-blue-france`
-- `--border-default-grey`
-- etc.
+- [ ] `npm install` fait
+- [ ] `npm start` lancé
+- [ ] Ouvert `http://localhost:8080/siteAide/` (avec `/siteAide/` !)
+- [ ] La JS fonctionne en local
+- [ ] `npm run build` exécuté
+- [ ] Git push fait
+- [ ] GitHub Pages activé
+- [ ] La JS fonctionne sur GitHub
 
 ---
 
-## ✅ CHECKLIST DE FONCTIONNEMENT
-
-Avant de signaler un bug, vérifiez :
-
-- [ ] Node.js est installé (`node -v`)
-- [ ] Les dépendances sont installées (`npm install`)
-- [ ] Le serveur tourne (`npm start`)
-- [ ] Le navigateur affiche http://localhost:8080
-- [ ] La console ne montre pas d'erreurs (F12)
-- [ ] Le fichier `src/js/script-dsfr-pur.js` existe
-- [ ] Le fichier `src/assets/css/style-dsfr-pur.css` existe
-
----
-
-## 📞 SUPPORT
-
-Si vous rencontrez des problèmes :
-1. Vérifiez la console du navigateur (F12)
-2. Vérifiez que tous les fichiers sont présents
-3. Essayez `npm install` puis `npm start`
-
----
-
-## 📜 LICENCE
-
-Ce projet utilise le DSFR qui est sous licence MIT.
-Le code custom est libre d'utilisation.
-
----
-
-**Créé avec ❤️ pour une expérience 100% DSFR !** 🇫🇷
-
-**Version** : 1.0.0 - Bleu Marine Finale
-**Date** : Février 2026
+**C'est tout ! Simple et ça marche partout ! 🚀**
