@@ -499,9 +499,32 @@ Les points essentiels à retenir de cette présentation`
   };
   
   // ============================================================================
-  // EVENT LISTENERS - Templates
+  // EVENT LISTENERS - Templates (NOUVEAUX IDs)
   // ============================================================================
   
+  // Template Site
+  document.getElementById('load-template-site')?.addEventListener('click', () => {
+    textarea.value = templates.site;
+    render();
+    showNotification('Template Site chargé ! 🌐');
+  });
+  
+  // Template Email
+  document.getElementById('load-template-email')?.addEventListener('click', () => {
+    textarea.value = templates.email;
+    render();
+    showNotification('Template Email chargé ! ✉️');
+  });
+  
+  // Template Slides
+  document.getElementById('load-template-slides')?.addEventListener('click', () => {
+    textarea.value = templates.slides;
+    currentSlide = 0;
+    render();
+    showNotification('Template Slides chargé ! 📊');
+  });
+  
+  // Anciens IDs (compatibilité)
   document.getElementById('nav-template-site')?.addEventListener('click', () => {
     textarea.value = templates.site;
     render();
@@ -563,14 +586,10 @@ Les points essentiels à retenir de cette présentation`
   });
   
   // ============================================================================
-  // MODE PLEIN ÉCRAN (comme le screenshot)
+  // MODE PLEIN ÉCRAN avec bouton EXIT inline
   // ============================================================================
   
-  // Créer le bouton EXIT
-  const exitBtn = document.createElement('button');
-  exitBtn.className = 'exit-fullscreen-btn';
-  exitBtn.innerHTML = '✕ Sortir du plein écran';
-  document.body.appendChild(exitBtn);
+  const exitBtnInline = document.getElementById('exit-fullscreen-inline');
   
   function toggleFullscreen() {
     const isFullscreen = document.body.classList.contains('fullscreen-mode');
@@ -578,10 +597,12 @@ Les points essentiels à retenir de cette présentation`
     if (!isFullscreen) {
       // Activer le mode plein écran
       document.body.classList.add('fullscreen-mode');
+      if (exitBtnInline) exitBtnInline.style.display = 'block';
       showNotification("Mode plein écran activé ⛶");
     } else {
       // Désactiver le mode plein écran
       document.body.classList.remove('fullscreen-mode');
+      if (exitBtnInline) exitBtnInline.style.display = 'none';
       showNotification("Mode normal ⛶");
     }
   }
@@ -589,8 +610,8 @@ Les points essentiels à retenir de cette présentation`
   // Bouton plein écran principal
   document.getElementById("fullscreen")?.addEventListener('click', toggleFullscreen);
   
-  // Bouton EXIT
-  exitBtn.addEventListener('click', toggleFullscreen);
+  // Bouton EXIT inline
+  exitBtnInline?.addEventListener('click', toggleFullscreen);
   
   // ESC pour sortir
   document.addEventListener('keydown', (e) => {
@@ -631,43 +652,24 @@ Les points essentiels à retenir de cette présentation`
   });
   
   // ============================================================================
-  // TOOLBAR - Gérer les dropdowns
+  // TOOLBAR - Gérer les ONGLETS (comme Word)
   // ============================================================================
   
-  document.querySelectorAll('.toolbar-btn').forEach(button => {
-    button.addEventListener('click', () => {
-      const group = button.getAttribute('data-group');
-      const dropdown = document.getElementById(`dropdown-${group}`);
+  // Gérer les onglets
+  document.querySelectorAll('.toolbar-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabName = tab.getAttribute('data-tab');
       
-      if (!dropdown) return;
+      // Désactiver tous les onglets
+      document.querySelectorAll('.toolbar-tab').forEach(t => t.classList.remove('active'));
+      // Activer l'onglet cliqué
+      tab.classList.add('active');
       
-      // Fermer tous les autres dropdowns
-      document.querySelectorAll('.toolbar-dropdown').forEach(d => {
-        if (d !== dropdown) d.classList.add('hidden');
-      });
-      
-      // Désactiver tous les autres boutons
-      document.querySelectorAll('.toolbar-btn').forEach(b => {
-        if (b !== button) b.classList.remove('active');
-      });
-      
-      // Toggle le dropdown actuel
-      dropdown.classList.toggle('hidden');
-      button.classList.toggle('active');
+      // Cacher tous les panels
+      document.querySelectorAll('.toolbar-panel').forEach(p => p.classList.remove('active'));
+      // Afficher le panel correspondant
+      document.getElementById(`panel-${tabName}`)?.classList.add('active');
     });
-  });
-  
-  // Expand all / Collapse all
-  document.getElementById('expand-all')?.addEventListener('click', () => {
-    document.querySelectorAll('.toolbar-dropdown').forEach(d => d.classList.remove('hidden'));
-    document.querySelectorAll('.toolbar-btn').forEach(b => b.classList.add('active'));
-    showNotification('Tout ouvert 📂');
-  });
-  
-  document.getElementById('collapse-all')?.addEventListener('click', () => {
-    document.querySelectorAll('.toolbar-dropdown').forEach(d => d.classList.add('hidden'));
-    document.querySelectorAll('.toolbar-btn').forEach(b => b.classList.remove('active'));
-    showNotification('Tout fermé 📁');
   });
   
   // ============================================================================
