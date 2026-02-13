@@ -25,70 +25,101 @@ main {
   padding-bottom: 2rem !important;
 }
 
-/* --- TOOLBAR STYLE GOUVERNEMENTAL --- */
+/* --- TOOLBAR STYLE WORD AVEC ONGLETS BLEU MARINE --- */
 .dsfr-toolbar {
-  background: var(--background-action-low-blue-france);
-  padding: 1.5rem;
-  border-radius: 0.25rem;
-  margin-bottom: 2rem;
-  border: 2px solid var(--blue-marine);
-}
-
-.toolbar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid var(--border-plain-blue-france);
-}
-
-.toolbar-header h3 {
-  margin: 0;
-  color: var(--text-title-blue-france);
-  font-size: 1.25rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.toolbar-icon {
-  font-size: 1.5rem;
-}
-
-.toolbar-actions {
-  display: flex;
-  gap: 0.75rem;
-}
-
-.mini-btn {
   background: white;
-  border: 1px solid var(--border-default-grey);
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  font-size: 0.875rem;
-  transition: all 0.2s;
-  font-weight: 500;
-}
-
-.mini-btn:hover {
-  background: var(--background-alt-blue-france);
-  border-color: var(--blue-marine);
-}
-
-/* --- RANGÉES DE BOUTONS BLEU MARINE --- */
-.toolbar-row {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-}
-
-.toolbar-row:last-child {
+  padding: 0;
+  border-radius: 0;
   margin-bottom: 0;
+  border: none;
+  border-bottom: 2px solid var(--blue-marine);
 }
+
+/* Barre d'onglets (comme Word) */
+.toolbar-tabs {
+  display: flex;
+  gap: 0;
+  background: var(--blue-marine);
+  padding: 0;
+  align-items: center;
+}
+
+.toolbar-tab {
+  background: transparent !important;
+  color: white !important;
+  border: none !important;
+  padding: 0.5rem 1.5rem !important;
+  cursor: pointer;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  transition: all 0.2s;
+  border-bottom: 3px solid transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.toolbar-tab:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.toolbar-tab.active {
+  background: white !important;
+  color: var(--blue-marine) !important;
+  border-bottom-color: var(--blue-marine) !important;
+}
+
+/* Bouton EXIT inline dans les onglets */
+.exit-inline {
+  margin-left: auto !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  margin-right: 0.5rem !important;
+}
+
+.exit-inline:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+}
+
+body.fullscreen-mode .exit-inline {
+  display: block !important;
+}
+
+/* Contenu de l'onglet */
+.toolbar-content {
+  padding: 0.75rem 1rem;
+  background: white;
+  min-height: 60px;
+}
+
+.toolbar-panel {
+  display: none;
+}
+
+.toolbar-panel.active {
+  display: block;
+}
+
+/* Groupes de boutons dans les panels */
+.toolbar-group {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-right: 1.5rem;
+  padding-right: 1.5rem;
+  border-right: 1px solid var(--border-default-grey);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.toolbar-group:last-child {
+  border-right: none;
+}
+
+.toolbar-group-label {
+  display: none !important; /* Cacher les labels */
+}
+
+/* --- RANGÉES DE BOUTONS (supprimé, remplacé par onglets) --- */
 
 /* --- BOUTONS BLEU MARINE (comme le drapeau) - COMPACTS --- */
 .toolbar-btn {
@@ -176,7 +207,9 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  margin-bottom: 2rem;
+  margin: 2rem auto; /* Centrer */
+  max-width: 1400px; /* Largeur max */
+  padding: 0 2rem; /* Padding pour ne pas coller aux bords */
 }
 
 .editor-panel,
@@ -230,6 +263,8 @@ main {
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
+  margin: 2rem auto; /* Centrer */
+  max-width: 1400px; /* Même largeur que l'éditeur */
 }
 
 .action-bar .fr-btn {
@@ -406,36 +441,48 @@ body.fullscreen-mode .dsfr-toolbar {
   margin: 0;
   border-radius: 0;
   flex-shrink: 0;
-  padding: 0.75rem 1rem; /* Plus compact */
+  padding: 0; /* Pas de padding pour toolbar en plein écran */
 }
 
-body.fullscreen-mode .toolbar-header {
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.5rem;
+body.fullscreen-mode .toolbar-content {
+  padding: 0.5rem 1rem; /* Padding uniquement sur le contenu */
 }
 
-body.fullscreen-mode .toolbar-row {
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+body.fullscreen-mode .toolbar-tabs {
+  flex-shrink: 0;
 }
 
 body.fullscreen-mode .editor-container {
   flex: 1;
   margin: 0;
-  height: calc(100vh - 200px); /* Ajuster selon la hauteur toolbar */
+  padding: 0;
+  max-width: 100%;
   overflow: hidden;
+  gap: 0; /* Pas de gap en plein écran */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 body.fullscreen-mode .editor-panel,
 body.fullscreen-mode .preview-panel {
   height: 100%;
   border-radius: 0;
+  border-left: none;
+  border-right: none;
+  display: flex;
+  flex-direction: column;
+}
+
+body.fullscreen-mode .panel-header {
+  flex-shrink: 0;
 }
 
 body.fullscreen-mode #markdown-input,
 body.fullscreen-mode #preview {
-  height: 100%;
-  min-height: 100%;
+  flex: 1;
+  height: auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 body.fullscreen-mode .action-bar {
@@ -443,34 +490,6 @@ body.fullscreen-mode .action-bar {
   border-radius: 0;
   padding: 0.75rem 1rem;
   position: relative;
-}
-
-/* Bouton EXIT plein écran */
-.exit-fullscreen-btn {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 10000;
-  background: var(--blue-marine) !important;
-  color: white !important;
-  border: none !important;
-  padding: 0.75rem 1.5rem !important;
-  border-radius: 0.25rem !important;
-  font-size: 0.875rem !important;
-  font-weight: 600 !important;
-  cursor: pointer !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: all 0.2s;
-  display: none;
-}
-
-body.fullscreen-mode .exit-fullscreen-btn {
-  display: block;
-}
-
-.exit-fullscreen-btn:hover {
-  background: var(--blue-marine-hover) !important;
-  transform: translateY(-2px);
 }
 
 [data-fr-scheme="dark"] body.fullscreen-mode {

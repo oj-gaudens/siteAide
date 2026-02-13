@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr" data-fr-scheme="system">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil – Studio Markdown DSFR</title>
+    <meta name="description" content="Créez vos sites, emails et slides rapidement, avec live preview et export facile.">
+    
+    <!-- DSFR CSS COMPLET -->
+    <link rel="stylesheet" href="/assets/dsfr.min.css">
+    <link rel="stylesheet" href="/assets/utility/utility.min.css">
+    <link rel="stylesheet" href="/assets/css/style-dsfr-pur.css">
+    
+    <!-- Meta theme color -->
+    <meta name="theme-color" content="#000091">
+    
+    <!-- DSFR Favicons -->
+    <link rel="apple-touch-icon" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" href="/assets/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+    <link rel="manifest" href="/assets/favicon/manifest.webmanifest" crossorigin="use-credentials">
+    
+    <!-- Marked.js pour le preview Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <!-- Liens d'évitement -->
+    <div class="fr-skiplinks">
+        <nav class="fr-container" role="navigation" aria-label="Accès rapide">
+            <ul class="fr-skiplinks__list">
+                <li><a class="fr-link" href="#content">Contenu</a></li>
+                <li><a class="fr-link" href="#header-navigation">Menu</a></li>
+                <li><a class="fr-link" href="#footer">Pied de page</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Header DSFR officiel -->
+    <header role="banner" class="fr-header">
+        <div class="fr-header__body">
+            <div class="fr-container">
+                <div class="fr-header__body-row">
+                    <div class="fr-header__brand fr-enlarge-link">
+                        <div class="fr-header__brand-top">
+                            <div class="fr-header__logo">
+                                <p class="fr-logo">
+                                    République<br>Française
+                                </p>
+                            </div>
+                            <div class="fr-header__navbar">
+                                <button class="fr-btn--menu fr-btn" data-fr-opened="false" aria-controls="modal-menu" aria-haspopup="menu" id="button-menu" title="Menu">
+                                    Menu
+                                </button>
+                            </div>
+                        </div>
+                        <div class="fr-header__service">
+                            <a href="/" title="Retour à l'accueil - Studio Markdown DSFR">
+                                <p class="fr-header__service-title">
+                                    Studio Markdown DSFR
+                                </p>
+                            </a>
+                            <p class="fr-header__service-tagline">
+                                Créez vos documents avec les composants du système de design de l'État
+                            </p>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="fr-header__tools">
+                        <div class="fr-header__tools-links">
+                            <ul class="fr-btns-group">
+                                <li>
+                                    <button class="fr-btn fr-icon-theme-fill" aria-controls="fr-theme-modal" data-fr-opened="false">
+                                        Thème
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fr-header__menu fr-modal" id="modal-menu" aria-labelledby="button-menu">
+            <div class="fr-container">
+                <button class="fr-btn--close fr-btn" aria-controls="modal-menu" title="Fermer">
+                    Fermer
+                </button>
+                <div class="fr-header__menu-links"></div>
+                <nav class="fr-nav" id="header-navigation" role="navigation" aria-label="Menu principal">
+                    <ul class="fr-nav__list">
+                        <li class="fr-nav__item">
+                            <a class="fr-nav__link" href="/" target="_self">Accueil</a>
+                        </li>
+                        <li class="fr-nav__item">
+                            <a class="fr-nav__link" href="/about" target="_self">À propos</a>
+                        </li>
+                        <li class="fr-nav__item">
+                            <button class="fr-nav__link" id="nav-template-site">🌐 Site Web</button>
+                        </li>
+                        <li class="fr-nav__item">
+                            <button class="fr-nav__link" id="nav-template-email">✉️ Email</button>
+                        </li>
+                        <li class="fr-nav__item">
+                            <button class="fr-nav__link" id="nav-template-slides">📊 Slides</button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <main id="content" role="main">
+        <div class="fr-container">
+            
+<!-- Barre d'outils DSFR - Style Screenshot -->
+<section class="dsfr-toolbar">
+  <div class="toolbar-header">
+    <h3><span class="toolbar-icon">🔧</span> Insérer des composants</h3>
+    <div class="toolbar-actions">
+      <button id="expand-all" class="mini-btn">📂 Tout ouvrir</button>
+      <button id="collapse-all" class="mini-btn">📁 Tout fermer</button>
+    </div>
+  </div>
+  
+  <!-- RANGÉE 1 : 5 boutons principaux -->
+  <div class="toolbar-row">
+    <button class="toolbar-btn" data-group="markdown">📝 MARKDOWN DE BASE ▼</button>
+    <button class="toolbar-btn" data-group="alertes">🚨 ALERTES ▼</button>
+    <button class="toolbar-btn" data-group="callouts">📢 CALLOUTS (MISE EN AVANT) ▼</button>
+    <button class="toolbar-btn" data-group="badges">🏷️ BADGES ▼</button>
+    <button class="toolbar-btn" data-group="accordeons">📋 ACCORDÉONS ▼</button>
+  </div>
+  
+  <!-- RANGÉE 2 : 4 boutons secondaires -->
+  <div class="toolbar-row">
+    <button class="toolbar-btn" data-group="grilles">📏 GRILLES & COLONNES ▼</button>
+    <button class="toolbar-btn" data-group="cartes">🃏 CARTES ▼</button>
+    <button class="toolbar-btn" data-group="tuiles">🏷️ TUILES ▼</button>
+    <button class="toolbar-btn" data-group="exemples">✨ EXEMPLES COMPLETS ▼</button>
+  </div>
+  
+  <!-- DROPDOWNS CACHÉS -->
+  <div class="toolbar-dropdowns">
+    
+    <!-- MARKDOWN DE BASE -->
+    <div class="toolbar-dropdown hidden" id="dropdown-markdown">
+      <div class="button-grid">
+        <button data-insert="**texte en gras**">✨ Gras</button>
+        <button data-insert="*texte en italique*">📐 Italique</button>
+        <button data-insert="~~texte barré~~">❌ Barré</button>
+        <button data-insert="`code inline`">💻 Code</button>
+        <button data-insert="# ">📌 Titre H1</button>
+        <button data-insert="## ">📍 Titre H2</button>
+        <button data-insert="### ">📎 Titre H3</button>
+        <button data-insert="- ">📋 Liste</button>
+        <button data-insert="1. ">🔢 Numérotée</button>
+        <button data-insert="[texte](https://example.com)">🔗 Lien</button>
+        <button data-insert="![image](https://via.placeholder.com/800x400)">🖼️ Image</button>
+        <button data-insert="> Citation">💬 Citation</button>
+        <button data-insert="```javascript\nconsole.log('Hello');\n```">📦 Code bloc</button>
+        <button data-insert="---">➖ Séparateur</button>
+        <button data-insert="| Col 1 | Col 2 | Col 3 |\n| ----- | ----- | ----- |\n| Val 1 | Val 2 | Val 3 |">📊 Tableau</button>
+      </div>
+    </div>
+
+    <!-- ALERTES -->
+    <div class="toolbar-dropdown hidden" id="dropdown-alertes">
+      <div class="button-grid">
+        <button data-insert="/// alert | Information importante\n    type: info\n    markup: h4\nCeci est une information importante.\n///">ℹ️ Info</button>
+        <button data-insert="/// alert | Opération réussie\n    type: success\n    markup: h4\nL'opération a été effectuée avec succès !\n///">✅ Succès</button>
+        <button data-insert="/// alert | Attention requise\n    type: warning\n    markup: h4\nVeuillez faire attention à ce point.\n///">⚠️ Warning</button>
+        <button data-insert="/// alert | Erreur détectée\n    type: error\n    markup: h4\nUne erreur s'est produite.\n///">❌ Erreur</button>
+      </div>
+    </div>
+
+    <!-- CALLOUTS -->
+    <div class="toolbar-dropdown hidden" id="dropdown-callouts">
+      <div class="button-grid">
+        <button data-insert="/// callout | Point clé\n    markup: h3\nC'est une information à mettre en avant.\n///">📌 Simple</button>
+        <button data-insert="/// callout | Information\n    color: green-menthe\n    markup: h3\nMise en avant verte.\n///">🟢 Vert</button>
+        <button data-insert="/// callout | À retenir\n    color: blue-cumulus\n    markup: h3\nMise en avant bleue.\n///">🔵 Bleu</button>
+        <button data-insert="/// callout | Nouveauté\n    color: yellow-tournesol\n    markup: h3\nMise en avant jaune.\n///">🟡 Jaune</button>
+        <button data-insert="/// callout | Info\n    color: blue-cumulus\n    icon: info-line\n    markup: h3\nAvec icône.\n///">ℹ️ Avec icône</button>
+        <button data-insert="/// callout | Découvrez\n    color: green-menthe\n    icon: medal-fill\n    link_label: En savoir plus\n    link_url: https://example.com/\n    link_newtab: true\n    markup: h4\nAvec bouton.\n///">🔘 Avec bouton</button>
+      </div>
+    </div>
+
+    <!-- BADGES -->
+    <div class="toolbar-dropdown hidden" id="dropdown-badges">
+      <div class="button-grid">
+        <button data-insert="/// badge\nBadge défaut\n///">⚪ Défaut</button>
+        <button data-insert="/// badge\n    type: success\n    icon: true\nValidé\n///">✅ Succès</button>
+        <button data-insert="/// badge\n    type: error\nErreur\n///">❌ Erreur</button>
+        <button data-insert="/// badge\n    type: info\n    icon: true\nInfo\n///">ℹ️ Info</button>
+        <button data-insert="/// badge\n    type: warning\n    icon: true\nAttention\n///">⚠️ Warning</button>
+        <button data-insert="/// badge\n    type: new\n    icon: true\nNouveau\n///">🆕 Nouveau</button>
+        <button data-insert="/// badge\n    color: green-menthe\nVert\n///">🟢 Vert</button>
+        <button data-insert="/// badge\n    color: blue-cumulus\nBleu\n///">🔵 Bleu</button>
+        <button data-insert="/// badge\n    color: purple-glycine\nViolet\n///">🟣 Violet</button>
+        <button data-insert="/// badge\n    color: yellow-tournesol\nJaune\n///">🌻 Jaune</button>
+        <button data-insert="/// badge\n    color: orange-terre-battue\nOrange\n///">🟠 Orange</button>
+      </div>
+    </div>
+
+    <!-- ACCORDÉONS -->
+    <div class="toolbar-dropdown hidden" id="dropdown-accordeons">
+      <div class="button-grid">
+        <button data-insert="/// accordion | Question 1\nRéponse à la première question.\n///">📋 Simple</button>
+        <button data-insert="/// accordion | Question ouverte\n    open: true\nRéponse visible par défaut.\n///">📂 Ouvert</button>
+        <button data-insert="/// accordion | Question 1\nRéponse 1.\n///\n\n/// accordion | Question 2\nRéponse 2.\n///\n\n/// accordion | Question 3\nRéponse 3.\n///">📋 Groupe</button>
+      </div>
+    </div>
+
+    <!-- GRILLES & COLONNES -->
+    <div class="toolbar-dropdown hidden" id="dropdown-grilles">
+      <div class="button-grid">
+        <button data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-6\nColonne 1\n///\n/// col | 12 lg-6\nColonne 2\n///\n///\n">📐 2 colonnes</button>
+        <button data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-4\nColonne 1\n///\n/// col | 12 lg-4\nColonne 2\n///\n/// col | 12 lg-4\nColonne 3\n///\n///\n">📐 3 colonnes</button>
+        <button data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-3\nCol 1\n///\n/// col | 12 lg-3\nCol 2\n///\n/// col | 12 lg-3\nCol 3\n///\n/// col | 12 lg-3\nCol 4\n///\n///\n">📐 4 colonnes</button>
+        <button data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-8\nGrande (8)\n///\n/// col | 12 lg-4\nPetite (4)\n///\n///\n">📐 8/4</button>
+      </div>
+    </div>
+
+    <!-- CARTES -->
+    <div class="toolbar-dropdown hidden" id="dropdown-cartes">
+      <div class="button-grid">
+        <button data-insert="/// card | Titre carte\n    target: /page1\n    markup: h4\nDescription de la carte.\n///">🃏 Simple</button>
+        <button data-insert="/// card | Avec image\n    image: https://via.placeholder.com/300x200\n    target: /page1\n    markup: h4\nCarte avec image.\n///">🖼️ Avec image</button>
+        <button data-insert="/// card | Avec badge\n    image: https://via.placeholder.com/300x200\n    target: /page1\n    badge: Nouveau | green-menthe\n    markup: h4\nCarte avec badge.\n///">🏷️ Avec badge</button>
+        <button data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-4\n/// card | Carte 1\n    image: https://via.placeholder.com/300x200\n    target: /p1\n    markup: h4\nDesc 1\n///\n///\n/// col | 12 lg-4\n/// card | Carte 2\n    image: https://via.placeholder.com/300x200\n    target: /p2\n    markup: h4\nDesc 2\n///\n///\n/// col | 12 lg-4\n/// card | Carte 3\n    image: https://via.placeholder.com/300x200\n    target: /p3\n    markup: h4\nDesc 3\n///\n///\n///\n">🃏 3 cartes</button>
+      </div>
+    </div>
+
+    <!-- TUILES -->
+    <div class="toolbar-dropdown hidden" id="dropdown-tuiles">
+      <div class="button-grid">
+        <button data-insert="/// tile | Service 1\n    picto: digital/application\n    target: /service1\n    markup: h4\nDescription du service.\n///">🏷️ Simple</button>
+        <button data-insert="/// tile | Service populaire\n    picto: environment/leaf\n    target: /service2\n    badge: Populaire | yellow-tournesol\n    markup: h4\nService populaire.\n///">⭐ Avec badge</button>
+        <button data-insert="/// row | fr-grid-row--gutters\n/// col\n/// tile | Service 1\n    picto: digital/application\n    target: /s1\n    markup: h4\nDesc 1\n///\n///\n/// col\n/// tile | Service 2\n    picto: health/health\n    target: /s2\n    markup: h4\nDesc 2\n///\n///\n/// col\n/// tile | Service 3\n    picto: environment/leaf\n    target: /s3\n    markup: h4\nDesc 3\n///\n///\n///\n">🏷️ 3 tuiles</button>
+      </div>
+    </div>
+
+    <!-- EXEMPLES COMPLETS -->
+    <div class="toolbar-dropdown hidden" id="dropdown-exemples">
+      <div class="button-grid">
+        <button data-insert="# Page d'accueil\n\n## Bienvenue\n\n/// callout | Point important\n    color: blue-cumulus\n    icon: info-line\n    markup: h3\nBienvenue sur notre site.\n///\n\n## Nos services\n\n/// row | fr-grid-row--gutters\n/// col | 12 lg-4\n/// card | Service 1\n    image: https://via.placeholder.com/300x200\n    target: /s1\n    markup: h4\nService 1\n///\n///\n/// col | 12 lg-4\n/// card | Service 2\n    image: https://via.placeholder.com/300x200\n    target: /s2\n    badge: Populaire | yellow-tournesol\n    markup: h4\nService 2\n///\n///\n/// col | 12 lg-4\n/// card | Service 3\n    image: https://via.placeholder.com/300x200\n    target: /s3\n    markup: h4\nService 3\n///\n///\n///\n">🌐 Page d'accueil</button>
+        <button data-insert="# FAQ\n\n/// accordion | Comment ça fonctionne ?\nExplication du fonctionnement.\n///\n\n/// accordion | C'est gratuit ?\n    open: true\nOui, c'est gratuit.\n///\n\n/// accordion | Comment nous contacter ?\nPar email à contact@example.com\n///\n">❓ Page FAQ</button>
+        <button data-insert="# Nos produits\n\n/// row | fr-grid-row--gutters\n/// col | 12 lg-3\n/// tile | Produit 1\n    picto: digital/application\n    target: /p1\n    badge: Nouveau | green-menthe\n    markup: h4\nProduit 1\n///\n///\n/// col | 12 lg-3\n/// tile | Produit 2\n    picto: health/health\n    target: /p2\n    badge: Populaire | yellow-tournesol\n    markup: h4\nProduit 2\n///\n///\n/// col | 12 lg-3\n/// tile | Produit 3\n    picto: environment/leaf\n    target: /p3\n    markup: h4\nProduit 3\n///\n///\n/// col | 12 lg-3\n/// tile | Produit 4\n    picto: system/success\n    target: /p4\n    markup: h4\nProduit 4\n///\n///\n///\n">🛍️ Page produits</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Éditeur et Preview -->
+<div class="editor-container">
+  <div class="editor-panel">
+    <div class="panel-header">📝 Éditeur Markdown</div>
+    <textarea id="markdown-input"># Bienvenue dans le Studio Markdown DSFR
+
+Utilisez les boutons bleus ci-dessus pour insérer des composants !
+
+## Exemple : Alerte
+
+/// alert | Information importante
+    type: info
+    markup: h4
+Ceci est une alerte d'information.
+///
+
+## Exemple : Callout
+
+/// callout | Point clé
+    color: green-menthe
+    icon: info-line
+    markup: h3
+Utilisez les composants DSFR pour créer des interfaces professionnelles.
+///
+
+## Exemple : Grille avec cartes
+
+/// row | fr-grid-row--gutters
+/// col | 12 lg-4
+/// card | Carte 1
+    image: https://via.placeholder.com/300x200
+    target: /page1
+    markup: h4
+Description de la carte 1.
+///
+///
+
+/// col | 12 lg-4
+/// card | Carte 2
+    image: https://via.placeholder.com/300x200
+    target: /page2
+    badge: Nouveau | green-menthe
+    markup: h4
+Carte avec un badge.
+///
+///
+
+/// col | 12 lg-4
+/// card | Carte 3
+    image: https://via.placeholder.com/300x200
+    target: /page3
+    markup: h4
+Description de la carte 3.
+///
+///
+///
+
+## Exemple : Badges
+
+/// badge
+    type: success
+    icon: true
+Validé
+///
+
+/// badge
+    color: green-menthe
+Nouveau
+///
+
+---
+
+💡 **Astuce** : Cliquez sur un bouton bleu pour ouvrir le menu, puis choisissez un composant à insérer !
+    </textarea>
+  </div>
+
+  <div class="preview-panel">
+    <div class="panel-header">👁️ Preview</div>
+    <div id="preview"></div>
+  </div>
+</div>
+
+<!-- Barre d'actions (bas) -->
+<div class="action-bar">
+  <button id="copy-html" class="fr-btn fr-btn--secondary fr-icon-file-text-line">Copier HTML</button>
+  <button id="copy-text" class="fr-btn fr-btn--secondary fr-icon-file-line">Copier texte</button>
+  <button id="download-html" class="fr-btn fr-btn--secondary fr-icon-download-line">Télécharger HTML</button>
+  <button id="export-pdf" class="fr-btn fr-btn--secondary fr-icon-printer-line">Exporter PDF</button>
+  <button id="clear-all" class="fr-btn fr-btn--secondary fr-icon-delete-bin-line">Effacer</button>
+  <button id="fullscreen" class="fr-btn fr-btn--secondary fr-icon-fullscreen-line">Plein écran</button>
+</div>
+
+        </div>
+    </main>
+
+    <!-- Footer DSFR officiel -->
+    <footer class="fr-footer" role="contentinfo" id="footer">
+        <div class="fr-container">
+            <div class="fr-footer__body">
+                <div class="fr-footer__brand fr-enlarge-link">
+                    <a href="/" title="Retour à l'accueil">
+                        <p class="fr-logo">
+                            République<br>Française
+                        </p>
+                    </a>
+                </div>
+                <div class="fr-footer__content">
+                    <p class="fr-footer__content-desc">
+                        Studio Markdown DSFR - Système de Design de l'État
+                    </p>
+                    <ul class="fr-footer__content-list">
+                        <li class="fr-footer__content-item">
+                            <a class="fr-footer__content-link" target="_blank" href="https://legifrance.gouv.fr">legifrance.gouv.fr</a>
+                        </li>
+                        <li class="fr-footer__content-item">
+                            <a class="fr-footer__content-link" target="_blank" href="https://gouvernement.fr">gouvernement.fr</a>
+                        </li>
+                        <li class="fr-footer__content-item">
+                            <a class="fr-footer__content-link" target="_blank" href="https://service-public.fr">service-public.fr</a>
+                        </li>
+                        <li class="fr-footer__content-item">
+                            <a class="fr-footer__content-link" target="_blank" href="https://data.gouv.fr">data.gouv.fr</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fr-footer__bottom">
+                <ul class="fr-footer__bottom-list">
+                    <li class="fr-footer__bottom-item">
+                        <a class="fr-footer__bottom-link" href="#">Accessibilité : partiellement conforme</a>
+                    </li>
+                    <li class="fr-footer__bottom-item">
+                        <a class="fr-footer__bottom-link" href="#">Mentions légales</a>
+                    </li>
+                    <li class="fr-footer__bottom-item">
+                        <a class="fr-footer__bottom-link" href="#">Données personnelles</a>
+                    </li>
+                </ul>
+                <div class="fr-footer__bottom-copy">
+                    <p>
+                        Sauf mention contraire, tous les contenus de ce site sont sous
+                        <a href="https://github.com/etalab/licence-ouverte/blob/master/LO.md" target="_blank">licence etalab-2.0</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modale de paramètres de thème -->
+    <dialog id="fr-theme-modal" class="fr-modal" role="dialog" aria-labelledby="fr-theme-modal-title">
+        <div class="fr-container fr-container--fluid fr-container-md">
+            <div class="fr-grid-row fr-grid-row--center">
+                <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+                    <div class="fr-modal__body">
+                        <div class="fr-modal__header">
+                            <button class="fr-btn--close fr-btn" aria-controls="fr-theme-modal" title="Fermer">
+                                Fermer
+                            </button>
+                        </div>
+                        <div class="fr-modal__content">
+                            <h1 id="fr-theme-modal-title" class="fr-modal__title">
+                                Paramètres d'affichage
+                            </h1>
+                            <div id="fr-display" class="fr-display">
+                                <div class="fr-form-group">
+                                    <fieldset class="fr-fieldset">
+                                        <legend class="fr-fieldset__legend fr-text--regular">
+                                            Choisissez un thème pour personnaliser l'apparence du site.
+                                        </legend>
+                                        <div class="fr-fieldset__content">
+                                            <div class="fr-radio-group fr-radio-rich">
+                                                <input value="light" type="radio" id="fr-radios-theme-light" name="fr-radios-theme">
+                                                <label class="fr-label" for="fr-radios-theme-light">Thème clair</label>
+                                                <div class="fr-radio-rich__img">
+                                                    <svg class="fr-artwork" width="80px" height="80px" viewBox="0 0 80 80">
+                                                        <use class="fr-artwork-decorative" href="/assets/artwork/light.svg#artwork-decorative"></use>
+                                                        <use class="fr-artwork-minor" href="/assets/artwork/light.svg#artwork-minor"></use>
+                                                        <use class="fr-artwork-major" href="/assets/artwork/light.svg#artwork-major"></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="fr-radio-group fr-radio-rich">
+                                                <input value="dark" type="radio" id="fr-radios-theme-dark" name="fr-radios-theme">
+                                                <label class="fr-label" for="fr-radios-theme-dark">Thème sombre</label>
+                                                <div class="fr-radio-rich__img">
+                                                    <svg class="fr-artwork" width="80px" height="80px" viewBox="0 0 80 80">
+                                                        <use class="fr-artwork-decorative" href="/assets/artwork/dark.svg#artwork-decorative"></use>
+                                                        <use class="fr-artwork-minor" href="/assets/artwork/dark.svg#artwork-minor"></use>
+                                                        <use class="fr-artwork-major" href="/assets/artwork/dark.svg#artwork-major"></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- DSFR JavaScript -->
+    <script type="module" src="/assets/dsfr.module.min.js"></script>
+    <script nomodule src="/assets/dsfr.nomodule.min.js"></script>
+    
+    <!-- Script custom -->
+    
+    <script src="/js/script.js"></script>
+    
+</body>
+</html>

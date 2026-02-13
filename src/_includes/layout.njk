@@ -228,6 +228,8 @@
     <script nomodule src="{{ '/assets/dsfr.nomodule.min.js' | url }}"></script>
     
     <!-- Script custom -->
-    <script type="module" src="{{ '/assets/js/script.js' | url }}"></script>
+    {% if jsFile %}
+    <script src="{{ '/js/' + jsFile | url }}"></script>
+    {% endif %}
 </body>
 </html>
