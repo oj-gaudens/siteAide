@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="/assets/utility/utility.min.css">
     <link rel="stylesheet" href="/assets/css/style-dsfr-pur.css">
     
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     <!-- Meta theme color -->
     <meta name="theme-color" content="#000091">
     
@@ -112,12 +115,11 @@
     <main id="content" role="main">
         <div class="fr-container">
             
-<!-- Toolbar Style Word avec UN onglet par composant -->
+<!-- Toolbar Style Word avec 9 onglets + barre Markdown fixe -->
 <section class="dsfr-toolbar">
-  <!-- Onglets DSFR + Bouton EXIT -->
+  <!-- Onglets (9 sans Markdown) + Bouton EXIT -->
   <div class="toolbar-tabs">
-    <button type="button" class="fr-btn fr-btn--sm toolbar-tab active" data-tab="markdown">Markdown</button>
-    <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="alertes">Alertes</button>
+    <button type="button" class="fr-btn fr-btn--sm toolbar-tab active" data-tab="alertes">Alertes</button>
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="callouts">Callouts</button>
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="badges">Badges</button>
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="cartes">Cartes</button>
@@ -130,67 +132,105 @@
     <button type="button" id="exit-fullscreen-inline" class="fr-btn fr-btn--sm fr-btn--secondary exit-inline" style="margin-left: auto; display: none;">✕ Sortir</button>
   </div>
   
+  <!-- BARRE MARKDOWN FIXE (toujours visible avec icônes Bootstrap) -->
+  <div class="markdown-fixed-bar">
+    <div class="toolbar-group">
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="**texte**" title="Gras">
+        <i class="bi bi-type-bold"></i>
+      </button>
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="*texte*" title="Italique">
+        <i class="bi bi-type-italic"></i>
+      </button>
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="~~texte~~" title="Barré">
+        <i class="bi bi-type-strikethrough"></i>
+      </button>
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="`code`" title="Code">
+        <i class="bi bi-code-slash"></i>
+      </button>
+    </div>
+    
+    <div class="toolbar-group">
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="# " title="Titre H1">
+        <i class="bi bi-type-h1"></i>
+      </button>
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="## " title="Titre H2">
+        <i class="bi bi-type-h2"></i>
+      </button>
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="### " title="Titre H3">
+        <i class="bi bi-type-h3"></i>
+      </button>
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="#### " title="Titre H4">
+        <i class="bi bi-type-h4"></i>
+      </button>
+    </div>
+    
+    <div class="toolbar-group">
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="- " title="Liste à puces">
+        <i class="bi bi-list-ul"></i>
+      </button>
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="1. " title="Liste numérotée">
+        <i class="bi bi-list-ol"></i>
+      </button>
+    </div>
+    
+    <div class="toolbar-group">
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="[texte](url)" title="Lien">
+        <i class="bi bi-link-45deg"></i>
+      </button>
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="![image](url)" title="Image">
+        <i class="bi bi-image"></i>
+      </button>
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="> Citation" title="Citation">
+        <i class="bi bi-quote"></i>
+      </button>
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="---" title="Séparateur">
+        <i class="bi bi-dash-lg"></i>
+      </button>
+    </div>
+  </div>
+  
   <!-- Contenu des onglets -->
   <div class="toolbar-content">
     
-    <!-- ONGLET 1 : MARKDOWN -->
-    <div class="toolbar-panel active" id="panel-markdown">
+    <!-- ONGLET 1 : ALERTES (par défaut) -->
+    <div class="toolbar-panel active" id="panel-alertes">
       <div class="toolbar-group">
-        <span class="toolbar-group-label">Texte</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="**texte**">Gras</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="*texte*">Italique</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="~~texte~~">Barré</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="`code`">Code</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Titres</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="# ">H1</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="## ">H2</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="### ">H3</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="#### ">H4</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Listes</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="- ">Puce</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="1. ">Numéro</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Liens</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="[texte](url)">Lien</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="![image](url)">Image</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Autres</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="> Citation">Citation</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="---">Séparateur</button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// alert | Information\n    type: info\n    markup: h4\nContenu de l'alerte d'information.\n///" title="Alerte Info">
+          <i class="bi bi-info-circle"></i>
+        </button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// alert | Succès\n    type: success\n    markup: h4\nOpération réussie !\n///" title="Alerte Succès">
+          <i class="bi bi-check-circle"></i>
+        </button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// alert | Attention\n    type: warning\n    markup: h4\nSoyez vigilant sur ce point.\n///" title="Alerte Warning">
+          <i class="bi bi-exclamation-triangle"></i>
+        </button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// alert | Erreur\n    type: error\n    markup: h4\nUne erreur est survenue.\n///" title="Alerte Erreur">
+          <i class="bi bi-x-circle"></i>
+        </button>
       </div>
     </div>
     
-    <!-- ONGLET 2 : ALERTES -->
-    <div class="toolbar-panel" id="panel-alertes">
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Types d'alertes</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// alert | Information\n    type: info\n    markup: h4\nContenu de l'alerte d'information.\n///">Info</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// alert | Succès\n    type: success\n    markup: h4\nOpération réussie !\n///">Succès</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// alert | Attention\n    type: warning\n    markup: h4\nSoyez vigilant sur ce point.\n///">Warning</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// alert | Erreur\n    type: error\n    markup: h4\nUne erreur est survenue.\n///">Erreur</button>
-      </div>
-    </div>
-    
-    <!-- ONGLET 3 : CALLOUTS -->
+    <!-- ONGLET 2 : CALLOUTS -->
     <div class="toolbar-panel" id="panel-callouts">
       <div class="toolbar-group">
-        <span class="toolbar-group-label">Types de callouts</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | Point important\n    markup: h3\nCeci est une mise en avant simple.\n///">Simple</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | Information\n    color: blue-cumulus\n    markup: h3\nMise en avant bleue.\n///">Bleu</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | À noter\n    color: green-menthe\n    markup: h3\nMise en avant verte.\n///">Vert</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | Important\n    color: yellow-tournesol\n    markup: h3\nMise en avant jaune.\n///">Jaune</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | Info\n    color: blue-cumulus\n    icon: info-line\n    markup: h3\nCallout avec icône.\n///">+ Icône</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | En savoir plus\n    color: green-menthe\n    icon: medal-fill\n    link_label: Découvrir\n    link_url: https://example.com\n    link_newtab: true\n    markup: h4\nCallout avec bouton.\n///">+ Bouton</button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | Point important\n    markup: h3\nCeci est une mise en avant simple.\n///" title="Callout Simple">
+          <i class="bi bi-megaphone"></i>
+        </button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | Information\n    color: blue-cumulus\n    markup: h3\nMise en avant bleue.\n///" title="Callout Bleu">
+          <i class="bi bi-info-square"></i>
+        </button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | À noter\n    color: green-menthe\n    markup: h3\nMise en avant verte.\n///" title="Callout Vert">
+          <i class="bi bi-bookmark-check"></i>
+        </button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | Important\n    color: yellow-tournesol\n    markup: h3\nMise en avant jaune.\n///" title="Callout Jaune">
+          <i class="bi bi-lightbulb"></i>
+        </button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | Info\n    color: blue-cumulus\n    icon: info-line\n    markup: h3\nCallout avec icône.\n///" title="Callout + Icône">
+          <i class="bi bi-chat-square-dots"></i>
+        </button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | En savoir plus\n    color: green-menthe\n    icon: medal-fill\n    link_label: Découvrir\n    link_url: https://example.com\n    link_newtab: true\n    markup: h4\nCallout avec bouton.\n///" title="Callout + Bouton">
+          <i class="bi bi-arrow-right-circle"></i>
+        </button>
       </div>
     </div>
     
@@ -198,19 +238,19 @@
     <div class="toolbar-panel" id="panel-badges">
       <div class="toolbar-group">
         <span class="toolbar-group-label">Types de badges</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\nBadge défaut\n///">Défaut</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: success\n    icon: true\nValidé\n///">Succès</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: error\nErreur\n///">Erreur</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: info\n    icon: true\nInfo\n///">Info</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: warning\nAttention\n///">Warning</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: new\n    icon: true\nNouveau\n///">Nouveau</button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\nBadge défaut\n///" title="Défaut"><i class="bi-tag"></i></button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: success\n    icon: true\nValidé\n///" title="Succès"><i class="bi-patch-check"></i></button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: error\nErreur\n///" title="Erreur"><i class="bi-patch-exclamation"></i></button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: info\n    icon: true\nInfo\n///" title="Info"><i class="bi-info-circle-fill"></i></button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: warning\nAttention\n///" title="Warning"><i class="bi-exclamation-triangle-fill"></i></button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: new\n    icon: true\nNouveau\n///" title="Nouveau"><i class="bi-patch-plus"></i></button>
       </div>
       
       <div class="toolbar-group">
         <span class="toolbar-group-label">Couleurs personnalisées</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    color: green-menthe\nVert\n///">Vert</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    color: blue-cumulus\nBleu\n///">Bleu</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    color: purple-glycine\nViolet\n///">Violet</button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    color: green-menthe\nVert\n///" title="Vert"><i class="bi-circle-fill text-success"></i></button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    color: blue-cumulus\nBleu\n///" title="Bleu"><i class="bi-circle-fill text-info"></i></button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    color: purple-glycine\nViolet\n///" title="Violet"><i class="bi-circle-fill text-purple"></i></button>
       </div>
     </div>
     
@@ -218,7 +258,7 @@
     <div class="toolbar-panel" id="panel-cartes">
       <div class="toolbar-group">
         <span class="toolbar-group-label">Types de cartes</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// card | Titre de la carte\n    target: /lien\n    markup: h4\nDescription de la carte simple.\n///">Simple</button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// card | Titre de la carte\n    target: /lien\n    markup: h4\nDescription de la carte simple.\n///" title="Simple"><i class="bi-card-text"></i></button>
         <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// card | Carte avec image\n    image: https://via.placeholder.com/300x200\n    target: /lien\n    markup: h4\nCarte avec une image d'illustration.\n///">+ Image</button>
         <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// card | Carte avec badge\n    image: https://via.placeholder.com/300x200\n    target: /lien\n    badge: Nouveau|green-menthe\n    markup: h4\nCarte avec image et badge.\n///">+ Badge</button>
       </div>
@@ -233,7 +273,7 @@
     <div class="toolbar-panel" id="panel-tuiles">
       <div class="toolbar-group">
         <span class="toolbar-group-label">Types de tuiles</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// tile | Service 1\n    picto: digital/application\n    target: /service\n    markup: h4\nDescription du service.\n///">Simple</button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// tile | Service 1\n    picto: digital/application\n    target: /service\n    markup: h4\nDescription du service.\n///" title="Simple"><i class="bi-card-text"></i></button>
         <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// tile | Service populaire\n    picto: environment/leaf\n    target: /service\n    badge: Populaire|yellow-tournesol\n    markup: h4\nService très demandé.\n///">+ Badge</button>
       </div>
       
@@ -247,8 +287,8 @@
     <div class="toolbar-panel" id="panel-accordeons">
       <div class="toolbar-group">
         <span class="toolbar-group-label">Types d'accordéons</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// accordion | Question ?\nRéponse à la question.\n///">Fermé</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// accordion | Question ouverte ?\n    open: true\nRéponse visible par défaut.\n///">Ouvert</button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// accordion | Question ?\nRéponse à la question.\n///" title="Fermé"><i class="bi-chevron-right"></i></button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// accordion | Question ouverte ?\n    open: true\nRéponse visible par défaut.\n///" title="Ouvert"><i class="bi-chevron-down"></i></button>
       </div>
       
       <div class="toolbar-group">
@@ -268,8 +308,8 @@
       
       <div class="toolbar-group">
         <span class="toolbar-group-label">Colonnes personnalisées</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-8\nColonne large (8)\n///\n/// col | 12 lg-4\nColonne étroite (4)\n///\n///\n">8/4</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-9\nColonne principale (9)\n///\n/// col | 12 lg-3\nBarre latérale (3)\n///\n///\n">9/3</button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-8\nColonne large (8)\n///\n/// col | 12 lg-4\nColonne étroite (4)\n///\n///\n" title="8/4"><i class="bi-layout-sidebar"></i></button>
+        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-9\nColonne principale (9)\n///\n/// col | 12 lg-3\nBarre latérale (3)\n///\n///\n" title="9/3"><i class="bi-layout-sidebar-reverse"></i></button>
       </div>
     </div>
     
@@ -455,7 +495,7 @@ Important à retenir.
     
     <!-- Script custom -->
     
-    <script src="/js/script.js"></script>
+    <script type="module" src="/assets/js/script.js"></script>
     
 </body>
 </html>

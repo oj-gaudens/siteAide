@@ -50,34 +50,57 @@ main {
   border-bottom: 1px solid var(--border-default-grey);
 }
 
-.toolbar-tab {
+.toolbar-tab,
+.toolbar-tab.fr-btn,
+.toolbar-tab.fr-btn--sm {
   background: transparent !important;
   color: white !important;
   border: none !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 3px solid transparent !important;
   padding: 0.5rem 1.5rem !important;
   cursor: pointer;
   font-size: 0.875rem !important;
   font-weight: 500 !important;
   transition: all 0.2s;
-  border-bottom: 3px solid transparent !important;
   border-radius: 0 !important;
   box-shadow: none !important;
+  outline: none !important;
 }
 
-.toolbar-tab:hover {
+.toolbar-tab:hover,
+.toolbar-tab.fr-btn:hover,
+.toolbar-tab.fr-btn--sm:hover {
   background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  border-bottom: 3px solid transparent !important;
 }
 
-.toolbar-tab.active {
+.toolbar-tab.active,
+.toolbar-tab.active.fr-btn,
+.toolbar-tab.active.fr-btn--sm {
   background: white !important;
   color: var(--blue-marine) !important;
-  border-bottom-color: var(--blue-marine) !important;
+  border: none !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 3px solid var(--blue-marine) !important;
 }
 
 /* Thème sombre pour les onglets */
-[data-fr-scheme="dark"] .toolbar-tab.active {
+[data-fr-scheme="dark"] .toolbar-tab.active,
+[data-fr-scheme="dark"] .toolbar-tab.active.fr-btn,
+[data-fr-scheme="dark"] .toolbar-tab.active.fr-btn--sm {
   background: var(--background-contrast-grey) !important;
   color: var(--text-title-grey) !important;
+  border: none !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 3px solid var(--text-title-grey) !important;
 }
 
 /* Bouton EXIT inline dans les onglets */
@@ -95,6 +118,41 @@ main {
 
 body.fullscreen-mode .exit-inline {
   display: block !important;
+}
+
+/* Barre Markdown fixe (toujours visible sous les onglets) */
+.markdown-fixed-bar {
+  background: var(--background-contrast-grey);
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--border-default-grey);
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.markdown-fixed-bar .toolbar-group {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin-right: 1.5rem;
+  padding-right: 1.5rem;
+  border-right: 1px solid var(--border-default-grey);
+  align-items: center;
+}
+
+.markdown-fixed-bar .toolbar-group:last-child {
+  border-right: none;
+}
+
+/* Icônes Bootstrap dans les boutons */
+.markdown-fixed-bar .fr-btn i {
+  font-size: 1.1rem;
+}
+
+/* Thème sombre pour la barre fixe */
+[data-fr-scheme="dark"] .markdown-fixed-bar {
+  background: var(--background-alt-grey);
+  border-bottom-color: var(--border-default-grey);
 }
 
 /* Contenu de l'onglet */
@@ -125,6 +183,25 @@ body.fullscreen-mode .exit-inline {
 
 .toolbar-group:last-child {
   border-right: none;
+}
+
+/* Boutons dans les panels - style DSFR propre */
+.toolbar-content .fr-btn {
+  background: var(--blue-marine) !important;
+  color: white !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.toolbar-content .fr-btn:hover {
+  background: var(--blue-marine-hover) !important;
+  transform: translateY(-1px);
+}
+
+/* Icônes dans les boutons */
+.toolbar-content .fr-btn i,
+.toolbar-panel .fr-btn i {
+  font-size: 1.1rem;
 }
 
 .toolbar-group-label {
