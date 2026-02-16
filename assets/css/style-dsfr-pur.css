@@ -298,7 +298,7 @@ body.fullscreen-mode .exit-inline {
   gap: 2rem;
   margin: 2rem auto; /* Centrer */
   max-width: 1400px; /* Largeur max */
-  padding: 0 2rem; /* Padding pour ne pas coller aux bords */
+  padding: 0 rem; /* Padding pour ne pas coller aux bords */
 }
 
 .editor-panel,
