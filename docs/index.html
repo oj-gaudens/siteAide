@@ -295,119 +295,6 @@
     
   </div>
 </section>
-    
-    <!-- ONGLET 1 : MARKDOWN DE BASE -->
-    <div class="toolbar-panel active" id="panel-markdown">
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Texte</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="**texte**">Gras</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="*texte*">Italique</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="~~texte~~">Barré</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="`code`">Code</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Titres</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="# ">H1</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="## ">H2</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="### ">H3</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="#### ">H4</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Listes</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="- ">Puce</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="1. ">Numéro</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Liens</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="[texte](url)">Lien</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="![image](url)">Image</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Autres</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="> Citation">Citation</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="---">Séparateur</button>
-      </div>
-    </div>
-    
-    <!-- ONGLET 2 : INSERTION -->
-    <div class="toolbar-panel" id="panel-insertion">
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Alertes</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// alert | Information\n    type: info\n    markup: h4\nContenu de l'alerte.\n///">Info</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// alert | Succès\n    type: success\n    markup: h4\nOpération réussie !\n///">Succès</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// alert | Attention\n    type: warning\n    markup: h4\nSoyez vigilant.\n///">Warning</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// alert | Erreur\n    type: error\n    markup: h4\nUne erreur est survenue.\n///">Erreur</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Callouts</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | Point important\n    markup: h3\nCeci est une mise en avant.\n///">Simple</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | Information\n    color: blue-cumulus\n    markup: h3\nMise en avant bleue.\n///">Bleu</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | À noter\n    color: green-menthe\n    markup: h3\nMise en avant verte.\n///">Vert</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | Important\n    color: yellow-tournesol\n    markup: h3\nMise en avant jaune.\n///">Jaune</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// callout | Info\n    color: blue-cumulus\n    icon: info-line\n    markup: h3\nAvec icône.\n///">+ Icône</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Badges</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\nBadge défaut\n///">Défaut</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: success\n    icon: true\nValidé\n///">Succès</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: error\nErreur\n///">Erreur</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: info\n    icon: true\nInfo\n///">Info</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: warning\nAttention\n///">Warning</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// badge\n    type: new\n    icon: true\nNouveau\n///">Nouveau</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Cartes</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// card | Titre de la carte\n    target: /lien\n    markup: h4\nDescription de la carte.\n///">Simple</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// card | Carte avec image\n    image: https://via.placeholder.com/300x200\n    target: /lien\n    markup: h4\nDescription.\n///">+ Image</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// card | Carte badge\n    image: https://via.placeholder.com/300x200\n    target: /lien\n    badge: Nouveau|green-menthe\n    markup: h4\nAvec badge.\n///">+ Badge</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Tuiles</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// tile | Service 1\n    picto: digital/application\n    target: /service\n    markup: h4\nDescription du service.\n///">Simple</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// tile | Service populaire\n    picto: environment/leaf\n    target: /service\n    badge: Populaire|yellow-tournesol\n    markup: h4\nService populaire.\n///">+ Badge</button>
-      </div>
-    </div>
-    
-    <!-- ONGLET 3 : FORMAT -->
-    <div class="toolbar-panel" id="panel-format">
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Grilles</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-6\nColonne 1\n///\n/// col | 12 lg-6\nColonne 2\n///\n///\n">2 colonnes</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-4\nColonne 1\n///\n/// col | 12 lg-4\nColonne 2\n///\n/// col | 12 lg-4\nColonne 3\n///\n///\n">3 colonnes</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-3\nCol 1\n///\n/// col | 12 lg-3\nCol 2\n///\n/// col | 12 lg-3\nCol 3\n///\n/// col | 12 lg-3\nCol 4\n///\n///\n">4 colonnes</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-8\nGrande colonne (8)\n///\n/// col | 12 lg-4\nPetite colonne (4)\n///\n///\n">8/4</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Accordéons</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// accordion | Question ?\nRéponse à la question.\n///">Simple</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// accordion | Question ouverte ?\n    open: true\nRéponse visible par défaut.\n///">Ouvert</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Exemples</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="# Page d'accueil\n\n/// callout | Bienvenue\n    color: blue-cumulus\n    icon: info-line\n    markup: h3\nBienvenue sur notre site.\n///\n\n## Nos services\n\n/// row | fr-grid-row--gutters\n/// col | 12 lg-4\n/// card | Service 1\n    image: https://via.placeholder.com/300x200\n    target: /s1\n    markup: h4\nDescription service 1\n///\n///\n/// col | 12 lg-4\n/// card | Service 2\n    image: https://via.placeholder.com/300x200\n    target: /s2\n    badge: Populaire|yellow-tournesol\n    markup: h4\nDescription service 2\n///\n///\n/// col | 12 lg-4\n/// card | Service 3\n    image: https://via.placeholder.com/300x200\n    target: /s3\n    markup: h4\nDescription service 3\n///\n///\n///\n">Page complète</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="# FAQ\n\n/// accordion | Comment ça marche ?\nExplication du fonctionnement.\n///\n\n/// accordion | C'est gratuit ?\n    open: true\nOui, c'est entièrement gratuit.\n///\n\n/// accordion | Comment nous contacter ?\nPar email à contact@example.com\n///\n">FAQ</button>
-      </div>
-      
-      <div class="toolbar-group">
-        <span class="toolbar-group-label">Templates</span>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" id="nav-template-site">🌐 Site</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" id="nav-template-email">✉️ Email</button>
-        <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" id="nav-template-slides">📊 Slides</button>
-      </div>
-    </div>
-    
-  </div>
-</section>
 
 <!-- Éditeur et Preview -->
 <div class="editor-container">
@@ -568,7 +455,7 @@ Important à retenir.
     
     <!-- Script custom -->
     
-    <script type="module" src="/js/script.js"></script>
+    <script src="/js/script.js"></script>
     
 </body>
 </html>

@@ -1,4 +1,3 @@
-https://oj-gaudens.github.io/siteAide/
 # 🎯 Studio Markdown DSFR - Version Finale
 
 ## ✅ TOUT EST PRÊT À FONCTIONNER !

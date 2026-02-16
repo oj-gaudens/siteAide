@@ -229,7 +229,7 @@
     
     <!-- Script custom -->
     {% if jsFile %}
-    <script type="module" src="{{ '/js/script.js' | url }}"></script>
+    <script src="{{ '/js/' + jsFile | url }}"></script>
     {% endif %}
 </body>
 </html>
