@@ -584,3 +584,76 @@ body.fullscreen-mode .action-bar {
 /* --- Transitions globales douces --- */
 * { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
 button, .fr-btn { transition: all 0.15s ease !important; }
+
+/* =======================================================================
+   SLIDES
+   ======================================================================= */
+
+.slide-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 400px;
+}
+
+.slide-progress {
+  height: 3px;
+  background: var(--border-default-grey, #ddd);
+  margin-bottom: 1.5rem;
+  border-radius: 2px;
+}
+
+.slide-progress-bar {
+  height: 100%;
+  background: var(--blue-marine, #000091);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.slide-content {
+  flex: 1;
+  padding: 0.5rem 0;
+}
+
+.slide-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-default-grey, #ddd);
+  margin-top: 1.5rem;
+  gap: 1rem;
+}
+
+.slide-counter {
+  font-size: 0.875rem;
+  color: var(--text-mention-grey, #666);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Raccourcis clavier : tooltip discret sous le textarea */
+.editor-panel::after {
+  content: 'Ctrl+B Gras · Ctrl+I Italique · Ctrl+K Lien · Tab Indenter';
+  display: block;
+  padding: 0.25rem 1rem;
+  font-size: 0.7rem;
+  color: var(--text-mention-grey, #888);
+  background: var(--background-alt-grey, #f6f6f6);
+  border-top: 1px solid var(--border-default-grey, #eee);
+  letter-spacing: 0.02em;
+}
+
+[data-fr-scheme="dark"] .slide-controls {
+  border-top-color: #444;
+}
+
+[data-fr-scheme="dark"] .slide-progress {
+  background: #333;
+}
+
+[data-fr-scheme="dark"] .editor-panel::after {
+  background: #111128;
+  color: #666;
+  border-top-color: #333;
+}
