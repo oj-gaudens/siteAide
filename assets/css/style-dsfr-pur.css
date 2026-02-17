@@ -857,3 +857,98 @@ body.fullscreen-mode .markdown-bar-right .exit-inline {
   outline-offset: -2px;
   box-shadow: inset 3px 0 0 var(--blue-marine);
 }
+
+/* =======================================================================
+   PLEIN ÉCRAN SLIDES
+   ======================================================================= */
+
+/* Topbar de la slide : barre de progression + bouton FS à droite */
+.slide-topbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.slide-topbar .slide-progress {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+/* Bouton entrer plein écran slides — icône + texte, discret */
+.slide-fs-btn {
+  background: transparent !important;
+  color: var(--blue-marine) !important;
+  border: 1px solid var(--blue-marine) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  white-space: nowrap !important;
+  padding: 0.3rem 0.7rem !important;
+  border-radius: 4px !important;
+  font-size: 0.8rem !important;
+  flex-shrink: 0;
+}
+
+.slide-fs-btn i { font-size: 0.9rem; }
+
+.slide-fs-btn:hover {
+  background: var(--blue-marine) !important;
+  color: white !important;
+}
+
+/* Bouton quitter plein écran slides — atténué */
+.slide-fs-exit-btn {
+  background: rgba(0, 0, 145, 0.12) !important;
+  color: var(--blue-marine) !important;
+  border: 1px solid rgba(0, 0, 145, 0.3) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  white-space: nowrap !important;
+  font-size: 0.8rem !important;
+  flex-shrink: 0;
+}
+
+.slide-fs-exit-btn i { font-size: 0.9rem; }
+
+.slide-fs-exit-btn:hover {
+  background: rgba(0, 0, 145, 0.22) !important;
+  border-color: rgba(0, 0, 145, 0.5) !important;
+}
+
+/* Plein écran slides : le preview occupe tout l'écran */
+body.slides-fs-active #preview.slides-fullscreen {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 10000 !important;
+  background: white !important;
+  padding: 2rem 3rem !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  border: none !important;
+}
+
+[data-fr-scheme="dark"] body.slides-fs-active #preview.slides-fullscreen {
+  background: #0d0d1a !important;
+}
+
+/* Slide content en plein écran : texte plus grand */
+body.slides-fs-active .slide-content {
+  font-size: 1.15rem;
+}
+
+body.slides-fs-active .slide-content h1 { font-size: 2.5rem; }
+body.slides-fs-active .slide-content h2 { font-size: 2rem; }
+body.slides-fs-active .slide-content h3 { font-size: 1.5rem; }
+
+/* Contrôles slides en plein écran : épinglés en bas */
+body.slides-fs-active .slide-controls {
+  margin-top: auto;
+  padding-top: 2rem;
+}
