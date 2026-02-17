@@ -115,10 +115,10 @@
     <main id="content" role="main">
         <div class="fr-container">
             
-<!-- Toolbar Style Word avec 9 onglets + barre Markdown fixe -->
+<!-- Toolbar Style Word -->
 <section class="dsfr-toolbar">
 
-  <!-- 1. BARRE MARKDOWN FIXE - toujours AU-DESSUS des onglets -->
+  <!-- 1. BARRE MARKDOWN + BOUTON PLEIN ÉCRAN à droite -->
   <div class="markdown-fixed-bar">
     <div class="toolbar-group">
       <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="**texte**" title="Gras">
@@ -170,9 +170,21 @@
         <i class="bi bi-dash-lg"></i>
       </button>
     </div>
+
+    <!-- Spacer + bouton plein écran dans la barre markdown -->
+    <div class="markdown-bar-right">
+      <!-- Mode normal : icône + texte -->
+      <button type="button" id="fullscreen" class="fr-btn fr-btn--sm fullscreen-md-btn" title="Plein écran">
+        <i class="bi bi-fullscreen"></i> Plein écran
+      </button>
+      <!-- Mode plein écran : icône + texte atténué -->
+      <button type="button" id="exit-fullscreen-inline" class="fr-btn fr-btn--sm exit-inline" style="display:none;" title="Quitter le plein écran">
+        <i class="bi bi-fullscreen-exit"></i> Quitter le plein écran
+      </button>
+    </div>
   </div>
 
-  <!-- 2. BARRE DES ONGLETS avec bouton plein écran à DROITE -->
+  <!-- 2. BARRE DES ONGLETS (sans bouton plein écran) -->
   <div class="toolbar-tabs">
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab active" data-tab="alertes">Alertes</button>
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="callouts">Callouts</button>
@@ -183,14 +195,6 @@
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="grilles">Grilles</button>
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="exemples">Exemples</button>
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="templates">Templates</button>
-    <!-- Bouton plein écran tout à droite dans la barre des onglets -->
-    <button type="button" id="fullscreen" class="fullscreen-tab-btn" title="Plein écran">
-      <i class="bi bi-fullscreen"></i> Plein écran
-    </button>
-    <!-- Bouton EXIT (visible seulement en plein écran) -->
-    <button type="button" id="exit-fullscreen-inline" class="exit-inline" style="display:none;" title="Quitter plein écran">
-      <i class="bi bi-fullscreen-exit"></i> Quitter le plein écran
-    </button>
   </div>
 
   <!-- 3. CONTENU DES ONGLETS -->
@@ -285,9 +289,7 @@
         <button type="button" class="fr-btn fr-btn--sm" data-insert="/// card | Carte avec badge\n    image: https://via.placeholder.com/300x200\n    target: /lien\n    badge: Nouveau|green-menthe\n    markup: h4\nCarte avec image et badge.\n///" title="Carte avec badge">
           <i class="bi bi-bookmark-star"></i> + Badge
         </button>
-      </div>
-      <div class="toolbar-group">
-        <button type="button" class="fr-btn fr-btn--sm" data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-4\n/// card | Carte 1\n    image: https://via.placeholder.com/300x200\n    target: /page1\n    markup: h4\nDescription carte 1\n///\n///\n/// col | 12 lg-4\n/// card | Carte 2\n    image: https://via.placeholder.com/300x200\n    target: /page2\n    badge: Populaire|yellow-tournesol\n    markup: h4\nDescription carte 2\n///\n///\n/// col | 12 lg-4\n/// card | Carte 3\n    image: https://via.placeholder.com/300x200\n    target: /page3\n    markup: h4\nDescription carte 3\n///\n///\n///\n" title="Grille 3 cartes">
+        <button type="button" class="fr-btn fr-btn--sm" data-insert="/// row | fr-grid-row--gutters\n/// col | 12 lg-4\n/// card | Carte 1\n    image: https://via.placeholder.com/300x200\n    target: /page1\n    markup: h4\nDescription carte 1\n///\n///\n/// col | 12 lg-4\n/// card | Carte 2\n    image: https://via.placeholder.com/300x200\n    target: /page2\n    badge: Populaire|yellow-tournesol\n    markup: h4\nDescription carte 2\n///\n///\n/// col | 12 lg-4\n/// card | Carte 3\n    image: https://via.placeholder.com/300x200\n    target: /page3\n    markup: h4\nDescription carte 3\n///\n///\n///\n" title="3 cartes">
           <i class="bi bi-grid-3x2-gap"></i> 3 cartes
         </button>
       </div>
@@ -406,11 +408,31 @@ Important à retenir.
   </div>
 </div>
 
-<!-- Barre d'actions (DSFR) -->
+<!-- Barre d'actions DSFR -->
 <div class="action-bar">
-  <button type="button" id="copy-html" class="fr-btn fr-btn--sm fr-btn--secondary fr-icon-file-text-line">Copier HTML</button>
-  <button type="button" id="copy-text" class="fr-btn fr-btn--sm fr-btn--secondary fr-icon-file-line">Copier texte</button>
-  <button type="button" id="download-html" class="fr-btn fr-btn--sm fr-btn--secondary fr-icon-download-line">Télécharger</button>
+
+  <!-- Groupe Copier avec dropdown DSFR -->
+  <div class="fr-select-group action-dropdown-group">
+    <button type="button" class="fr-btn fr-btn--sm fr-icon-file-text-line" id="btn-copy-menu" aria-expanded="false" aria-controls="copy-dropdown">
+      Copier
+    </button>
+    <ul class="action-dropdown" id="copy-dropdown" role="list" hidden>
+      <li><button type="button" id="copy-html" class="fr-nav__link"><i class="bi bi-filetype-html"></i> Copier HTML</button></li>
+      <li><button type="button" id="copy-md" class="fr-nav__link"><i class="bi bi-markdown"></i> Copier Markdown</button></li>
+    </ul>
+  </div>
+
+  <!-- Groupe Télécharger avec dropdown DSFR -->
+  <div class="fr-select-group action-dropdown-group">
+    <button type="button" class="fr-btn fr-btn--sm fr-icon-download-line" id="btn-download-menu" aria-expanded="false" aria-controls="download-dropdown">
+      Télécharger
+    </button>
+    <ul class="action-dropdown" id="download-dropdown" role="list" hidden>
+      <li><button type="button" id="download-html" class="fr-nav__link"><i class="bi bi-filetype-html"></i> Télécharger HTML</button></li>
+      <li><button type="button" id="download-md" class="fr-nav__link"><i class="bi bi-markdown"></i> Télécharger Markdown</button></li>
+    </ul>
+  </div>
+
   <button type="button" id="export-pdf" class="fr-btn fr-btn--sm fr-btn--secondary fr-icon-printer-line">PDF</button>
   <button type="button" id="clear-all" class="fr-btn fr-btn--sm fr-btn--secondary fr-icon-delete-bin-line">Effacer</button>
 </div>
