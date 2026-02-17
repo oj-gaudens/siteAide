@@ -360,6 +360,8 @@ function lancerMarkdownEditor() {
     }
   }
 
+  let slideDirection = 1;
+
   function renderSlides(md) {
     const slides = md.split(/^---\s*$/m).map(s => s.trim()).filter(s => s);
     if (!slides.length) { preview.innerHTML = '<p>Aucune slide</p>'; return; }
@@ -370,8 +372,9 @@ function lancerMarkdownEditor() {
     let html = marked.parse(tokenized);
     html = restorePlaceholders(html);
 
-    const pct = Math.round(((currentSlide + 1) / slides.length) * 100);
-    const isSlideFs = preview.classList.contains('slides-fullscreen');
+    const pct  = Math.round(((currentSlide + 1) / slides.length) * 100);
+    const isFs = preview.classList.contains('slides-fullscreen');
+    const animClass = slideDirection > 0 ? 'slide-anim-next' : 'slide-anim-prev';
 
     preview.innerHTML = `
       <div class="slide-wrapper">
@@ -379,16 +382,16 @@ function lancerMarkdownEditor() {
           <div class="slide-progress">
             <div class="slide-progress-bar" style="width:${pct}%"></div>
           </div>
-          ${isSlideFs
-            ? `<button class="fr-btn fr-btn--sm slide-fs-exit-btn" id="slide-exit-fs" title="Quitter le plein écran slides">
+          ${isFs
+            ? `<button class="slide-fs-exit-btn" id="slide-exit-fs">
                 <i class="bi bi-fullscreen-exit"></i> Quitter le plein écran
                </button>`
-            : `<button class="fr-btn fr-btn--sm slide-fs-btn" id="slide-enter-fs" title="Plein écran slides">
+            : `<button class="slide-fs-btn" id="slide-enter-fs">
                 <i class="bi bi-fullscreen"></i> Plein écran
                </button>`
           }
         </div>
-        <div class="slide-content">${html}</div>
+        <div class="slide-content ${animClass}">${html}</div>
         <div class="slide-controls">
           <button class="fr-btn fr-btn--sm fr-btn--secondary" id="prev-slide" ${currentSlide === 0 ? 'disabled' : ''}>
             ← Précédent
@@ -400,24 +403,39 @@ function lancerMarkdownEditor() {
         </div>
       </div>`;
 
-    document.getElementById('prev-slide')?.addEventListener('click', () => { currentSlide--; renderSlides(md); });
-    document.getElementById('next-slide')?.addEventListener('click', () => { currentSlide++; renderSlides(md); });
+    // Boutons navigation
+    document.getElementById('prev-slide')?.addEventListener('click', () => {
+      slideDirection = -1; currentSlide--; renderSlides(md);
+    });
+    document.getElementById('next-slide')?.addEventListener('click', () => {
+      slideDirection = 1; currentSlide++; renderSlides(md);
+    });
 
-    // Bouton entrer plein écran slides
+    // Boutons plein écran (dans la slide)
     document.getElementById('slide-enter-fs')?.addEventListener('click', () => {
       preview.classList.add('slides-fullscreen');
       document.body.classList.add('slides-fs-active');
       renderSlides(md);
     });
-
-    // Bouton quitter plein écran slides
     document.getElementById('slide-exit-fs')?.addEventListener('click', () => {
       preview.classList.remove('slides-fullscreen');
       document.body.classList.remove('slides-fs-active');
       renderSlides(md);
     });
 
-    // ESC pour quitter le plein écran slides aussi
+    // Clavier ← →
+    if (preview._slideKeyHandler) document.removeEventListener('keydown', preview._slideKeyHandler);
+    preview._slideKeyHandler = e => {
+      if (document.activeElement === textarea) return;
+      if (e.key === 'ArrowRight' && currentSlide < slides.length - 1) { slideDirection = 1; currentSlide++; renderSlides(md); }
+      if (e.key === 'ArrowLeft'  && currentSlide > 0)                  { slideDirection = -1; currentSlide--; renderSlides(md); }
+      if (e.key === 'Escape' && preview.classList.contains('slides-fullscreen')) {
+        preview.classList.remove('slides-fullscreen');
+        document.body.classList.remove('slides-fs-active');
+        renderSlides(md);
+      }
+    };
+    document.addEventListener('keydown', preview._slideKeyHandler);
   }
 
   function render() {
@@ -425,7 +443,21 @@ function lancerMarkdownEditor() {
     if (isSlidesMode(md)) {
       renderSlides(md);
     } else {
-      currentSlide = 0; // reset si on quitte le mode slides
+      currentSlide = 0;
+      slideDirection = 1;
+      // Cacher les boutons slides dans la toolbar-tabs
+      const enterBtn = document.getElementById('slide-enter-fs');
+      const exitBtn2 = document.getElementById('slide-exit-fs');
+      if (enterBtn) enterBtn.style.display = 'none';
+      if (exitBtn2) exitBtn2.style.display = 'none';
+      // Nettoyer le listener clavier slides
+      if (preview._slideKeyHandler) {
+        document.removeEventListener('keydown', preview._slideKeyHandler);
+        preview._slideKeyHandler = null;
+      }
+      // Quitter le plein écran slides si actif
+      preview.classList.remove('slides-fullscreen');
+      document.body.classList.remove('slides-fs-active');
       renderNormal(md);
     }
   }

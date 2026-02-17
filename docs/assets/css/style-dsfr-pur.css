@@ -952,3 +952,213 @@ body.slides-fs-active .slide-controls {
   margin-top: auto;
   padding-top: 2rem;
 }
+
+/* =======================================================================
+   PANEL HEADER PREVIEW avec boutons slides
+   ======================================================================= */
+
+#preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+#slides-header-btns {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* =======================================================================
+   ANIMATION CHANGEMENT DE SLIDE
+   ======================================================================= */
+
+@keyframes slideInFromRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInFromLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.slide-anim-next {
+  animation: slideInFromRight 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.slide-anim-prev {
+  animation: slideInFromLeft 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* =======================================================================
+   POLICE ADAPTATIVE EN PLEIN ÉCRAN SLIDES
+   ======================================================================= */
+
+body.slides-fs-active #preview.slides-fullscreen .slide-content {
+  font-size: clamp(1rem, 2vw, 1.4rem);
+}
+
+body.slides-fs-active #preview.slides-fullscreen .slide-content h1 {
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  line-height: 1.15;
+}
+
+body.slides-fs-active #preview.slides-fullscreen .slide-content h2 {
+  font-size: clamp(1.4rem, 3.5vw, 2.5rem);
+  line-height: 1.2;
+}
+
+body.slides-fs-active #preview.slides-fullscreen .slide-content h3 {
+  font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+}
+
+body.slides-fs-active #preview.slides-fullscreen .slide-content p,
+body.slides-fs-active #preview.slides-fullscreen .slide-content li {
+  font-size: clamp(0.95rem, 1.8vw, 1.3rem);
+  line-height: 1.7;
+}
+
+/* Supprimer les anciens styles font-size fixes */
+body.slides-fs-active .slide-content { font-size: unset; }
+body.slides-fs-active .slide-content h1 { font-size: unset; }
+body.slides-fs-active .slide-content h2 { font-size: unset; }
+body.slides-fs-active .slide-content h3 { font-size: unset; }
+
+/* =======================================================================
+   BOUTONS SLIDES PLEIN ÉCRAN dans toolbar-tabs
+   ======================================================================= */
+
+/* Bouton "Plein écran" slides — même style que le bouton plein écran global */
+.slide-tab-fs-btn {
+  margin-left: auto !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 4px !important;
+  padding: 0.3rem 0.8rem !important;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: none;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  margin-right: 0.5rem !important;
+  white-space: nowrap !important;
+  box-shadow: none !important;
+  transition: background 0.15s;
+}
+
+.slide-tab-fs-btn:hover {
+  background: rgba(255, 255, 255, 0.28) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Bouton "Quitter le plein écran" slides — atténué */
+.slide-tab-fs-exit-btn {
+  margin-left: auto !important;
+  background: rgba(0, 0, 145, 0.2) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 4px !important;
+  padding: 0.3rem 0.8rem !important;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: none;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  margin-right: 0.5rem !important;
+  white-space: nowrap !important;
+  box-shadow: none !important;
+  transition: background 0.15s;
+}
+
+.slide-tab-fs-exit-btn:hover {
+  background: rgba(0, 0, 145, 0.35) !important;
+}
+
+/* =======================================================================
+   SLIDES - TOPBAR (barre progression + bouton plein écran)
+   ======================================================================= */
+
+.slide-topbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+}
+
+.slide-topbar .slide-progress {
+  flex: 1;
+  margin-bottom: 0 !important;
+}
+
+/* Bouton Plein écran dans la slide */
+.slide-fs-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: transparent;
+  color: var(--blue-marine, #000091);
+  border: 1px solid var(--blue-marine, #000091);
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.slide-fs-btn:hover {
+  background: var(--blue-marine, #000091);
+  color: white;
+}
+
+/* Bouton Quitter plein écran dans la slide — atténué */
+.slide-fs-exit-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: rgba(0, 0, 145, 0.1);
+  color: var(--blue-marine, #000091);
+  border: 1px solid rgba(0, 0, 145, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.slide-fs-exit-btn:hover {
+  background: rgba(0, 0, 145, 0.2);
+}
+
+/* =======================================================================
+   ANIMATION SLIDES — correction overflow hidden pour que ça marche
+   ======================================================================= */
+
+.slide-wrapper {
+  overflow: hidden;
+}
+
+@keyframes slideFromRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideFromLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.slide-anim-next {
+  animation: slideFromRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.slide-anim-prev {
+  animation: slideFromLeft 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
