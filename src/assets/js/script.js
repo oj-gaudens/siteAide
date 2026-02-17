@@ -674,6 +674,7 @@ Les points essentiels de cette présentation.
 ///`
   };
 
+  // Boutons onglet Templates (panneau toolbar)
   document.getElementById('load-template-site')?.addEventListener('click', () => {
     textarea.value = TEMPLATES.site; currentSlide = 0; render(); notify('Template Site chargé 🌐');
   });
@@ -681,6 +682,17 @@ Les points essentiels de cette présentation.
     textarea.value = TEMPLATES.email; currentSlide = 0; render(); notify('Template Email chargé ✉️');
   });
   document.getElementById('load-template-slides')?.addEventListener('click', () => {
+    textarea.value = TEMPLATES.slides; currentSlide = 0; render(); notify('Template Slides chargé 📊');
+  });
+
+  // Boutons du menu de navigation header (mêmes templates)
+  document.getElementById('nav-template-site')?.addEventListener('click', () => {
+    textarea.value = TEMPLATES.site; currentSlide = 0; render(); notify('Template Site chargé 🌐');
+  });
+  document.getElementById('nav-template-email')?.addEventListener('click', () => {
+    textarea.value = TEMPLATES.email; currentSlide = 0; render(); notify('Template Email chargé ✉️');
+  });
+  document.getElementById('nav-template-slides')?.addEventListener('click', () => {
     textarea.value = TEMPLATES.slides; currentSlide = 0; render(); notify('Template Slides chargé 📊');
   });
 
@@ -735,13 +747,22 @@ Les points essentiels de cette présentation.
 }
 
 // ============================================================================
-// POINT D'ENTRÉE
+// POINT D'ENTRÉE - Attend DOM + marked.js
 // ============================================================================
 
+function tryLaunch(attempts) {
+  // marked doit être chargé (CDN), textarea doit exister
+  if (typeof marked !== 'undefined' && document.getElementById('markdown-input')) {
+    lancerMarkdownEditor();
+  } else if (attempts > 0) {
+    setTimeout(() => tryLaunch(attempts - 1), 100);
+  } else {
+    console.error('❌ Impossible de lancer : marked ou textarea absent');
+  }
+}
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(lancerMarkdownEditor, window.dsfr ? 0 : 200);
-  });
+  document.addEventListener('DOMContentLoaded', () => tryLaunch(20));
 } else {
-  setTimeout(lancerMarkdownEditor, window.dsfr ? 0 : 200);
+  tryLaunch(20);
 }

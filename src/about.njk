@@ -1,0 +1,264 @@
+---
+layout: layout.njk
+title: À propos
+siteTitle: Studio Markdown DSFR
+siteDescription: Tout savoir sur le Studio Markdown DSFR et comment l'utiliser.
+---
+
+<!-- En-tête de page -->
+<div class="fr-py-6w">
+
+  <!-- Titre + intro -->
+  <div class="fr-mb-6w">
+    <h1 class="fr-h1">À propos du Studio Markdown DSFR</h1>
+    <p class="fr-text--lead">
+      Un éditeur Markdown en ligne qui génère des composants du 
+      <a href="https://www.systeme-de-design.gouv.fr/" target="_blank" rel="noopener" class="fr-link">
+        Système de Design de l'État (DSFR)
+      </a>
+      — directement depuis une syntaxe simple, sans écrire de HTML.
+    </p>
+  </div>
+
+  <!-- Callout principal -->
+  <div class="fr-callout fr-callout--blue-cumulus fr-mb-6w">
+    <h2 class="fr-callout__title">Qu'est-ce que c'est ?</h2>
+    <p class="fr-callout__text">
+      Le Studio Markdown DSFR vous permet d'écrire du contenu en Markdown et 
+      d'insérer des composants DSFR officiels (alertes, callouts, cartes, tuiles, accordéons…) 
+      en quelques clics. Le résultat est un HTML valide, accessible et conforme 
+      aux standards de l'État français.
+    </p>
+  </div>
+
+  <!-- Section fonctionnalités -->
+  <h2 class="fr-h2 fr-mb-3w">Fonctionnalités</h2>
+
+  <div class="fr-grid-row fr-grid-row--gutters fr-mb-6w">
+
+    <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+      <div class="fr-tile fr-tile--horizontal fr-enlarge-link">
+        <div class="fr-tile__body">
+          <h3 class="fr-tile__title">
+            <span class="fr-tile__link">Composants DSFR</span>
+          </h3>
+          <p class="fr-tile__desc">
+            Alertes, callouts, badges, cartes, tuiles, accordéons et grilles — tous générés en HTML DSFR valide.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+      <div class="fr-tile fr-tile--horizontal fr-enlarge-link">
+        <div class="fr-tile__body">
+          <h3 class="fr-tile__title">
+            <span class="fr-tile__link">Preview en temps réel</span>
+          </h3>
+          <p class="fr-tile__desc">
+            Chaque modification dans l'éditeur met à jour instantanément la prévisualisation à droite.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+      <div class="fr-tile fr-tile--horizontal fr-enlarge-link">
+        <div class="fr-tile__body">
+          <h3 class="fr-tile__title">
+            <span class="fr-tile__link">Mode Slides</span>
+          </h3>
+          <p class="fr-tile__desc">
+            Séparez vos sections avec <code>---</code> pour créer une présentation en diaporama navigable.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+      <div class="fr-tile fr-tile--horizontal fr-enlarge-link">
+        <div class="fr-tile__body">
+          <h3 class="fr-tile__title">
+            <span class="fr-tile__link">Export HTML</span>
+          </h3>
+          <p class="fr-tile__desc">
+            Téléchargez un fichier HTML autonome avec le DSFR inclus, prêt à être intégré ou partagé.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+      <div class="fr-tile fr-tile--horizontal fr-enlarge-link">
+        <div class="fr-tile__body">
+          <h3 class="fr-tile__title">
+            <span class="fr-tile__link">Plein écran</span>
+          </h3>
+          <p class="fr-tile__desc">
+            Passez en mode plein écran pour vous concentrer sur la rédaction sans distraction.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+      <div class="fr-tile fr-tile--horizontal fr-enlarge-link">
+        <div class="fr-tile__body">
+          <h3 class="fr-tile__title">
+            <span class="fr-tile__link">Sauvegarde auto</span>
+          </h3>
+          <p class="fr-tile__desc">
+            Votre contenu est sauvegardé automatiquement dans le navigateur. Rien ne se perd.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Section syntaxe -->
+  <h2 class="fr-h2 fr-mb-3w">Syntaxe des composants</h2>
+
+  <p class="fr-text fr-mb-3w">
+    Tous les composants DSFR s'insèrent avec la syntaxe <code>/// type | titre</code>. 
+    Cliquez sur les boutons de la barre d'outils pour les insérer automatiquement, 
+    ou écrivez-les directement.
+  </p>
+
+  <!-- Accordéons de référence -->
+  <div class="fr-mb-6w">
+
+    <section class="fr-accordion">
+      <h3 class="fr-accordion__title">
+        <button class="fr-accordion__btn" aria-expanded="true" aria-controls="acc-alert">
+          Alerte — <code>/// alert</code>
+        </button>
+      </h3>
+      <div class="fr-collapse fr-collapse--expanded" id="acc-alert">
+        <div class="fr-p-3w">
+          <p>Types disponibles : <code>info</code>, <code>success</code>, <code>warning</code>, <code>error</code></p>
+          <pre class="fr-mt-2w" style="background:#f6f6f6;padding:1rem;border-radius:4px;font-size:0.85rem;overflow-x:auto;">/// alert | Titre de l'alerte
+    type: info
+    markup: h4
+Contenu de l'alerte.
+///</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="fr-accordion">
+      <h3 class="fr-accordion__title">
+        <button class="fr-accordion__btn" aria-expanded="false" aria-controls="acc-callout">
+          Callout — <code>/// callout</code>
+        </button>
+      </h3>
+      <div class="fr-collapse" id="acc-callout">
+        <div class="fr-p-3w">
+          <p>Couleurs : <code>blue-cumulus</code>, <code>green-menthe</code>, <code>yellow-tournesol</code>, <code>pink-tuile</code>, <code>purple-glycine</code></p>
+          <pre class="fr-mt-2w" style="background:#f6f6f6;padding:1rem;border-radius:4px;font-size:0.85rem;overflow-x:auto;">/// callout | Titre du callout
+    color: blue-cumulus
+    markup: h3
+    link_label: En savoir plus
+    link_url: /page
+Contenu du callout.
+///</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="fr-accordion">
+      <h3 class="fr-accordion__title">
+        <button class="fr-accordion__btn" aria-expanded="false" aria-controls="acc-card">
+          Carte — <code>/// card</code>
+        </button>
+      </h3>
+      <div class="fr-collapse" id="acc-card">
+        <div class="fr-p-3w">
+          <pre style="background:#f6f6f6;padding:1rem;border-radius:4px;font-size:0.85rem;overflow-x:auto;">/// card | Titre de la carte
+    target: /lien
+    image: https://example.com/image.jpg
+    badge: Nouveau|green-menthe
+    markup: h4
+Description de la carte.
+///</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="fr-accordion">
+      <h3 class="fr-accordion__title">
+        <button class="fr-accordion__btn" aria-expanded="false" aria-controls="acc-grid">
+          Grille — <code>/// row</code> / <code>/// col</code>
+        </button>
+      </h3>
+      <div class="fr-collapse" id="acc-grid">
+        <div class="fr-p-3w">
+          <p>Utilisez la grille DSFR en 12 colonnes. Les classes col suivent le format <code>12 lg-4</code> (mobile 12, desktop 4).</p>
+          <pre class="fr-mt-2w" style="background:#f6f6f6;padding:1rem;border-radius:4px;font-size:0.85rem;overflow-x:auto;">/// row | fr-grid-row--gutters
+/// col | 12 lg-6
+Contenu colonne 1
+///
+/// col | 12 lg-6
+Contenu colonne 2
+///
+///</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="fr-accordion">
+      <h3 class="fr-accordion__title">
+        <button class="fr-accordion__btn" aria-expanded="false" aria-controls="acc-slides">
+          Mode Slides — séparateur <code>---</code>
+        </button>
+      </h3>
+      <div class="fr-collapse" id="acc-slides">
+        <div class="fr-p-3w">
+          <p>Ajoutez au moins deux sections séparées par <code>---</code> seul sur une ligne pour activer le mode diaporama.</p>
+          <pre class="fr-mt-2w" style="background:#f6f6f6;padding:1rem;border-radius:4px;font-size:0.85rem;overflow-x:auto;"># Slide 1
+Contenu de la première slide.
+
+---
+
+## Slide 2
+Contenu de la deuxième slide.
+
+---
+
+## Slide 3
+Dernière slide.</pre>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Raccourcis clavier -->
+  <h2 class="fr-h2 fr-mb-3w">Raccourcis clavier</h2>
+
+  <div class="fr-table fr-mb-6w">
+    <table>
+      <caption>Raccourcis disponibles dans l'éditeur</caption>
+      <thead>
+        <tr>
+          <th scope="col">Raccourci</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><kbd>Ctrl</kbd> + <kbd>B</kbd></td><td>Mettre en <strong>gras</strong></td></tr>
+        <tr><td><kbd>Ctrl</kbd> + <kbd>I</kbd></td><td>Mettre en <em>italique</em></td></tr>
+        <tr><td><kbd>Ctrl</kbd> + <kbd>K</kbd></td><td>Insérer un lien</td></tr>
+        <tr><td><kbd>Tab</kbd></td><td>Indenter (4 espaces)</td></tr>
+        <tr><td><kbd>Échap</kbd></td><td>Quitter le mode plein écran</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CTA retour -->
+  <div class="fr-alert fr-alert--info">
+    <h2 class="fr-alert__title">Prêt à créer ?</h2>
+    <p>Retournez sur <a href="/" class="fr-link">la page d'accueil</a> pour commencer à écrire.</p>
+  </div>
+
+</div>

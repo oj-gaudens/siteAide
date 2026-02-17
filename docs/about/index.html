@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="fr" data-fr-scheme="system">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos – Studio Markdown DSFR</title>
+    <meta name="description" content="Tout savoir sur le Studio Markdown DSFR et comment l&#39;utiliser.">
+    
+    <!-- DSFR CSS COMPLET -->
+    <link rel="stylesheet" href="/assets/dsfr.min.css">
+    <link rel="stylesheet" href="/assets/utility/utility.min.css">
+    <link rel="stylesheet" href="/assets/css/style-dsfr-pur.css">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Meta theme color -->
+    <meta name="theme-color" content="#000091">
+    
+    <!-- DSFR Favicons -->
+    <link rel="apple-touch-icon" href="/assets/favicon/apple-touch-icon.png">
+    <link rel="icon" href="/assets/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+    <link rel="manifest" href="/assets/favicon/manifest.webmanifest" crossorigin="use-credentials">
+    
+    <!-- Marked.js pour le preview Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <!-- Liens d'évitement -->
+    <div class="fr-skiplinks">
+        <nav class="fr-container" role="navigation" aria-label="Accès rapide">
+            <ul class="fr-skiplinks__list">
+                <li><a class="fr-link" href="#content">Contenu</a></li>
+                <li><a class="fr-link" href="#header-navigation">Menu</a></li>
+                <li><a class="fr-link" href="#footer">Pied de page</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Header DSFR officiel -->
+    <header role="banner" class="fr-header">
+        <div class="fr-header__body">
+            <div class="fr-container">
+                <div class="fr-header__body-row">
+                    <div class="fr-header__brand fr-enlarge-link">
+                        <div class="fr-header__brand-top">
+                            <div class="fr-header__logo">
+                                <p class="fr-logo">
+                                    République<br>Française
+                                </p>
+                            </div>
+                            <div class="fr-header__navbar">
+                                <button class="fr-btn--menu fr-btn" data-fr-opened="false" aria-controls="modal-menu" aria-haspopup="menu" id="button-menu" title="Menu">
+                                    Menu
+                                </button>
+                            </div>
+                        </div>
+                        <div class="fr-header__service">
+                            <a href="/" title="Retour à l'accueil - Studio Markdown DSFR">
+                                <p class="fr-header__service-title">
+                                    Studio Markdown DSFR
+                                </p>
+                            </a>
+                            <p class="fr-header__service-tagline">
+                                Créez vos documents avec les composants du système de design de l'État
+                            </p>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="fr-header__tools">
+                        <div class="fr-header__tools-links">
+                            <ul class="fr-btns-group">
+                                <li>
+                                    <button class="fr-btn fr-icon-theme-fill" aria-controls="fr-theme-modal" data-fr-opened="false">
+                                        Thème
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fr-header__menu fr-modal" id="modal-menu" aria-labelledby="button-menu">
+            <div class="fr-container">
+                <button class="fr-btn--close fr-btn" aria-controls="modal-menu" title="Fermer">
+                    Fermer
+                </button>
+                <div class="fr-header__menu-links"></div>
+                <nav class="fr-nav" id="header-navigation" role="navigation" aria-label="Menu principal">
+                    <ul class="fr-nav__list">
+                        <li class="fr-nav__item">
+                            <a class="fr-nav__link" href="/" target="_self">Accueil</a>
+                        </li>
+                        <li class="fr-nav__item">
+                            <a class="fr-nav__link" href="/about" target="_self">À propos</a>
+                        </li>
+                        <li class="fr-nav__item">
+                            <button class="fr-nav__link" id="nav-template-site">🌐 Site Web</button>
+                        </li>
+                        <li class="fr-nav__item">
+                            <button class="fr-nav__link" id="nav-template-email">✉️ Email</button>
+                        </li>
+                        <li class="fr-nav__item">
+                            <button class="fr-nav__link" id="nav-template-slides">📊 Slides</button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <main id="content" role="main">
+        <div class="fr-container">
+            
+<!-- En-tête de page -->
+<div class="fr-py-6w">
+
+  <!-- Titre + intro -->
+  <div class="fr-mb-6w">
+    <h1 class="fr-h1">À propos du Studio Markdown DSFR</h1>
+    <p class="fr-text--lead">
+      Un éditeur Markdown en ligne qui génère des composants du 
+      <a href="https://www.systeme-de-design.gouv.fr/" target="_blank" rel="noopener" class="fr-link">
+        Système de Design de l'État (DSFR)
+      </a>
+      — directement depuis une syntaxe simple, sans écrire de HTML.
+    </p>
+  </div>
+
+  <!-- Callout principal -->
+  <div class="fr-callout fr-callout--blue-cumulus fr-mb-6w">
+    <h2 class="fr-callout__title">Qu'est-ce que c'est ?</h2>
+    <p class="fr-callout__text">
+      Le Studio Markdown DSFR vous permet d'écrire du contenu en Markdown et 
+      d'insérer des composants DSFR officiels (alertes, callouts, cartes, tuiles, accordéons…) 
+      en quelques clics. Le résultat est un HTML valide, accessible et conforme 
+      aux standards de l'État français.
+    </p>
+  </div>
+
+  <!-- Section fonctionnalités -->
+  <h2 class="fr-h2 fr-mb-3w">Fonctionnalités</h2>
+
+  <div class="fr-grid-row fr-grid-row--gutters fr-mb-6w">
+
+    <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+      <div class="fr-tile fr-tile--horizontal fr-enlarge-link">
+        <div class="fr-tile__body">
+          <h3 class="fr-tile__title">
+            <span class="fr-tile__link">Composants DSFR</span>
+          </h3>
+          <p class="fr-tile__desc">
+            Alertes, callouts, badges, cartes, tuiles, accordéons et grilles — tous générés en HTML DSFR valide.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+      <div class="fr-tile fr-tile--horizontal fr-enlarge-link">
+        <div class="fr-tile__body">
+          <h3 class="fr-tile__title">
+            <span class="fr-tile__link">Preview en temps réel</span>
+          </h3>
+          <p class="fr-tile__desc">
+            Chaque modification dans l'éditeur met à jour instantanément la prévisualisation à droite.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+      <div class="fr-tile fr-tile--horizontal fr-enlarge-link">
+        <div class="fr-tile__body">
+          <h3 class="fr-tile__title">
+            <span class="fr-tile__link">Mode Slides</span>
+          </h3>
+          <p class="fr-tile__desc">
+            Séparez vos sections avec <code>---</code> pour créer une présentation en diaporama navigable.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+      <div class="fr-tile fr-tile--horizontal fr-enlarge-link">
+        <div class="fr-tile__body">
+          <h3 class="fr-tile__title">
+            <span class="fr-tile__link">Export HTML</span>
+          </h3>
+          <p class="fr-tile__desc">
+            Téléchargez un fichier HTML autonome avec le DSFR inclus, prêt à être intégré ou partagé.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+      <div class="fr-tile fr-tile--horizontal fr-enlarge-link">
+        <div class="fr-tile__body">
+          <h3 class="fr-tile__title">
+            <span class="fr-tile__link">Plein écran</span>
+          </h3>
+          <p class="fr-tile__desc">
+            Passez en mode plein écran pour vous concentrer sur la rédaction sans distraction.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+      <div class="fr-tile fr-tile--horizontal fr-enlarge-link">
+        <div class="fr-tile__body">
+          <h3 class="fr-tile__title">
+            <span class="fr-tile__link">Sauvegarde auto</span>
+          </h3>
+          <p class="fr-tile__desc">
+            Votre contenu est sauvegardé automatiquement dans le navigateur. Rien ne se perd.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Section syntaxe -->
+  <h2 class="fr-h2 fr-mb-3w">Syntaxe des composants</h2>
+
+  <p class="fr-text fr-mb-3w">
+    Tous les composants DSFR s'insèrent avec la syntaxe <code>/// type | titre</code>. 
+    Cliquez sur les boutons de la barre d'outils pour les insérer automatiquement, 
+    ou écrivez-les directement.
+  </p>
+
+  <!-- Accordéons de référence -->
+  <div class="fr-mb-6w">
+
+    <section class="fr-accordion">
+      <h3 class="fr-accordion__title">
+        <button class="fr-accordion__btn" aria-expanded="true" aria-controls="acc-alert">
+          Alerte — <code>/// alert</code>
+        </button>
+      </h3>
+      <div class="fr-collapse fr-collapse--expanded" id="acc-alert">
+        <div class="fr-p-3w">
+          <p>Types disponibles : <code>info</code>, <code>success</code>, <code>warning</code>, <code>error</code></p>
+          <pre class="fr-mt-2w" style="background:#f6f6f6;padding:1rem;border-radius:4px;font-size:0.85rem;overflow-x:auto;">/// alert | Titre de l'alerte
+    type: info
+    markup: h4
+Contenu de l'alerte.
+///</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="fr-accordion">
+      <h3 class="fr-accordion__title">
+        <button class="fr-accordion__btn" aria-expanded="false" aria-controls="acc-callout">
+          Callout — <code>/// callout</code>
+        </button>
+      </h3>
+      <div class="fr-collapse" id="acc-callout">
+        <div class="fr-p-3w">
+          <p>Couleurs : <code>blue-cumulus</code>, <code>green-menthe</code>, <code>yellow-tournesol</code>, <code>pink-tuile</code>, <code>purple-glycine</code></p>
+          <pre class="fr-mt-2w" style="background:#f6f6f6;padding:1rem;border-radius:4px;font-size:0.85rem;overflow-x:auto;">/// callout | Titre du callout
+    color: blue-cumulus
+    markup: h3
+    link_label: En savoir plus
+    link_url: /page
+Contenu du callout.
+///</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="fr-accordion">
+      <h3 class="fr-accordion__title">
+        <button class="fr-accordion__btn" aria-expanded="false" aria-controls="acc-card">
+          Carte — <code>/// card</code>
+        </button>
+      </h3>
+      <div class="fr-collapse" id="acc-card">
+        <div class="fr-p-3w">
+          <pre style="background:#f6f6f6;padding:1rem;border-radius:4px;font-size:0.85rem;overflow-x:auto;">/// card | Titre de la carte
+    target: /lien
+    image: https://example.com/image.jpg
+    badge: Nouveau|green-menthe
+    markup: h4
+Description de la carte.
+///</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="fr-accordion">
+      <h3 class="fr-accordion__title">
+        <button class="fr-accordion__btn" aria-expanded="false" aria-controls="acc-grid">
+          Grille — <code>/// row</code> / <code>/// col</code>
+        </button>
+      </h3>
+      <div class="fr-collapse" id="acc-grid">
+        <div class="fr-p-3w">
+          <p>Utilisez la grille DSFR en 12 colonnes. Les classes col suivent le format <code>12 lg-4</code> (mobile 12, desktop 4).</p>
+          <pre class="fr-mt-2w" style="background:#f6f6f6;padding:1rem;border-radius:4px;font-size:0.85rem;overflow-x:auto;">/// row | fr-grid-row--gutters
+/// col | 12 lg-6
+Contenu colonne 1
+///
+/// col | 12 lg-6
+Contenu colonne 2
+///
+///</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="fr-accordion">
+      <h3 class="fr-accordion__title">
+        <button class="fr-accordion__btn" aria-expanded="false" aria-controls="acc-slides">
+          Mode Slides — séparateur <code>---</code>
+        </button>
+      </h3>
+      <div class="fr-collapse" id="acc-slides">
+        <div class="fr-p-3w">
+          <p>Ajoutez au moins deux sections séparées par <code>---</code> seul sur une ligne pour activer le mode diaporama.</p>
+          <pre class="fr-mt-2w" style="background:#f6f6f6;padding:1rem;border-radius:4px;font-size:0.85rem;overflow-x:auto;"># Slide 1
+Contenu de la première slide.
+
+---
+
+## Slide 2
+Contenu de la deuxième slide.
+
+---
+
+## Slide 3
+Dernière slide.</pre>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Raccourcis clavier -->
+  <h2 class="fr-h2 fr-mb-3w">Raccourcis clavier</h2>
+
+  <div class="fr-table fr-mb-6w">
+    <table>
+      <caption>Raccourcis disponibles dans l'éditeur</caption>
+      <thead>
+        <tr>
+          <th scope="col">Raccourci</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><kbd>Ctrl</kbd> + <kbd>B</kbd></td><td>Mettre en <strong>gras</strong></td></tr>
+        <tr><td><kbd>Ctrl</kbd> + <kbd>I</kbd></td><td>Mettre en <em>italique</em></td></tr>
+        <tr><td><kbd>Ctrl</kbd> + <kbd>K</kbd></td><td>Insérer un lien</td></tr>
+        <tr><td><kbd>Tab</kbd></td><td>Indenter (4 espaces)</td></tr>
+        <tr><td><kbd>Échap</kbd></td><td>Quitter le mode plein écran</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CTA retour -->
+  <div class="fr-alert fr-alert--info">
+    <h2 class="fr-alert__title">Prêt à créer ?</h2>
+    <p>Retournez sur <a href="/" class="fr-link">la page d'accueil</a> pour commencer à écrire.</p>
+  </div>
+
+</div>
+
+        </div>
+    </main>
+
+    <!-- Footer DSFR officiel -->
+    <footer class="fr-footer" role="contentinfo" id="footer">
+        <div class="fr-container">
+            <div class="fr-footer__body">
+                <div class="fr-footer__brand fr-enlarge-link">
+                    <a href="/" title="Retour à l'accueil">
+                        <p class="fr-logo">
+                            République<br>Française
+                        </p>
+                    </a>
+                </div>
+                <div class="fr-footer__content">
+                    <p class="fr-footer__content-desc">
+                        Studio Markdown DSFR - Système de Design de l'État
+                    </p>
+                    <ul class="fr-footer__content-list">
+                        <li class="fr-footer__content-item">
+                            <a class="fr-footer__content-link" target="_blank" href="https://legifrance.gouv.fr">legifrance.gouv.fr</a>
+                        </li>
+                        <li class="fr-footer__content-item">
+                            <a class="fr-footer__content-link" target="_blank" href="https://gouvernement.fr">gouvernement.fr</a>
+                        </li>
+                        <li class="fr-footer__content-item">
+                            <a class="fr-footer__content-link" target="_blank" href="https://service-public.fr">service-public.fr</a>
+                        </li>
+                        <li class="fr-footer__content-item">
+                            <a class="fr-footer__content-link" target="_blank" href="https://data.gouv.fr">data.gouv.fr</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fr-footer__bottom">
+                <ul class="fr-footer__bottom-list">
+                    <li class="fr-footer__bottom-item">
+                        <a class="fr-footer__bottom-link" href="#">Accessibilité : partiellement conforme</a>
+                    </li>
+                    <li class="fr-footer__bottom-item">
+                        <a class="fr-footer__bottom-link" href="#">Mentions légales</a>
+                    </li>
+                    <li class="fr-footer__bottom-item">
+                        <a class="fr-footer__bottom-link" href="#">Données personnelles</a>
+                    </li>
+                </ul>
+                <div class="fr-footer__bottom-copy">
+                    <p>
+                        Sauf mention contraire, tous les contenus de ce site sont sous
+                        <a href="https://github.com/etalab/licence-ouverte/blob/master/LO.md" target="_blank">licence etalab-2.0</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modale de paramètres de thème -->
+    <dialog id="fr-theme-modal" class="fr-modal" role="dialog" aria-labelledby="fr-theme-modal-title">
+        <div class="fr-container fr-container--fluid fr-container-md">
+            <div class="fr-grid-row fr-grid-row--center">
+                <div class="fr-col-12 fr-col-md-6 fr-col-lg-4">
+                    <div class="fr-modal__body">
+                        <div class="fr-modal__header">
+                            <button class="fr-btn--close fr-btn" aria-controls="fr-theme-modal" title="Fermer">
+                                Fermer
+                            </button>
+                        </div>
+                        <div class="fr-modal__content">
+                            <h1 id="fr-theme-modal-title" class="fr-modal__title">
+                                Paramètres d'affichage
+                            </h1>
+                            <div id="fr-display" class="fr-display">
+                                <div class="fr-form-group">
+                                    <fieldset class="fr-fieldset">
+                                        <legend class="fr-fieldset__legend fr-text--regular">
+                                            Choisissez un thème pour personnaliser l'apparence du site.
+                                        </legend>
+                                        <div class="fr-fieldset__content">
+                                            <div class="fr-radio-group fr-radio-rich">
+                                                <input value="light" type="radio" id="fr-radios-theme-light" name="fr-radios-theme">
+                                                <label class="fr-label" for="fr-radios-theme-light">Thème clair</label>
+                                                <div class="fr-radio-rich__img">
+                                                    <svg class="fr-artwork" width="80px" height="80px" viewBox="0 0 80 80">
+                                                        <use class="fr-artwork-decorative" href="/assets/artwork/light.svg#artwork-decorative"></use>
+                                                        <use class="fr-artwork-minor" href="/assets/artwork/light.svg#artwork-minor"></use>
+                                                        <use class="fr-artwork-major" href="/assets/artwork/light.svg#artwork-major"></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="fr-radio-group fr-radio-rich">
+                                                <input value="dark" type="radio" id="fr-radios-theme-dark" name="fr-radios-theme">
+                                                <label class="fr-label" for="fr-radios-theme-dark">Thème sombre</label>
+                                                <div class="fr-radio-rich__img">
+                                                    <svg class="fr-artwork" width="80px" height="80px" viewBox="0 0 80 80">
+                                                        <use class="fr-artwork-decorative" href="/assets/artwork/dark.svg#artwork-decorative"></use>
+                                                        <use class="fr-artwork-minor" href="/assets/artwork/dark.svg#artwork-minor"></use>
+                                                        <use class="fr-artwork-major" href="/assets/artwork/dark.svg#artwork-major"></use>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- DSFR JavaScript -->
+    <script type="module" src="/assets/dsfr.module.min.js"></script>
+    <script nomodule src="/assets/dsfr.nomodule.min.js"></script>
+    
+    <!-- Script custom -->
+    
+</body>
+</html>
