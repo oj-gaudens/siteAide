@@ -657,3 +657,203 @@ button, .fr-btn { transition: all 0.15s ease !important; }
   color: #666;
   border-top-color: #333;
 }
+
+/* =======================================================================
+   BOUTON PLEIN ÉCRAN dans la barre Markdown
+   ======================================================================= */
+
+.markdown-bar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--border-default-grey, #ddd);
+}
+
+/* Bouton plein écran - icône + texte, discret */
+.fullscreen-md-btn {
+  background: transparent !important;
+  color: var(--blue-marine) !important;
+  border: 1px solid var(--blue-marine) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  white-space: nowrap !important;
+  padding: 0.3rem 0.7rem !important;
+  border-radius: 4px !important;
+  min-width: 0 !important;
+}
+
+.fullscreen-md-btn i {
+  font-size: 0.9rem;
+}
+
+.fullscreen-md-btn:hover {
+  background: var(--blue-marine) !important;
+  color: white !important;
+}
+
+body:not(.fullscreen-mode) .exit-inline {
+  display: none !important;
+}
+
+body.fullscreen-mode .fullscreen-md-btn {
+  display: none !important;
+}
+
+/* Bouton EXIT — icône + texte, couleur atténuée (bleu marine transparent) */
+.markdown-bar-right .exit-inline {
+  background: rgba(0, 0, 145, 0.12) !important;
+  color: var(--blue-marine) !important;
+  border: 1px solid rgba(0, 0, 145, 0.3) !important;
+  border-radius: 4px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  white-space: nowrap !important;
+  margin-left: 0 !important;
+  font-size: 0.8rem !important;
+}
+
+.markdown-bar-right .exit-inline i {
+  font-size: 0.9rem;
+}
+
+.markdown-bar-right .exit-inline:hover {
+  background: rgba(0, 0, 145, 0.22) !important;
+  border-color: rgba(0, 0, 145, 0.5) !important;
+}
+
+body.fullscreen-mode .markdown-bar-right .exit-inline {
+  display: inline-flex !important;
+}
+
+/* Supprimer les anciens styles plein écran standalone */
+.fullscreen-tab-btn { display: none !important; }
+
+[data-fr-scheme="dark"] .markdown-bar-right {
+  border-left-color: #444;
+}
+
+[data-fr-scheme="dark"] .fullscreen-md-btn {
+  background: #3232a8 !important;
+}
+
+/* =======================================================================
+   DROPDOWNS ACTION BAR (Copier / Télécharger)
+   ======================================================================= */
+
+.action-dropdown-group {
+  position: relative;
+}
+
+.action-dropdown-group > .fr-btn {
+  background-color: var(--blue-marine) !important;
+  color: white !important;
+  border: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+}
+
+/* Flèche indicatrice sur le bouton parent */
+.action-dropdown-group > .fr-btn::after {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid white;
+  margin-left: 0.2rem;
+  transition: transform 0.2s;
+}
+
+.action-dropdown-group > .fr-btn[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+.action-dropdown-group > .fr-btn:hover {
+  background-color: var(--blue-marine-hover) !important;
+}
+
+/* Menu dropdown */
+.action-dropdown {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  background: white;
+  border: 2px solid var(--blue-marine);
+  border-radius: 4px;
+  min-width: 200px;
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+  z-index: 1000;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.12);
+}
+
+.action-dropdown[hidden] {
+  display: none;
+}
+
+.action-dropdown li {
+  margin: 0;
+  padding: 0;
+}
+
+.action-dropdown .fr-nav__link {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  padding: 0.6rem 1rem !important;
+  width: 100% !important;
+  text-align: left !important;
+  background: transparent !important;
+  color: var(--text-default-grey, #3a3a3a) !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.action-dropdown .fr-nav__link:hover {
+  background: var(--background-action-low-blue-france, #ebebff) !important;
+  color: var(--blue-marine) !important;
+}
+
+.action-dropdown .fr-nav__link i {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+[data-fr-scheme="dark"] .action-dropdown {
+  background: #1a1a2e;
+  border-color: #3232a8;
+}
+
+[data-fr-scheme="dark"] .action-dropdown .fr-nav__link {
+  color: #e0e0ff !important;
+}
+
+[data-fr-scheme="dark"] .action-dropdown .fr-nav__link:hover {
+  background: #2a2a5a !important;
+}
+
+/* =======================================================================
+   AUTO-SCROLL TEXTAREA - highlight de la ligne active
+   ======================================================================= */
+
+#markdown-input {
+  scroll-behavior: smooth;
+}
+
+/* Indicateur ligne courante (pseudo via box-shadow inset sur focus) */
+#markdown-input:focus {
+  outline: 2px solid var(--blue-marine);
+  outline-offset: -2px;
+  box-shadow: inset 3px 0 0 var(--blue-marine);
+}

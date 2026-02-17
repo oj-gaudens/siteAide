@@ -475,21 +475,72 @@ function lancerMarkdownEditor() {
   });
 
   // ============================================================================
+  // DROPDOWNS (Copier / Télécharger)
+  // ============================================================================
+
+  function setupDropdown(btnId, dropdownId) {
+    const btn  = document.getElementById(btnId);
+    const menu = document.getElementById(dropdownId);
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      // Fermer tous les autres dropdowns
+      document.querySelectorAll('.action-dropdown').forEach(d => {
+        d.hidden = true;
+        d.previousElementSibling?.setAttribute('aria-expanded', 'false');
+      });
+      // Toggle celui-ci
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      menu.hidden = isOpen;
+    });
+  }
+
+  setupDropdown('btn-copy-menu', 'copy-dropdown');
+  setupDropdown('btn-download-menu', 'download-dropdown');
+
+  // Fermer les dropdowns si on clique ailleurs
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.action-dropdown').forEach(d => {
+      d.hidden = true;
+    });
+    document.querySelectorAll('[aria-controls="copy-dropdown"], [aria-controls="download-dropdown"]').forEach(b => {
+      b.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ============================================================================
   // BOUTONS D'ACTION
   // ============================================================================
 
+  function downloadBlob(content, filename, type) {
+    const blob = new Blob([content], { type });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = filename; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // --- COPIER HTML ---
   document.getElementById('copy-html')?.addEventListener('click', () => {
     navigator.clipboard.writeText(preview.innerHTML)
       .then(() => notify('HTML copié ! 📋'))
-      .catch(() => notify('Erreur de copie ❌'));
+      .catch(() => notify('Erreur ❌'));
+    document.getElementById('copy-dropdown').hidden = true;
+    document.getElementById('btn-copy-menu')?.setAttribute('aria-expanded', 'false');
   });
 
-  document.getElementById('copy-text')?.addEventListener('click', () => {
-    navigator.clipboard.writeText(preview.innerText)
-      .then(() => notify('Texte copié ! 📄'))
-      .catch(() => notify('Erreur de copie ❌'));
+  // --- COPIER MARKDOWN ---
+  document.getElementById('copy-md')?.addEventListener('click', () => {
+    navigator.clipboard.writeText(textarea.value)
+      .then(() => notify('Markdown copié ! 📋'))
+      .catch(() => notify('Erreur ❌'));
+    document.getElementById('copy-dropdown').hidden = true;
+    document.getElementById('btn-copy-menu')?.setAttribute('aria-expanded', 'false');
   });
 
+  // --- TÉLÉCHARGER HTML ---
   document.getElementById('download-html')?.addEventListener('click', () => {
     const fullHtml = `<!DOCTYPE html>
 <html lang="fr">
@@ -503,14 +554,18 @@ function lancerMarkdownEditor() {
 ${preview.innerHTML}
 </body>
 </html>`;
-    const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    a.href     = url;
-    a.download = 'document-dsfr.html';
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadBlob(fullHtml, 'document-dsfr.html', 'text/html;charset=utf-8');
     notify('HTML téléchargé ! 💾');
+    document.getElementById('download-dropdown').hidden = true;
+    document.getElementById('btn-download-menu')?.setAttribute('aria-expanded', 'false');
+  });
+
+  // --- TÉLÉCHARGER MARKDOWN ---
+  document.getElementById('download-md')?.addEventListener('click', () => {
+    downloadBlob(textarea.value, 'document.md', 'text/markdown;charset=utf-8');
+    notify('Markdown téléchargé ! 💾');
+    document.getElementById('download-dropdown').hidden = true;
+    document.getElementById('btn-download-menu')?.setAttribute('aria-expanded', 'false');
   });
 
   document.getElementById('export-pdf')?.addEventListener('click', () => {
@@ -525,6 +580,30 @@ ${preview.innerHTML}
     render();
     notify('Contenu effacé 🗑️');
   });
+
+  // ============================================================================
+  // AUTO-SCROLL TEXTAREA — suit le curseur quand on tape
+  // ============================================================================
+
+  function scrollToCursor() {
+    // Calcule la position approximative du curseur en pixels
+    const lineHeight  = parseFloat(getComputedStyle(textarea).lineHeight) || 24;
+    const paddingTop  = parseFloat(getComputedStyle(textarea).paddingTop)  || 0;
+    const textBefore  = textarea.value.substring(0, textarea.selectionStart);
+    const linesBefore = textBefore.split('\n').length;
+    const cursorY     = paddingTop + (linesBefore - 1) * lineHeight;
+    const visible     = textarea.clientHeight;
+    // Si le curseur est hors de la zone visible, on scrolle
+    if (cursorY < textarea.scrollTop + lineHeight) {
+      textarea.scrollTop = cursorY - lineHeight;
+    } else if (cursorY > textarea.scrollTop + visible - lineHeight * 2) {
+      textarea.scrollTop = cursorY - visible + lineHeight * 2;
+    }
+  }
+
+  textarea.addEventListener('keyup',   scrollToCursor);
+  textarea.addEventListener('click',   scrollToCursor);
+  textarea.addEventListener('input',   scrollToCursor);
 
   // ============================================================================
   // PLEIN ÉCRAN
