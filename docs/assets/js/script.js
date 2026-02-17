@@ -597,7 +597,7 @@ Les points essentiels à retenir de cette présentation`
     if (!isFullscreen) {
       // Activer le mode plein écran
       document.body.classList.add('fullscreen-mode');
-      if (exitBtnInline) exitBtnInline.style.display = 'block';
+      if (exitBtnInline) exitBtnInline.style.display = 'inline-flex';
       showNotification("Mode plein écran activé ⛶");
     } else {
       // Désactiver le mode plein écran

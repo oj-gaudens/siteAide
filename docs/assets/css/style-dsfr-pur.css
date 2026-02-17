@@ -1,17 +1,16 @@
 /* =======================================================================
    MARKDOWN EDITOR DSFR - STYLE 100% DSFR
-   Utilise UNIQUEMENT les variables et classes DSFR
-   Bleu marine officiel : #000091 (comme le drapeau français)
+   Bleu marine officiel : #000091
    ======================================================================= */
 
-/* --- VARIABLES CUSTOM MINIMALES --- */
+/* --- VARIABLES --- */
 :root {
-  --blue-marine: #000091; /* Bleu marine du drapeau français */
+  --blue-marine: #000091;
   --blue-marine-hover: #1212ff;
   --blue-marine-active: #2323ff;
 }
 
-/* --- CONTENEUR CENTRÉ --- */
+/* --- CONTENEUR --- */
 .fr-container {
   max-width: 1200px !important;
   margin-left: auto !important;
@@ -25,106 +24,26 @@ main {
   padding-bottom: 2rem !important;
 }
 
-/* --- TOOLBAR STYLE WORD AVEC ONGLETS BLEU MARINE --- */
+/* =======================================================================
+   TOOLBAR : ordre = markdown-fixed-bar EN HAUT, toolbar-tabs EN BAS
+   ======================================================================= */
+
 .dsfr-toolbar {
   background: white;
   padding: 0;
-  border-radius: 0;
   margin-bottom: 0;
   border: none;
   border-bottom: 2px solid var(--blue-marine);
-}
-
-/* Barre d'onglets (comme Word) - Compatible thème DSFR */
-.toolbar-tabs {
   display: flex;
-  gap: 0;
-  background: var(--blue-marine);
-  padding: 0;
-  align-items: center;
+  flex-direction: column;
 }
 
-/* Thème sombre pour la barre d'onglets */
-[data-fr-scheme="dark"] .toolbar-tabs {
-  background: var(--blue-marine);
-  border-bottom: 1px solid var(--border-default-grey);
-}
-
-.toolbar-tab,
-.toolbar-tab.fr-btn,
-.toolbar-tab.fr-btn--sm {
-  background: transparent !important;
-  color: white !important;
-  border: none !important;
-  border-top: none !important;
-  border-left: none !important;
-  border-right: none !important;
-  border-bottom: 3px solid transparent !important;
-  padding: 0.5rem 1.5rem !important;
-  cursor: pointer;
-  font-size: 0.875rem !important;
-  font-weight: 500 !important;
-  transition: all 0.2s;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-.toolbar-tab:hover,
-.toolbar-tab.fr-btn:hover,
-.toolbar-tab.fr-btn--sm:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: white !important;
-  border-bottom: 3px solid transparent !important;
-}
-
-.toolbar-tab.active,
-.toolbar-tab.active.fr-btn,
-.toolbar-tab.active.fr-btn--sm {
-  background: white !important;
-  color: var(--blue-marine) !important;
-  border: none !important;
-  border-top: none !important;
-  border-left: none !important;
-  border-right: none !important;
-  border-bottom: 3px solid var(--blue-marine) !important;
-}
-
-/* Thème sombre pour les onglets */
-[data-fr-scheme="dark"] .toolbar-tab.active,
-[data-fr-scheme="dark"] .toolbar-tab.active.fr-btn,
-[data-fr-scheme="dark"] .toolbar-tab.active.fr-btn--sm {
-  background: var(--background-contrast-grey) !important;
-  color: var(--text-title-grey) !important;
-  border: none !important;
-  border-top: none !important;
-  border-left: none !important;
-  border-right: none !important;
-  border-bottom: 3px solid var(--text-title-grey) !important;
-}
-
-/* Bouton EXIT inline dans les onglets */
-.exit-inline {
-  margin-left: auto !important;
-  background: rgba(255, 255, 255, 0.2) !important;
-  color: white !important;
-  border: 1px solid rgba(255, 255, 255, 0.4) !important;
-  margin-right: 0.5rem !important;
-}
-
-.exit-inline:hover {
-  background: rgba(255, 255, 255, 0.3) !important;
-}
-
-body.fullscreen-mode .exit-inline {
-  display: block !important;
-}
-
-/* Barre Markdown fixe (toujours visible sous les onglets) */
+/* ---- 1. BARRE MARKDOWN (toujours visible, en PREMIER dans le flex) ---- */
 .markdown-fixed-bar {
-  background: var(--background-contrast-grey);
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--border-default-grey);
+  order: 0;
+  background: var(--background-contrast-grey, #f6f6f6);
+  padding: 0.4rem 1rem;
+  border-bottom: 1px solid var(--border-default-grey, #ddd);
   display: flex;
   gap: 0;
   flex-wrap: wrap;
@@ -133,10 +52,10 @@ body.fullscreen-mode .exit-inline {
 
 .markdown-fixed-bar .toolbar-group {
   display: inline-flex;
-  gap: 0.25rem;
-  margin-right: 1.5rem;
-  padding-right: 1.5rem;
-  border-right: 1px solid var(--border-default-grey);
+  gap: 0.2rem;
+  margin-right: 1rem;
+  padding-right: 1rem;
+  border-right: 1px solid var(--border-default-grey, #ddd);
   align-items: center;
 }
 
@@ -144,22 +63,174 @@ body.fullscreen-mode .exit-inline {
   border-right: none;
 }
 
-/* Icônes Bootstrap dans les boutons */
+/* Boutons de la barre Markdown - fond blanc avec bordure */
+.markdown-fixed-bar .fr-btn {
+  background: white !important;
+  color: var(--blue-marine) !important;
+  border: 1px solid #c1c1fb !important;
+  box-shadow: none !important;
+  padding: 0.3rem 0.5rem !important;
+  min-width: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 4px !important;
+}
+
+.markdown-fixed-bar .fr-btn:hover {
+  background: #ebebff !important;
+  border-color: var(--blue-marine) !important;
+}
+
 .markdown-fixed-bar .fr-btn i {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
-/* Thème sombre pour la barre fixe */
+/* Thème sombre pour barre Markdown */
 [data-fr-scheme="dark"] .markdown-fixed-bar {
-  background: var(--background-alt-grey);
-  border-bottom-color: var(--border-default-grey);
+  background: #1e1e1e;
+  border-bottom-color: #444;
 }
 
-/* Contenu de l'onglet */
+[data-fr-scheme="dark"] .markdown-fixed-bar .toolbar-group {
+  border-right-color: #444;
+}
+
+[data-fr-scheme="dark"] .markdown-fixed-bar .fr-btn {
+  background: #2a2a2a !important;
+  color: #c8c8ff !important;
+  border-color: #555 !important;
+}
+
+[data-fr-scheme="dark"] .markdown-fixed-bar .fr-btn:hover {
+  background: #3a3a6a !important;
+  border-color: #8888ff !important;
+}
+
+/* ---- 2. BARRE DES ONGLETS (en SECOND dans le flex) ---- */
+.toolbar-tabs {
+  order: 1;
+  display: flex;
+  gap: 0;
+  background: var(--blue-marine);
+  padding: 0;
+  align-items: center;
+}
+
+/* Boutons onglets - non actif */
+.toolbar-tab,
+.toolbar-tab.fr-btn,
+.toolbar-tab.fr-btn--sm {
+  background: transparent !important;
+  color: white !important;
+  border: none !important;
+  border-bottom: 3px solid transparent !important;
+  padding: 0.5rem 1.2rem !important;
+  cursor: pointer;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.toolbar-tab:hover,
+.toolbar-tab.fr-btn:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: white !important;
+  border-bottom-color: rgba(255,255,255,0.3) !important;
+}
+
+/* Onglet actif - fond blanc */
+.toolbar-tab.active,
+.toolbar-tab.active.fr-btn,
+.toolbar-tab.active.fr-btn--sm {
+  background: white !important;
+  color: var(--blue-marine) !important;
+  border: none !important;
+  border-bottom: 3px solid var(--blue-marine) !important;
+  font-weight: 700 !important;
+}
+
+/* Thème sombre pour onglet actif */
+[data-fr-scheme="dark"] .toolbar-tab.active,
+[data-fr-scheme="dark"] .toolbar-tab.active.fr-btn {
+  background: #2a2a2a !important;
+  color: #c8c8ff !important;
+  border-bottom-color: #c8c8ff !important;
+}
+
+[data-fr-scheme="dark"] .toolbar-tabs {
+  background: #0d0d5e;
+}
+
+/* ---- BOUTON PLEIN ÉCRAN (tout à droite dans toolbar-tabs) ---- */
+.fullscreen-tab-btn {
+  margin-left: auto !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 0.35rem 0.75rem !important;
+  cursor: pointer;
+  font-size: 1rem;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-right: 0.4rem !important;
+  box-shadow: none !important;
+  transition: background 0.15s;
+  min-width: 0 !important;
+}
+
+.fullscreen-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+}
+
+body.fullscreen-mode .fullscreen-tab-btn {
+  display: none !important;
+}
+
+/* ---- BOUTON EXIT plein écran ---- */
+.exit-inline {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 4px !important;
+  padding: 0.35rem 0.75rem !important;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: none;
+  align-items: center !important;
+  gap: 0.3rem !important;
+  margin-right: 0.4rem !important;
+  margin-left: auto !important;
+  box-shadow: none !important;
+  white-space: nowrap;
+}
+
+.exit-inline:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
+}
+
+body.fullscreen-mode .exit-inline {
+  display: inline-flex !important;
+}
+
+/* ---- 3. CONTENU DES ONGLETS ---- */
 .toolbar-content {
-  padding: 0.75rem 1rem;
+  order: 2;
+  padding: 0.6rem 1rem;
   background: white;
-  min-height: 60px;
+  min-height: 52px;
+  border-top: 1px solid #e8e8ff;
+}
+
+[data-fr-scheme="dark"] .toolbar-content {
+  background: #1a1a2e;
+  border-top-color: #333;
 }
 
 .toolbar-panel {
@@ -167,155 +238,107 @@ body.fullscreen-mode .exit-inline {
 }
 
 .toolbar-panel.active {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
 }
 
-/* Groupes de boutons dans les panels */
+/* ---- GROUPES dans les panels ---- */
 .toolbar-group {
   display: inline-flex;
-  gap: 0.5rem;
-  margin-right: 1.5rem;
-  padding-right: 1.5rem;
-  border-right: 1px solid var(--border-default-grey);
+  gap: 0.4rem;
+  margin-right: 1rem;
+  padding-right: 1rem;
+  border-right: 1px solid var(--border-default-grey, #ddd);
   flex-wrap: wrap;
   align-items: center;
 }
 
 .toolbar-group:last-child {
   border-right: none;
+  margin-right: 0;
+  padding-right: 0;
 }
 
-/* Boutons dans les panels - style DSFR propre */
-.toolbar-content .fr-btn {
+[data-fr-scheme="dark"] .toolbar-group {
+  border-right-color: #444;
+}
+
+/* ---- BOUTONS dans les panels - Bleu marine DSFR avec icon + label ---- */
+.toolbar-content .fr-btn,
+.toolbar-panel .fr-btn {
   background: var(--blue-marine) !important;
   color: white !important;
   border: none !important;
   box-shadow: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  padding: 0.35rem 0.7rem !important;
+  border-radius: 4px !important;
+  font-size: 0.8rem !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  transition: background 0.15s, transform 0.1s;
 }
 
-.toolbar-content .fr-btn:hover {
+.toolbar-content .fr-btn:hover,
+.toolbar-panel .fr-btn:hover {
   background: var(--blue-marine-hover) !important;
   transform: translateY(-1px);
 }
 
-/* Icônes dans les boutons */
 .toolbar-content .fr-btn i,
 .toolbar-panel .fr-btn i {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
 }
 
-.toolbar-group-label {
-  display: none !important; /* Cacher les labels */
-}
-
-/* --- RANGÉES DE BOUTONS (supprimé, remplacé par onglets) --- */
-
-/* --- BOUTONS BLEU MARINE (comme le drapeau) - COMPACTS --- */
-.toolbar-btn {
-  background: var(--blue-marine) !important;
+/* Thème sombre : boutons panels */
+[data-fr-scheme="dark"] .toolbar-content .fr-btn,
+[data-fr-scheme="dark"] .toolbar-panel .fr-btn {
+  background: #3232a8 !important;
   color: white !important;
-  border: none !important;
-  padding: 0.5rem 1rem !important; /* Réduit de 1rem à 0.5rem */
-  border-radius: 0.25rem !important;
-  font-size: 0.75rem !important; /* Réduit de 0.875rem à 0.75rem */
-  font-weight: 600 !important;
-  cursor: pointer !important;
-  transition: all 0.2s !important;
-  white-space: nowrap !important;
-  flex: 1 !important;
-  min-width: 150px !important; /* Réduit de 200px à 150px */
-  text-align: left !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 0.5rem !important;
 }
 
-.toolbar-btn:hover {
-  background: var(--blue-marine-hover) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 145, 0.3) !important;
+[data-fr-scheme="dark"] .toolbar-content .fr-btn:hover,
+[data-fr-scheme="dark"] .toolbar-panel .fr-btn:hover {
+  background: #4040c0 !important;
 }
 
-.toolbar-btn:active,
-.toolbar-btn.active {
-  background: var(--blue-marine-active) !important;
-  transform: translateY(0) !important;
+/* Cacher les labels de groupe */
+.toolbar-group-label {
+  display: none !important;
 }
 
-/* --- DROPDOWNS --- */
-.toolbar-dropdowns {
-  margin-top: 1.5rem;
-}
+/* =======================================================================
+   ÉDITEUR ET PREVIEW
+   ======================================================================= */
 
-.toolbar-dropdown {
-  background: white;
-  border: 2px solid var(--blue-marine);
-  border-radius: 0.25rem;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 145, 0.1);
-}
-
-.toolbar-dropdown.hidden {
-  display: none;
-}
-
-.toolbar-dropdown:last-child {
-  margin-bottom: 0;
-}
-
-/* --- GRILLE DE BOUTONS DANS LES DROPDOWNS --- */
-.button-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 0.75rem;
-}
-
-.button-grid button {
-  background: white;
-  border: 2px solid var(--border-default-grey);
-  padding: 0.875rem 1rem;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  text-align: left;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.2s;
-  color: var(--text-default-grey);
-}
-
-.button-grid button:hover {
-  background: var(--background-alt-blue-france);
-  border-color: var(--blue-marine);
-  transform: translateX(4px);
-  box-shadow: 0 2px 8px rgba(0, 0, 145, 0.15);
-}
-
-/* --- ÉDITEUR ET PREVIEW --- */
 .editor-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  margin: 2rem auto; /* Centrer */
-  max-width: 1400px; /* Largeur max */
-  padding: 0 rem; /* Padding pour ne pas coller aux bords */
+  margin: 2rem auto;
+  max-width: 1400px;
+  padding: 0;
 }
 
 .editor-panel,
 .preview-panel {
   background: white;
-  border: 2px solid var(--border-default-grey);
+  border: 2px solid var(--border-default-grey, #ddd);
   border-radius: 0.25rem;
   overflow: hidden;
 }
 
 .panel-header {
-  background: var(--background-alt-grey);
+  background: var(--background-alt-grey, #f6f6f6);
   padding: 1rem 1.5rem;
-  border-bottom: 2px solid var(--border-default-grey);
+  border-bottom: 2px solid var(--border-default-grey, #ddd);
   font-weight: 700;
   font-size: 1rem;
-  color: var(--text-title-grey);
+  color: var(--text-title-grey, #161616);
 }
 
 #markdown-input {
@@ -328,7 +351,7 @@ body.fullscreen-mode .exit-inline {
   border: none;
   resize: vertical;
   background: white;
-  color: var(--text-default-grey);
+  color: var(--text-default-grey, #3a3a3a);
 }
 
 #markdown-input:focus {
@@ -342,9 +365,39 @@ body.fullscreen-mode .exit-inline {
   overflow-y: auto;
 }
 
-/* --- BARRE D'ACTIONS BLEU MARINE --- */
+/* Composants DSFR dans le preview */
+#preview .fr-alert { margin-bottom: 1rem; }
+#preview .fr-callout { margin-bottom: 1rem; }
+#preview .fr-badge { margin-right: 0.5rem; margin-bottom: 0.5rem; }
+#preview .fr-card { margin-bottom: 1rem; }
+#preview h1, #preview h2, #preview h3 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
+#preview p { margin-bottom: 1rem; }
+#preview ul, #preview ol { margin-bottom: 1rem; padding-left: 2rem; }
+
+/* Thème sombre éditeur */
+[data-fr-scheme="dark"] .editor-panel,
+[data-fr-scheme="dark"] .preview-panel {
+  background: #1a1a2e;
+  border-color: #333;
+}
+
+[data-fr-scheme="dark"] .panel-header {
+  background: #111128;
+  border-color: #333;
+  color: #e0e0ff;
+}
+
+[data-fr-scheme="dark"] #markdown-input {
+  background: #1a1a2e;
+  color: #e0e0ff;
+}
+
+/* =======================================================================
+   BARRE D'ACTIONS
+   ======================================================================= */
+
 .action-bar {
-  background: var(--background-action-low-blue-france);
+  background: var(--background-action-low-blue-france, #ebebff);
   padding: 1.5rem;
   border-top: 2px solid var(--blue-marine);
   border-radius: 0 0 0.25rem 0.25rem;
@@ -352,147 +405,30 @@ body.fullscreen-mode .exit-inline {
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
-  margin: 2rem auto; /* Centrer */
-  max-width: 1400px; /* Même largeur que l'éditeur */
+  margin: 2rem auto;
+  max-width: 1400px;
 }
 
 .action-bar .fr-btn {
-  min-width: 150px !important;
-}
-
-/* Surcharge des boutons DSFR pour le bleu marine */
-.action-bar .fr-btn--secondary {
+  min-width: 140px !important;
   background-color: var(--blue-marine) !important;
   color: white !important;
+  border: none !important;
 }
 
-.action-bar .fr-btn--secondary:hover {
+.action-bar .fr-btn:hover {
   background-color: var(--blue-marine-hover) !important;
 }
 
-/* --- NOTIFICATION --- */
-.notification {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  padding: 1rem 1.5rem;
-  background: var(--background-action-high-success);
-  color: white;
-  border-radius: 0.25rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  z-index: 9999;
-  animation: slideIn 0.3s ease;
-  font-weight: 600;
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateY(100px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* --- THÈME SOMBRE AVEC DSFR --- */
-[data-fr-scheme="dark"] .dsfr-toolbar {
-  background: var(--background-contrast-grey);
-  border-color: var(--border-plain-grey);
-}
-
-[data-fr-scheme="dark"] .toolbar-header {
-  border-color: var(--border-plain-grey);
-}
-
-[data-fr-scheme="dark"] .toolbar-dropdown {
-  background: var(--background-contrast-grey);
-  border-color: var(--border-plain-grey);
-}
-
-[data-fr-scheme="dark"] .editor-panel,
-[data-fr-scheme="dark"] .preview-panel {
-  background: var(--background-contrast-grey);
-  border-color: var(--border-plain-grey);
-}
-
-[data-fr-scheme="dark"] #markdown-input {
-  background: var(--background-contrast-grey);
-  color: var(--text-default-grey);
-}
-
-[data-fr-scheme="dark"] .panel-header {
-  background: var(--background-alt-grey);
-  border-color: var(--border-plain-grey);
-}
-
 [data-fr-scheme="dark"] .action-bar {
-  background: var(--background-contrast-grey);
-  border-color: var(--border-plain-grey);
+  background: #111128;
+  border-color: #3232a8;
 }
 
-[data-fr-scheme="dark"] .button-grid button {
-  background: var(--background-alt-grey);
-  border-color: var(--border-plain-grey);
-  color: var(--text-default-grey);
-}
+/* =======================================================================
+   MODE PLEIN ÉCRAN
+   ======================================================================= */
 
-[data-fr-scheme="dark"] .button-grid button:hover {
-  background: var(--background-alt-blue-france);
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 1200px) {
-  .fr-container {
-    padding-left: 3rem !important;
-    padding-right: 3rem !important;
-  }
-}
-
-@media (max-width: 992px) {
-  .editor-container {
-    grid-template-columns: 1fr;
-  }
-  
-  .toolbar-row {
-    flex-direction: column;
-  }
-  
-  .toolbar-btn {
-    width: 100% !important;
-    min-width: 0 !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .fr-container {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-  }
-  
-  .toolbar-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  
-  .toolbar-actions {
-    width: 100%;
-    flex-direction: column;
-  }
-  
-  .mini-btn {
-    width: 100%;
-  }
-}
-
-/* --- COMPOSANTS DSFR DANS LE PREVIEW --- */
-#preview .fr-alert {
-  margin-bottom: 1rem;
-}
-
-/* --- MODE PLEIN ÉCRAN (simplifié et garanti) --- */
 body.fullscreen-mode {
   overflow: hidden !important;
 }
@@ -514,7 +450,7 @@ body.fullscreen-mode main {
   padding: 0 !important;
   margin: 0 !important;
   z-index: 9999 !important;
-  background: var(--background-default-grey) !important;
+  background: var(--background-default-grey, white) !important;
   display: flex !important;
   flex-direction: column !important;
 }
@@ -533,15 +469,10 @@ body.fullscreen-mode .dsfr-toolbar {
   margin: 0 !important;
   border-radius: 0 !important;
   flex-shrink: 0 !important;
-  padding: 0 !important;
 }
 
 body.fullscreen-mode .toolbar-content {
-  padding: 0.5rem 1rem !important;
-}
-
-body.fullscreen-mode .toolbar-tabs {
-  flex-shrink: 0 !important;
+  padding: 0.4rem 1rem !important;
 }
 
 body.fullscreen-mode .editor-container {
@@ -549,11 +480,11 @@ body.fullscreen-mode .editor-container {
   margin: 0 !important;
   padding: 0 !important;
   max-width: 100% !important;
-  overflow: visible !important;
   gap: 0 !important;
   display: grid !important;
   grid-template-columns: 1fr 1fr !important;
   height: 100% !important;
+  overflow: hidden !important;
 }
 
 body.fullscreen-mode .editor-panel,
@@ -574,64 +505,58 @@ body.fullscreen-mode #markdown-input,
 body.fullscreen-mode #preview {
   flex: 1 !important;
   width: 100% !important;
-  height: 100% !important;
   min-height: 0 !important;
   overflow-y: auto !important;
-  display: block !important;
 }
 
 body.fullscreen-mode .action-bar {
   flex-shrink: 0 !important;
   border-radius: 0 !important;
-  padding: 0.75rem 1rem !important;
-  position: relative !important;
-  display: flex !important;
-  justify-content: center !important;
-  gap: 1rem !important;
-  background: var(--background-action-low-blue-france) !important;
-  border-top: 2px solid var(--blue-marine) !important;
+  padding: 0.6rem 1rem !important;
+  margin: 0 !important;
+  max-width: 100% !important;
 }
 
-[data-fr-scheme="dark"] body.fullscreen-mode {
-  background: var(--background-default-grey) !important;
+/* =======================================================================
+   NOTIFICATION
+   ======================================================================= */
+
+.notification {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 1rem 1.5rem;
+  background: #18753c;
+  color: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  animation: slideIn 0.3s ease;
+  font-weight: 600;
 }
 
-[data-fr-scheme="dark"] body.fullscreen-mode main {
-  background: var(--background-default-grey) !important;
+@keyframes slideIn {
+  from { transform: translateY(100px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
 }
 
-#preview .fr-callout {
-  margin-bottom: 1rem;
+/* =======================================================================
+   RESPONSIVE
+   ======================================================================= */
+
+@media (max-width: 1200px) {
+  .fr-container { padding-left: 3rem !important; padding-right: 3rem !important; }
 }
 
-#preview .fr-badge {
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
+@media (max-width: 992px) {
+  .editor-container { grid-template-columns: 1fr; }
 }
 
-#preview .fr-card {
-  margin-bottom: 1rem;
+@media (max-width: 768px) {
+  .fr-container { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .toolbar-tab { padding: 0.4rem 0.7rem !important; font-size: 0.78rem !important; }
 }
 
-#preview h1, #preview h2, #preview h3 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
-}
-
-#preview p {
-  margin-bottom: 1rem;
-}
-
-#preview ul, #preview ol {
-  margin-bottom: 1rem;
-  padding-left: 2rem;
-}
-
-/* --- TRANSITIONS --- */
-* {
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-button, .fr-btn {
-  transition: all 0.2s ease !important;
-}
+/* --- Transitions globales douces --- */
+* { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+button, .fr-btn { transition: all 0.15s ease !important; }
