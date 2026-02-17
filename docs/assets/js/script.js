@@ -59,21 +59,30 @@ function lancerMarkdownEditor() {
   }
 
   /**
-   * Sépare les lignes d'options (indentées ou format "key:") des lignes de contenu.
-   * Robuste : une ligne est une option si elle matche /^\s+\w+:/ OU /^\w+:(?!\/)/ 
-   * (évite de matcher "https://" comme option)
+   * Sépare les lignes d'options des lignes de contenu.
+   * Les options sont TOUJOURS en premier dans le bloc, avant le contenu.
+   * Une ligne est une option si elle matche "key: value" (avec ou sans indentation)
+   * mais pas "https://" (on protège les URLs).
    */
   function splitOptionsContent(rawContent) {
-    const lines = rawContent.trim().split('\n');
+    // NE PAS trimmer rawContent ici — le trim() effaçait l'indentation de la 1ère ligne
+    const lines = rawContent.split('\n');
     const optLines = [];
     const ctxLines = [];
-    let optsDone = false; // les options sont toujours avant le contenu
+    let optsDone = false;
     for (const line of lines) {
-      if (!optsDone && /^\s+[\w_]+\s*:/.test(line)) {
+      // Option : ligne (éventuellement indentée) du style "  key: value"
+      // Protection : on exclut "https://" et les lignes vides en mode opts
+      if (!optsDone && /^\s*[\w_]+\s*:\s*\S/.test(line) && !/^\s*https?:\/\//.test(line)) {
         optLines.push(line);
+      } else if (!optsDone && line.trim() === '') {
+        // ligne vide entre options → on ignore
+        continue;
       } else {
         optsDone = true;
-        ctxLines.push(line);
+        if (line.trim() !== '' || ctxLines.length > 0) {
+          ctxLines.push(line);
+        }
       }
     }
     return { optText: optLines.join('\n'), content: ctxLines.join('\n').trim() };
