@@ -364,7 +364,6 @@ function lancerMarkdownEditor() {
     const slides = md.split(/^---\s*$/m).map(s => s.trim()).filter(s => s);
     if (!slides.length) { preview.innerHTML = '<p>Aucune slide</p>'; return; }
 
-    // Clamp currentSlide
     currentSlide = Math.max(0, Math.min(currentSlide, slides.length - 1));
 
     const tokenized = tokenizeComponents(slides[currentSlide]);
@@ -372,10 +371,22 @@ function lancerMarkdownEditor() {
     html = restorePlaceholders(html);
 
     const pct = Math.round(((currentSlide + 1) / slides.length) * 100);
+    const isSlideFs = preview.classList.contains('slides-fullscreen');
+
     preview.innerHTML = `
       <div class="slide-wrapper">
-        <div class="slide-progress">
-          <div class="slide-progress-bar" style="width:${pct}%"></div>
+        <div class="slide-topbar">
+          <div class="slide-progress">
+            <div class="slide-progress-bar" style="width:${pct}%"></div>
+          </div>
+          ${isSlideFs
+            ? `<button class="fr-btn fr-btn--sm slide-fs-exit-btn" id="slide-exit-fs" title="Quitter le plein écran slides">
+                <i class="bi bi-fullscreen-exit"></i> Quitter le plein écran
+               </button>`
+            : `<button class="fr-btn fr-btn--sm slide-fs-btn" id="slide-enter-fs" title="Plein écran slides">
+                <i class="bi bi-fullscreen"></i> Plein écran
+               </button>`
+          }
         </div>
         <div class="slide-content">${html}</div>
         <div class="slide-controls">
@@ -391,6 +402,22 @@ function lancerMarkdownEditor() {
 
     document.getElementById('prev-slide')?.addEventListener('click', () => { currentSlide--; renderSlides(md); });
     document.getElementById('next-slide')?.addEventListener('click', () => { currentSlide++; renderSlides(md); });
+
+    // Bouton entrer plein écran slides
+    document.getElementById('slide-enter-fs')?.addEventListener('click', () => {
+      preview.classList.add('slides-fullscreen');
+      document.body.classList.add('slides-fs-active');
+      renderSlides(md);
+    });
+
+    // Bouton quitter plein écran slides
+    document.getElementById('slide-exit-fs')?.addEventListener('click', () => {
+      preview.classList.remove('slides-fullscreen');
+      document.body.classList.remove('slides-fs-active');
+      renderSlides(md);
+    });
+
+    // ESC pour quitter le plein écran slides aussi
   }
 
   function render() {
@@ -621,7 +648,14 @@ ${preview.innerHTML}
   document.getElementById('fullscreen')?.addEventListener('click', toggleFullscreen);
   exitBtn?.addEventListener('click', toggleFullscreen);
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && document.body.classList.contains('fullscreen-mode')) toggleFullscreen();
+    if (e.key === 'Escape') {
+      if (document.body.classList.contains('fullscreen-mode')) toggleFullscreen();
+      if (document.body.classList.contains('slides-fs-active')) {
+        preview.classList.remove('slides-fullscreen');
+        document.body.classList.remove('slides-fs-active');
+        renderSlides(textarea.value);
+      }
+    }
   });
 
   // ============================================================================
