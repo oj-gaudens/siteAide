@@ -57,7 +57,7 @@
                             </div>
                         </div>
                         <div class="fr-header__service">
-                            <a href="/" title="Retour à l'accueil - Studio Markdown DSFR">
+                            <a href="{{ '/' | url }}" title="Retour à l'accueil - Studio Markdown DSFR">
                                 <p class="fr-header__service-title">
                                     Studio Markdown DSFR
                                 </p>
@@ -91,10 +91,10 @@
                 <nav class="fr-nav" id="header-navigation" role="navigation" aria-label="Menu principal">
                     <ul class="fr-nav__list">
                         <li class="fr-nav__item">
-                            <a class="fr-nav__link" href="/" target="_self">Accueil</a>
+                            <a class="fr-nav__link" href="{{ '/' | url }}" target="_self">Accueil</a>
                         </li>
                         <li class="fr-nav__item">
-                            <a class="fr-nav__link" href="/about" target="_self">À propos</a>
+                            <a class="fr-nav__link" href="{{ '/about/' | url }}" target="_self">À propos</a>
                         </li>
                         <li class="fr-nav__item">
                             <button class="fr-nav__link" id="nav-template-site">🌐 Site Web</button>
@@ -123,7 +123,7 @@
         <div class="fr-container">
             <div class="fr-footer__body">
                 <div class="fr-footer__brand fr-enlarge-link">
-                    <a href="/" title="Retour à l'accueil">
+                    <a href="{{ '/' | url }}" title="Retour à l'accueil">
                         <p class="fr-logo">
                             République<br>Française
                         </p>
