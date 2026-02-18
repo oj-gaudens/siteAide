@@ -1162,3 +1162,201 @@ body.slides-fs-active .slide-content h3 { font-size: unset; }
 .slide-anim-prev {
   animation: slideFromLeft 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
+
+/* =======================================================================
+   FIX CARTES DSFR - hauteur uniforme et badges
+   ======================================================================= */
+
+/* Cartes dans une grille : hauteur 100% pour uniformiser */
+.fr-grid-row .fr-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.fr-card__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.fr-card__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Badge au-dessus du titre */
+.fr-card__content .fr-badge {
+  margin-bottom: 0.5rem;
+  align-self: flex-start;
+}
+
+/* Titre et description prennent l'espace disponible */
+.fr-card__title {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.fr-card__desc {
+  margin-top: 0;
+  flex: 1;
+}
+
+/* Image de carte : ratio uniforme */
+.fr-card__img {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: var(--background-contrast-grey, #f6f6f6);
+}
+
+.fr-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* =======================================================================
+   FIX SLIDES - Responsive + Scroll + Boutons visibles
+   ======================================================================= */
+
+/* Wrapper de slide : scroll activé + hauteur max */
+.slide-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  overflow-y: auto !important; /* SCROLL MOLETTE ACTIVÉ */
+  overflow-x: hidden;
+  padding-bottom: 1rem;
+}
+
+/* Contenu de slide : responsive avec tailles adaptatives */
+.slide-content {
+  flex: 1;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  padding: 0.5rem 0;
+  min-height: 0; /* permet le shrink */
+}
+
+/* Titres responsives en mode slides */
+.slide-content h1 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  line-height: 1.2;
+  margin: 1rem 0 0.75rem;
+}
+
+.slide-content h2 {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  line-height: 1.25;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.slide-content h3 {
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
+  line-height: 1.3;
+  margin: 0.5rem 0;
+}
+
+.slide-content p,
+.slide-content li {
+  font-size: clamp(0.875rem, 1.5vw, 1.1rem);
+  line-height: 1.6;
+}
+
+/* Contrôles slides : TOUJOURS VISIBLES en bas */
+.slide-controls {
+  flex-shrink: 0;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-default-grey, #ddd);
+  background: white;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+/* Mode plein écran slides : scroll + boutons fixes */
+body.slides-fs-active #preview.slides-fullscreen {
+  overflow-y: auto !important; /* SCROLL MOLETTE EN PLEIN ÉCRAN */
+  padding: 1.5rem 2rem 2rem;
+}
+
+body.slides-fs-active .slide-wrapper {
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body.slides-fs-active .slide-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: visible;
+}
+
+/* Topbar et contrôles sticky en plein écran */
+body.slides-fs-active .slide-topbar {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 20;
+  padding: 0.75rem 0;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--border-default-blue-france, #e5e5f4);
+}
+
+body.slides-fs-active .slide-controls {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  z-index: 20;
+  padding: 1rem 0 0.5rem;
+  margin-top: auto;
+  border-top: 2px solid var(--border-default-blue-france, #e5e5f4);
+}
+
+/* Dark mode */
+[data-fr-scheme="dark"] .slide-controls,
+[data-fr-scheme="dark"] body.slides-fs-active .slide-topbar,
+[data-fr-scheme="dark"] body.slides-fs-active .slide-controls {
+  background: #1a1a2e;
+  border-color: #444;
+}
+
+[data-fr-scheme="dark"] body.slides-fs-active #preview.slides-fullscreen {
+  background: #0d0d1a !important;
+}
+
+/* Composants DSFR dans slides : responsive */
+.slide-content .fr-card,
+.slide-content .fr-tile,
+.slide-content .fr-callout,
+.slide-content .fr-alert {
+  font-size: clamp(0.875rem, 1.4vw, 1rem);
+}
+
+.slide-content .fr-card__title,
+.slide-content .fr-tile__title {
+  font-size: clamp(1rem, 2vw, 1.3rem) !important;
+}
+
+/* Images responsives dans slides */
+.slide-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Mobile : réduire encore les tailles */
+@media (max-width: 768px) {
+  body.slides-fs-active #preview.slides-fullscreen {
+    padding: 1rem;
+  }
+  
+  .slide-content h1 { font-size: clamp(1.3rem, 5vw, 1.8rem); }
+  .slide-content h2 { font-size: clamp(1.1rem, 4vw, 1.5rem); }
+  .slide-content h3 { font-size: clamp(0.95rem, 3vw, 1.2rem); }
+  
+  .slide-controls button {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
+  }
+}

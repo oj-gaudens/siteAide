@@ -581,10 +581,38 @@ function lancerMarkdownEditor() {
     URL.revokeObjectURL(url);
   }
 
+  // Fonction pour générer le HTML de toutes les slides (si en mode slides)
+  function getAllSlidesHTML() {
+    const md = textarea.value;
+    if (!isSlidesMode(md)) {
+      // Mode normal : juste le preview actuel
+      return preview.innerHTML;
+    }
+    
+    // Mode slides : générer toutes les slides
+    const slides = md.split(/^---\s*$/m).map(s => s.trim()).filter(s => s);
+    let allHTML = '';
+    
+    slides.forEach((slideContent, idx) => {
+      const tokenized = tokenizeComponents(slideContent);
+      let html = marked.parse(tokenized);
+      html = restorePlaceholders(html);
+      
+      allHTML += `
+        <div class="slide-page" style="page-break-after: always; min-height: 80vh; padding: 2rem; margin-bottom: 2rem; border-bottom: 3px solid #e5e5f4;">
+          <div style="font-size: 0.75rem; color: #666; margin-bottom: 1rem;">Slide ${idx + 1} / ${slides.length}</div>
+          ${html}
+        </div>`;
+    });
+    
+    return allHTML;
+  }
+
   // --- COPIER HTML ---
   document.getElementById('copy-html')?.addEventListener('click', () => {
-    navigator.clipboard.writeText(preview.innerHTML)
-      .then(() => notify('HTML copié ! 📋'))
+    const html = getAllSlidesHTML();
+    navigator.clipboard.writeText(html)
+      .then(() => notify(isSlidesMode(textarea.value) ? 'Toutes les slides copiées ! 📋' : 'HTML copié ! 📋'))
       .catch(() => notify('Erreur ❌'));
     document.getElementById('copy-dropdown').hidden = true;
     document.getElementById('btn-copy-menu')?.setAttribute('aria-expanded', 'false');
@@ -601,20 +629,29 @@ function lancerMarkdownEditor() {
 
   // --- TÉLÉCHARGER HTML ---
   document.getElementById('download-html')?.addEventListener('click', () => {
+    const contentHTML = getAllSlidesHTML();
     const fullHtml = `<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Export DSFR</title>
+  <title>Export DSFR${isSlidesMode(textarea.value) ? ' - Slides' : ''}</title>
   <link rel="stylesheet" href="https://unpkg.com/@gouvfr/dsfr/dist/dsfr.min.css">
+  <style>
+    body { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .slide-page { margin-bottom: 3rem; }
+    @media print {
+      .slide-page { page-break-after: always; min-height: 100vh; }
+    }
+  </style>
 </head>
 <body class="fr-m-4w">
-${preview.innerHTML}
+${contentHTML}
 </body>
 </html>`;
-    downloadBlob(fullHtml, 'document-dsfr.html', 'text/html;charset=utf-8');
-    notify('HTML téléchargé ! 💾');
+    const filename = isSlidesMode(textarea.value) ? 'slides-dsfr.html' : 'document-dsfr.html';
+    downloadBlob(fullHtml, filename, 'text/html;charset=utf-8');
+    notify(isSlidesMode(textarea.value) ? 'Toutes les slides téléchargées ! 💾' : 'HTML téléchargé ! 💾');
     document.getElementById('download-dropdown').hidden = true;
     document.getElementById('btn-download-menu')?.setAttribute('aria-expanded', 'false');
   });
@@ -627,9 +664,54 @@ ${preview.innerHTML}
     document.getElementById('btn-download-menu')?.setAttribute('aria-expanded', 'false');
   });
 
-  document.getElementById('export-pdf')?.addEventListener('click', () => {
-    window.print();
-    notify('Impression lancée ! 📑');
+  // --- EXPORTER EN PDF (jsPDF) ---
+  document.getElementById('export-pdf')?.addEventListener('click', async () => {
+    // Charger jsPDF dynamiquement si pas déjà chargé
+    if (typeof window.jspdf === 'undefined') {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      document.head.appendChild(script);
+      await new Promise(resolve => { script.onload = resolve; });
+    }
+
+    try {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF('p', 'mm', 'a4');
+      
+      const contentHTML = getAllSlidesHTML();
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = contentHTML;
+      tempDiv.style.cssText = 'position:absolute;left:-9999px;width:190mm;font-family:Arial,sans-serif;font-size:12pt;line-height:1.6;';
+      document.body.appendChild(tempDiv);
+
+      // Convertir le HTML en texte simple pour le PDF
+      const textContent = tempDiv.innerText || tempDiv.textContent;
+      const lines = doc.splitTextToSize(textContent, 180);
+      
+      let y = 20;
+      const pageHeight = 280;
+      const lineHeight = 7;
+      
+      lines.forEach(line => {
+        if (y > pageHeight) {
+          doc.addPage();
+          y = 20;
+        }
+        doc.text(line, 15, y);
+        y += lineHeight;
+      });
+
+      document.body.removeChild(tempDiv);
+      
+      const filename = isSlidesMode(textarea.value) ? 'slides-dsfr.pdf' : 'document-dsfr.pdf';
+      doc.save(filename);
+      notify(isSlidesMode(textarea.value) ? 'PDF de toutes les slides créé ! 📄' : 'PDF créé ! 📄');
+    } catch (err) {
+      console.error('Erreur PDF:', err);
+      // Fallback sur window.print()
+      window.print();
+      notify('Impression lancée ! 📑');
+    }
   });
 
   document.getElementById('clear-all')?.addEventListener('click', () => {
