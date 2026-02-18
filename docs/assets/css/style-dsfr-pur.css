@@ -1360,3 +1360,107 @@ body.slides-fs-active .slide-controls {
     padding: 0.4rem 0.6rem;
   }
 }
+
+/* =======================================================================
+   VIDÉOS (composant media)
+   ======================================================================= */
+
+.fr-content-media {
+  margin: 1.5rem 0;
+}
+
+.fr-content-media__img {
+  position: relative;
+  background: #000;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.fr-responsive-vid {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-width: 100%;
+}
+
+/* Légende vidéo */
+.fr-content-media p {
+  color: var(--text-mention-grey, #666);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* =======================================================================
+   TABLEAUX MARKDOWN - Style DSFR
+   ======================================================================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  background: white;
+  border: 1px solid var(--border-default-grey, #ddd);
+}
+
+thead {
+  background: var(--background-contrast-grey, #f6f6f6);
+}
+
+thead th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 700;
+  color: var(--text-title-grey, #161616);
+  border-bottom: 2px solid var(--border-default-blue-france, #000091);
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--border-default-grey, #e5e5e5);
+}
+
+tbody tr:hover {
+  background: var(--background-alt-blue-france, #f5f5fe);
+}
+
+tbody td {
+  padding: 0.75rem 1rem;
+  color: var(--text-default-grey, #3a3a3a);
+}
+
+/* Dark mode tableaux */
+[data-fr-scheme="dark"] table {
+  background: #1a1a2e;
+  border-color: #444;
+}
+
+[data-fr-scheme="dark"] thead {
+  background: #2a2a3e;
+}
+
+[data-fr-scheme="dark"] thead th {
+  color: #e0e0ff;
+  border-bottom-color: #4040c0;
+}
+
+[data-fr-scheme="dark"] tbody tr {
+  border-bottom-color: #333;
+}
+
+[data-fr-scheme="dark"] tbody tr:hover {
+  background: #252540;
+}
+
+[data-fr-scheme="dark"] tbody td {
+  color: #c8c8e0;
+}
+
+/* Responsive tableaux : scroll horizontal sur mobile */
+@media (max-width: 768px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

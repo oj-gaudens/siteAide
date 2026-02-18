@@ -270,6 +270,34 @@ function lancerMarkdownEditor() {
 </section>`;
   }
 
+  // ---- MEDIA (Vidéo) ----
+  let _videoCounter = 0;
+  function renderMedia(title, rawContent) {
+    const { optText, content } = splitOptionsContent(rawContent);
+    const opts     = parseOptions(optText);
+    const url      = opts.url      || '';
+    const captions = opts.captions || '';
+    const poster   = opts.poster   || '';
+    const id       = `video-${_videoCounter++}`;
+    
+    if (!url) return '<p>Erreur : URL vidéo manquante</p>';
+    
+    const posterAttr  = poster ? ` poster="${escHtml(poster)}"` : '';
+    const captionsTag = captions ? `<track kind="captions" src="${escHtml(captions)}" srclang="fr" label="Français">` : '';
+    const titleHtml   = title ? `<p class="fr-text--sm fr-text--light" style="margin-top:0.5rem;">${escHtml(title.trim())}</p>` : '';
+    
+    return `<div class="fr-content-media">
+  <div class="fr-content-media__img">
+    <video id="${id}" controls class="fr-responsive-vid"${posterAttr}>
+      <source src="${escHtml(url)}" type="video/mp4">
+      ${captionsTag}
+      Votre navigateur ne supporte pas la vidéo HTML5.
+    </video>
+  </div>
+  ${titleHtml}
+</div>`;
+  }
+
   // ---- GRILLES (row / col) ----
   // Traitement séparé car ces blocs sont auto-fermants avec /// seul
   // et peuvent contenir d'autres blocs déjà tokenisés (placeholders)
@@ -307,11 +335,12 @@ function lancerMarkdownEditor() {
     blockRegistry.clear();
     _blockCounter = 0;
     _accCounter   = 0;
+    _videoCounter = 0;
     let text = md;
 
     // Regex générique pour un bloc /// TYPE [| TITLE] \n CONTENT \n ///
     // Note : lazy match sur le contenu, multiline
-    const blockRe = /^\/\/\/\s*(alert|callout|badge|card|tile|accordion)\s*(?:\|\s*([^\n]*))?\n([\s\S]*?)^\/\/\/\s*$/gm;
+    const blockRe = /^\/\/\/\s*(alert|callout|badge|card|tile|accordion|media)\s*(?:\|\s*([^\n]*))?\n([\s\S]*?)^\/\/\/\s*$/gm;
 
     text = text.replace(blockRe, (match, type, title, rawContent) => {
       title = (title || '').trim();
@@ -323,6 +352,7 @@ function lancerMarkdownEditor() {
         case 'card':      html = renderCard(title, rawContent);      break;
         case 'tile':      html = renderTile(title, rawContent);      break;
         case 'accordion': html = renderAccordion(title, rawContent); break;
+        case 'media':     html = renderMedia(title, rawContent);     break;
       }
       return registerBlock(html);
     });
@@ -664,53 +694,73 @@ ${contentHTML}
     document.getElementById('btn-download-menu')?.setAttribute('aria-expanded', 'false');
   });
 
-  // --- EXPORTER EN PDF (jsPDF) ---
+  // --- EXPORTER EN PDF (html2pdf.js - garde le rendu graphique) ---
   document.getElementById('export-pdf')?.addEventListener('click', async () => {
-    // Charger jsPDF dynamiquement si pas déjà chargé
-    if (typeof window.jspdf === 'undefined') {
+    // Charger html2pdf dynamiquement si pas déjà chargé
+    if (typeof window.html2pdf === 'undefined') {
       const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
       document.head.appendChild(script);
       await new Promise(resolve => { script.onload = resolve; });
     }
 
     try {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF('p', 'mm', 'a4');
-      
       const contentHTML = getAllSlidesHTML();
+      
+      // Créer un conteneur temporaire avec les styles DSFR
       const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = contentHTML;
-      tempDiv.style.cssText = 'position:absolute;left:-9999px;width:190mm;font-family:Arial,sans-serif;font-size:12pt;line-height:1.6;';
+      tempDiv.innerHTML = `
+        <link rel="stylesheet" href="https://unpkg.com/@gouvfr/dsfr/dist/dsfr.min.css">
+        <style>
+          body { font-family: Marianne, Arial, sans-serif; font-size: 11pt; line-height: 1.5; color: #161616; }
+          .slide-page { page-break-after: always; padding: 1.5rem; min-height: 90vh; }
+          .slide-page:last-child { page-break-after: avoid; }
+          .fr-callout, .fr-alert, .fr-card { margin: 1rem 0; }
+          h1 { font-size: 1.8rem; margin: 1rem 0; }
+          h2 { font-size: 1.4rem; margin: 0.8rem 0; }
+          h3 { font-size: 1.1rem; margin: 0.6rem 0; }
+          p { margin: 0.5rem 0; }
+          img { max-width: 100%; height: auto; }
+        </style>
+        ${contentHTML}
+      `;
+      tempDiv.style.cssText = 'position:absolute;left:-9999px;width:210mm;background:white;padding:1rem;';
       document.body.appendChild(tempDiv);
 
-      // Convertir le HTML en texte simple pour le PDF
-      const textContent = tempDiv.innerText || tempDiv.textContent;
-      const lines = doc.splitTextToSize(textContent, 180);
-      
-      let y = 20;
-      const pageHeight = 280;
-      const lineHeight = 7;
-      
-      lines.forEach(line => {
-        if (y > pageHeight) {
-          doc.addPage();
-          y = 20;
-        }
-        doc.text(line, 15, y);
-        y += lineHeight;
-      });
-
-      document.body.removeChild(tempDiv);
-      
       const filename = isSlidesMode(textarea.value) ? 'slides-dsfr.pdf' : 'document-dsfr.pdf';
-      doc.save(filename);
+      
+      const opt = {
+        margin: [10, 10, 10, 10],
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: { 
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          backgroundColor: '#ffffff'
+        },
+        jsPDF: { 
+          unit: 'mm', 
+          format: 'a4', 
+          orientation: 'portrait',
+          compress: true
+        },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      };
+
+      await window.html2pdf().set(opt).from(tempDiv).save();
+      
+      document.body.removeChild(tempDiv);
       notify(isSlidesMode(textarea.value) ? 'PDF de toutes les slides créé ! 📄' : 'PDF créé ! 📄');
+      
     } catch (err) {
       console.error('Erreur PDF:', err);
+      notify('Erreur lors de la création du PDF ❌');
       // Fallback sur window.print()
-      window.print();
-      notify('Impression lancée ! 📑');
+      setTimeout(() => {
+        window.print();
+        notify('Impression lancée ! 📑');
+      }, 500);
     }
   });
 

@@ -23,11 +23,12 @@
 
 ## 📄 Export PDF
 
-Le bouton **PDF** génère un vrai fichier `.pdf` :
-- Charge automatiquement jsPDF depuis CDN (1ère utilisation)
-- **Mode normal** : PDF `document-dsfr.pdf` avec le contenu
-- **Mode slides** : PDF `slides-dsfr.pdf` avec TOUTES les slides (une par page)
-- Conversion HTML → texte pour compatibilité maximale
+Le bouton **PDF** génère un vrai fichier `.pdf` **avec le rendu graphique complet** :
+- Utilise **html2pdf.js** (charge automatiquement depuis CDN ~500KB, 1ère utilisation)
+- **Garde tous les styles DSFR** : couleurs, composants, mise en page
+- **Mode normal** : PDF `document-dsfr.pdf` avec le contenu stylisé
+- **Mode slides** : PDF `slides-dsfr.pdf` avec TOUTES les slides (une par page A4)
+- Qualité haute résolution (scale 2x) pour un PDF net
 - Fallback sur `window.print()` en cas d'erreur
 
 ## 🎯 Résumé
@@ -42,6 +43,8 @@ Le bouton **PDF** génère un vrai fichier `.pdf` :
 
 ## ⚠️ Notes
 
-- Le PDF utilise jsPDF (chargement dynamique ~200KB)
-- Les styles DSFR complexes sont simplifiés dans le PDF (texte pur)
-- Pour un PDF avec styles, utiliser "Télécharger HTML" puis ouvrir dans navigateur et imprimer en PDF
+- Le PDF utilise **html2pdf.js** (chargement dynamique ~500KB, converti HTML→Canvas→PDF)
+- **Tous les styles DSFR sont préservés** : alertes bleues/vertes, callouts, cartes, badges...
+- Génération prend 2-5 secondes selon la taille (conversion graphique)
+- Qualité optimale pour impression et partage
+- Images externes (via URL) doivent supporter CORS pour apparaître dans le PDF

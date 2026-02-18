@@ -54,6 +54,9 @@ jsFile: script.js
       <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="![image](url)" title="Image">
         <i class="bi bi-image"></i>
       </button>
+      <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="/// media | Titre de la vidéo\n    url: https://example.com/video.mp4\n    captions: /chemin/sous-titres.vtt\n    poster: /chemin/affiche.jpg\n///" title="Vidéo">
+        <i class="bi bi-play-circle"></i>
+      </button>
       <button type="button" class="fr-btn fr-btn--sm fr-btn--secondary" data-insert="> Citation" title="Citation">
         <i class="bi bi-quote"></i>
       </button>
@@ -81,6 +84,7 @@ jsFile: script.js
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="callouts">Callouts</button>
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="badges">Badges</button>
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="cartes">Cartes</button>
+    <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="tableaux">Tableaux</button>
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="tuiles">Tuiles</button>
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="accordeons">Accordéons</button>
     <button type="button" class="fr-btn fr-btn--sm toolbar-tab" data-tab="grilles">Grilles</button>
@@ -186,7 +190,33 @@ jsFile: script.js
       </div>
     </div>
 
-    <!-- ONGLET 5 : TUILES -->
+    <!-- ONGLET 5 : TABLEAUX -->
+    <div class="toolbar-panel" id="panel-tableaux">
+      <div class="toolbar-group">
+        <button type="button" class="fr-btn fr-btn--sm" data-insert="| Colonne 1 | Colonne 2 |\n|----------|----------|\n| Ligne 1  | Donnée 1 |\n| Ligne 2  | Donnée 2 |" title="Tableau 2 colonnes">
+          <i class="bi bi-table"></i> 2 col.
+        </button>
+        <button type="button" class="fr-btn fr-btn--sm" data-insert="| Colonne 1 | Colonne 2 | Colonne 3 |\n|----------|----------|----------|\n| Ligne 1  | Donnée 1 | Donnée 2 |\n| Ligne 2  | Donnée 3 | Donnée 4 |" title="Tableau 3 colonnes">
+          <i class="bi bi-grid"></i> 3 col.
+        </button>
+        <button type="button" class="fr-btn fr-btn--sm" data-insert="| Colonne 1 | Colonne 2 | Colonne 3 | Colonne 4 |\n|----------|----------|----------|----------|\n| Ligne 1  | Donnée 1 | Donnée 2 | Donnée 3 |\n| Ligne 2  | Donnée 4 | Donnée 5 | Donnée 6 |" title="Tableau 4 colonnes">
+          <i class="bi bi-grid-3x2"></i> 4 col.
+        </button>
+        <button type="button" class="fr-btn fr-btn--sm" data-insert="| Colonne 1 | Colonne 2 | Colonne 3 | Colonne 4 | Colonne 5 |\n|----------|----------|----------|----------|----------|\n| Ligne 1  | Donnée 1 | Donnée 2 | Donnée 3 | Donnée 4 |\n| Ligne 2  | Donnée 5 | Donnée 6 | Donnée 7 | Donnée 8 |" title="Tableau 5 colonnes">
+          <i class="bi bi-grid-3x3"></i> 5 col.
+        </button>
+      </div>
+      <div class="toolbar-group">
+        <button type="button" class="fr-btn fr-btn--sm" data-insert="| Jour     | Visites |\n|---------|--------|\n| Lundi   | 1605   |\n| Mardi   | 1497   |\n| Mercredi| 1446   |" title="Exemple tableau stats">
+          <i class="bi bi-bar-chart"></i> Stats
+        </button>
+        <button type="button" class="fr-btn fr-btn--sm" data-insert="| Nom      | Prénom  | Email           |\n|----------|---------|----------------|\n| Dupont   | Jean    | jean@example.fr|\n| Martin   | Marie   | marie@example.fr|" title="Exemple tableau contacts">
+          <i class="bi bi-person-lines-fill"></i> Contacts
+        </button>
+      </div>
+    </div>
+
+    <!-- ONGLET 6 : TUILES -->
     <div class="toolbar-panel" id="panel-tuiles">
       <div class="toolbar-group">
         <button type="button" class="fr-btn fr-btn--sm" data-insert="/// tile | Service\n    picto: digital/application\n    target: /service\n    markup: h4\nDescription du service.\n///" title="Tuile simple">
